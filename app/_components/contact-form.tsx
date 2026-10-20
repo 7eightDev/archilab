@@ -6,6 +6,7 @@ import {
   type ContactFormValues,
   initialContactFormState,
 } from '@/app/_actions/contact-form-state'
+import { postContactRequest } from '@/app/_actions/post-contact-request'
 import { Button } from '@/app/_components/ui/button'
 import { Input } from '@/app/_components/ui/input'
 import { Label } from '@/app/_components/ui/label'
@@ -53,7 +54,7 @@ function Field({ name, label, errors, children }: FieldProps) {
   )
 }
 
-export function ContactForm({ action }: { action: ContactAction }) {
+export function ContactForm({ action = postContactRequest }: { action?: ContactAction }) {
   const [state, formAction, pending] = useActionState(action, initialContactFormState)
   const { fieldErrors, formErrors, values } = state
 

@@ -1,4 +1,3 @@
-import { submitContact } from '@/app/_actions/submit-contact'
 import { ContactSection } from '@/app/_components/contact-section'
 import { Hero } from '@/app/_components/hero'
 import { Logo } from '@/app/_components/logo'
@@ -28,7 +27,7 @@ export default async function Home() {
       <main className="flex-1">
         <Hero showProjectLink={project !== null} />
         <ServicesSection services={services} />
-        <ContactSection action={submitContact} />
+        <ContactSection />
       </main>
       <footer className="border-t border-rule">
         <div className="mx-auto max-w-6xl px-4 py-8 text-sm text-slate sm:px-8">

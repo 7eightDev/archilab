@@ -1,6 +1,7 @@
 import { type ContactAction, ContactForm } from './contact-form'
 
-export function ContactSection({ action }: { action: ContactAction }) {
+/** `action` defaults to posting to /api/contact; override it in tests. */
+export function ContactSection({ action }: { action?: ContactAction }) {
   return (
     <section id="contatti" aria-labelledby="contatti-title" className="bg-linen">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:px-8 md:grid-cols-[4fr_8fr] md:gap-16 md:py-16">
