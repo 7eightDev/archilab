@@ -1,0 +1,12 @@
+import { z } from 'zod'
+
+export const SlugSchema = z
+  .string()
+  .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'Lo slug può contenere solo minuscole, numeri e trattini singoli')
+
+export const ImageSchema = z.object({
+  src: z.string().min(1),
+  alt: z.string().min(1, "Il testo alternativo è obbligatorio"),
+})
+
+export type Image = z.infer<typeof ImageSchema>
