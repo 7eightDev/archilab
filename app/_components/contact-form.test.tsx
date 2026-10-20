@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import type { ContactFormState } from '@/app/_actions/contact-form-state'
 import { initialContactFormState } from '@/app/_actions/contact-form-state'
@@ -15,6 +15,37 @@ describe('ContactForm', () => {
     expect(
       screen.getByRole('checkbox', { name: /Acconsento al trattamento dei miei dati/ }),
     ).toBeInTheDocument()
+  })
+
+  it('marks every field as required for assistive technologies', () => {
+    render(<ContactForm action={jest.fn()} />)
+
+    expect(screen.getByLabelText('Nome')).toBeRequired()
+    expect(screen.getByLabelText('Email')).toBeRequired()
+    expect(screen.getByLabelText('Il tuo messaggio')).toBeRequired()
+    expect(screen.getByRole('checkbox')).toBeRequired()
+  })
+
+  it('keeps an empty live region ready so the confirmation gets announced', () => {
+    render(<ContactForm action={jest.fn()} />)
+
+    expect(screen.getByRole('status')).toBeEmptyDOMElement()
+  })
+
+  it('moves focus to the first invalid field', async () => {
+    const action = jest.fn(
+      async (): Promise<ContactFormState> => ({
+        status: 'error',
+        fieldErrors: { email: ['Indirizzo email non valido'], message: ['Troppo corto'] },
+        formErrors: [],
+        values: { name: 'Mario', email: 'mario@', message: 'Ciao' },
+      }),
+    )
+    render(<ContactForm action={action} />)
+
+    await userEvent.click(screen.getByRole('button', { name: 'Invia' }))
+
+    await waitFor(() => expect(screen.getByLabelText('Email')).toHaveFocus())
   })
 
   it('shows field errors returned by the action and keeps the typed values', async () => {

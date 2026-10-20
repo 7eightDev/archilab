@@ -11,7 +11,7 @@ export function Hero({ showProjectLink }: { showProjectLink: boolean }) {
         </h1>
         <p className="max-w-[46ch] text-lg leading-relaxed text-slate">
           Interni, ristrutturazioni e pratiche urbanistiche: un approccio su misura, dal primo schizzo
-          alla posa dell&apos;ultimo dettaglio.
+          alla posa dell&apos;ultimo&nbsp;dettaglio.
         </p>
         <div className="flex flex-wrap items-center gap-x-8 gap-y-4 pt-2">
           <a href="#contatti" className={buttonVariants()}>

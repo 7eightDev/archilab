@@ -7,7 +7,7 @@ export function SiteFooter() {
         <div className="flex items-end gap-4">
           <LogoMark className="h-8 w-auto" />
           <p>
-            <span className="text-navy">Archilab</span>, studio di architettura di Maria Pezzella
+            <span className="text-navy">Archilab</span>, studio di architettura di Maria&nbsp;Pezzella
           </p>
         </div>
         <p>Fondi (LT)</p>

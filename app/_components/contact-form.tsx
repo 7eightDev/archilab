@@ -1,6 +1,6 @@
 'use client'
 
-import { useActionState } from 'react'
+import { useActionState, useEffect, useRef } from 'react'
 import {
   type ContactFormState,
   type ContactFormValues,
@@ -57,18 +57,25 @@ function Field({ name, label, errors, children }: FieldProps) {
 export function ContactForm({ action = postContactRequest }: { action?: ContactAction }) {
   const [state, formAction, pending] = useActionState(action, initialContactFormState)
   const { fieldErrors, formErrors, values } = state
+  const formRef = useRef<HTMLFormElement>(null)
+
+  // After a rejected submission, take keyboard and screen-reader users straight to the first problem.
+  useEffect(() => {
+    if (state.status !== 'error') return
+    formRef.current?.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus()
+  }, [state])
 
   return (
-    <form action={formAction} noValidate className="flex flex-col gap-6">
+    <form ref={formRef} action={formAction} noValidate className="flex flex-col gap-6">
       <div className="grid gap-6 sm:grid-cols-2">
         <Field name="name" label="Nome" errors={fieldErrors.name}>
           {(props) => (
-            <Input {...props} type="text" autoComplete="name" defaultValue={values.name} className={`h-12 ${controlClass}`} />
+            <Input {...props} type="text" required autoComplete="name" defaultValue={values.name} className={`h-12 ${controlClass}`} />
           )}
         </Field>
         <Field name="email" label="Email" errors={fieldErrors.email}>
           {(props) => (
-            <Input {...props} type="email" autoComplete="email" defaultValue={values.email} className={`h-12 ${controlClass}`} />
+            <Input {...props} type="email" required autoComplete="email" defaultValue={values.email} className={`h-12 ${controlClass}`} />
           )}
         </Field>
       </div>
@@ -76,6 +83,7 @@ export function ContactForm({ action = postContactRequest }: { action?: ContactA
         {(props) => (
           <Textarea
             {...props}
+            required
             rows={6}
             defaultValue={values.message}
             placeholder="Che tipo di intervento, dove, con quali tempi"
@@ -85,13 +93,14 @@ export function ContactForm({ action = postContactRequest }: { action?: ContactA
       </Field>
 
       <div className="flex flex-col gap-2">
-        <label className="flex items-start gap-4 text-sm leading-relaxed text-navy">
+        <label className="flex min-h-11 cursor-pointer items-start gap-4 py-2 text-sm leading-relaxed text-navy">
           <input
             type="checkbox"
             name="privacyConsent"
+            required
             aria-invalid={fieldErrors.privacyConsent ? true : undefined}
             aria-describedby={fieldErrors.privacyConsent ? 'contact-privacy-error' : undefined}
-            className="mt-1 size-4 shrink-0 accent-teal-ink"
+            className="mt-0.5 size-5 shrink-0 cursor-pointer accent-teal-ink"
           />
           Acconsento al trattamento dei miei dati per essere ricontattato.
         </label>
@@ -106,11 +115,11 @@ export function ContactForm({ action = postContactRequest }: { action?: ContactA
         <Button type="submit" disabled={pending} className="min-w-32">
           {pending ? 'Invio in corso…' : 'Invia'}
         </Button>
-        {state.status === 'success' && (
-          <p role="status" className="text-base text-navy">
-            Messaggio ricevuto, grazie. Ti rispondo all&apos;indirizzo email che hai indicato.
-          </p>
-        )}
+        {/* Always mounted: screen readers only announce changes to a live region that already exists. */}
+        <p role="status" className="text-base text-navy empty:hidden">
+          {state.status === 'success' &&
+            'Messaggio ricevuto, grazie. Ti rispondo all’indirizzo email che hai indicato.'}
+        </p>
         {formErrors.length > 0 && (
           <p role="alert" className="text-base text-error">
             {formErrors.join(' ')}
