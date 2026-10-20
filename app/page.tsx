@@ -1,7 +1,10 @@
+import { AboutSection } from '@/app/_components/about-section'
 import { ContactSection } from '@/app/_components/contact-section'
+import { FeaturedProjectSection } from '@/app/_components/featured-project-section'
 import { Hero } from '@/app/_components/hero'
-import { Logo } from '@/app/_components/logo'
 import { ServicesSection } from '@/app/_components/services-section'
+import { SiteFooter } from '@/app/_components/site-footer'
+import { SiteHeader } from '@/app/_components/site-header'
 import { getFeaturedProject, listServices } from '@/app/_infrastructure/container'
 
 export default async function Home() {
@@ -9,31 +12,15 @@ export default async function Home() {
 
   return (
     <>
-      <header className="mx-auto flex w-full max-w-6xl flex-wrap items-end justify-between gap-4 px-4 pt-6 sm:px-8">
-        <a href="#" aria-label="Archilab, torna all'inizio" className="focus-visible:outline-2 focus-visible:outline-offset-4 ">
-          <Logo />
-        </a>
-        <nav aria-label="Sezioni" className="flex gap-6 text-sm text-navy">
-          {services.length > 0 && (
-            <a href="#servizi" className="underline-offset-4 hover:underline">
-              Servizi
-            </a>
-          )}
-          <a href="#contatti" className="underline-offset-4 hover:underline">
-            Contatti
-          </a>
-        </nav>
-      </header>
+      <SiteHeader showServices={services.length > 0} showProject={project !== null} />
       <main className="flex-1">
         <Hero showProjectLink={project !== null} />
+        <AboutSection />
         <ServicesSection services={services} />
+        <FeaturedProjectSection project={project} />
         <ContactSection />
       </main>
-      <footer className="border-t border-rule">
-        <div className="mx-auto max-w-6xl px-4 py-8 text-sm text-slate sm:px-8">
-          Archilab, studio di architettura di Maria Pezzella
-        </div>
-      </footer>
+      <SiteFooter />
     </>
   )
 }
