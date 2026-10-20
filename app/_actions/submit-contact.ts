@@ -15,14 +15,12 @@ export async function submitContact(
   const values = {
     name: text(formData, 'name'),
     email: text(formData, 'email'),
-    phone: text(formData, 'phone'),
     message: text(formData, 'message'),
   }
 
   try {
     const result = await submitContactRequest.execute({
       ...values,
-      phone: values.phone.trim() === '' ? undefined : values.phone,
       privacyConsent: formData.get('privacyConsent') === 'on',
     })
 

@@ -1,55 +1,32 @@
-import Image from 'next/image'
-import type { Project } from '@/app/_domain/entities/project'
+import { buttonVariants } from '@/app/_components/ui/button'
+import { LogoMark } from './logo'
+import { textLinkClass } from './link-styles'
 
-function placeAndYear(project: Project): string {
-  return project.location ? `${project.location}, ${project.year}` : String(project.year)
-}
-
-export function Hero({ project }: { project: Project | null }) {
+export function Hero({ showProjectLink }: { showProjectLink: boolean }) {
   return (
-    <section className="mx-auto grid max-w-6xl gap-14 px-4 pt-14 pb-20 sm:px-8 md:grid-cols-[5fr_7fr] md:items-end md:gap-16 md:pt-24 md:pb-28">
-      <div className="flex flex-col gap-7">
-        <h1 className="font-display text-[2.6rem] leading-[1.05] font-light tracking-[0.01em] text-ink sm:text-6xl">
-          Case pensate per chi le abita, dal primo schizzo al cantiere.
+    <section className="mx-auto grid max-w-6xl gap-12 px-4 pt-12 pb-16 sm:px-8 md:grid-cols-[8fr_4fr] md:items-end md:gap-16 md:pt-16">
+      <div className="flex flex-col gap-6">
+        <h1 className="font-display text-5xl leading-[1.05] font-normal tracking-[-0.02em] text-navy sm:text-6xl md:text-7xl">
+          Dove abitare prende forma.
         </h1>
-        <p className="max-w-[38ch] text-lg leading-relaxed text-mist">
-          Sono Maria Pezzella, architetto. Progetto nuove abitazioni, ristrutturazioni e interni, e
-          seguo le pratiche edilizie e la direzione dei lavori.
+        <p className="max-w-[46ch] text-lg leading-relaxed text-slate">
+          Interni, ristrutturazioni e pratiche urbanistiche: un approccio su misura, dal primo schizzo
+          alla posa dell&apos;ultimo dettaglio.
         </p>
-        <a
-          href="#contatti"
-          className="inline-flex h-11 w-fit items-center bg-ink px-6 text-base text-paper transition-colors hover:bg-ink/85 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ochre"
-        >
-          Richiedi un preventivo
-        </a>
+        <div className="flex flex-wrap items-center gap-x-8 gap-y-4 pt-2">
+          <a href="#contatti" className={buttonVariants()}>
+            Richiedi una consulenza
+          </a>
+          {showProjectLink && (
+            <a href="#progetto" className={`${textLinkClass} inline-flex min-h-12 items-center text-base`}>
+              Guarda il progetto
+            </a>
+          )}
+        </div>
       </div>
 
-      {project && (
-        <figure>
-          <div className="relative">
-            {/* Construction lines from the logo: they overshoot the frame like a drafting sketch. */}
-            <span aria-hidden className="absolute -top-10 -bottom-3 -left-3 w-px bg-ink" />
-            <span aria-hidden className="absolute -bottom-3 -left-3 h-px w-[calc(100%+1.5rem)] bg-ink sm:w-[calc(100%+3rem)]" />
-            <span aria-hidden className="absolute -top-6 bottom-0 -left-7 hidden w-px bg-line sm:block" />
-            <span aria-hidden className="absolute -top-12 right-10 h-12 w-px bg-ochre" />
-            <div className="relative aspect-[4/3] overflow-hidden bg-sand">
-              <Image
-                src={project.coverImage.src}
-                alt={project.coverImage.alt}
-                fill
-                priority
-                sizes="(min-width: 768px) 58vw, 100vw"
-                unoptimized={project.coverImage.src.endsWith('.svg')}
-                className="object-cover"
-              />
-            </div>
-          </div>
-          <figcaption className="mt-7 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-            <span className="font-display text-xl text-ink">{project.title}</span>
-            <span className="text-sm text-mist">{placeAndYear(project)}</span>
-          </figcaption>
-        </figure>
-      )}
+      {/* The business-card mark, drawn large: construction lines that become a house. */}
+      <LogoMark className="hidden h-auto w-full max-w-sm justify-self-end md:block" />
     </section>
   )
 }

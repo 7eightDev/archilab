@@ -7,17 +7,19 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-public-sans);
-  --font-display: var(--font-josefin-sans);
-  --font-heading: var(--font-josefin-sans);
-  --color-paper: var(--paper);
-  --color-sand: var(--sand);
-  --color-ink: var(--ink);
-  --color-mist: var(--mist);
-  --color-line: var(--line);
-  --color-ochre: var(--ochre);
-  --color-ochre-ink: var(--ochre-ink);
-  --color-rust: var(--rust);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-fraunces);
+  --font-heading: var(--font-fraunces);
+  --color-cream: var(--cream);
+  --color-linen: var(--linen);
+  --color-navy: var(--navy);
+  --color-slate: var(--slate);
+  --color-rule: var(--rule);
+  --color-terracotta: var(--terracotta);
+  --color-terracotta-ink: var(--terracotta-ink);
+  --color-teal: var(--teal);
+  --color-teal-ink: var(--teal-ink);
+  --color-error: var(--error);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -57,40 +59,46 @@
 }
 
 :root {
-  /* Brand palette, taken from the Archilab business card. */
-  --paper: #ece6de; /* plaster */
-  --sand: #e2d8cb;
-  --ink: #262b3a; /* the door */
-  --mist: #545b6a; /* secondary text, AA on paper and sand */
-  --line: #b5aea4; /* construction lines */
-  --ochre: #b1883f; /* the roof, graphics only */
-  --ochre-ink: #7a5c24; /* ochre dark enough for text */
-  --rust: #8a4b2e; /* the pillar, also used for errors */
+  /*
+   * Brand palette. The pure brand hues (terracotta, teal) fall below 4.5:1 on cream,
+   * so text and filled controls use the darker "-ink" shades; the pure hues are kept
+   * for rules, graphics and large type.
+   */
+  --cream: #faf6f0;
+  --linen: #f2ebe1; /* alternate section background */
+  --navy: #1c2b3a; /* text and structure */
+  --slate: #4a5866; /* secondary text, 6.7:1 on cream */
+  --rule: #d8cdbf; /* hairlines and input borders on light grounds */
+  --terracotta: #b5651d; /* accents, graphics */
+  --terracotta-ink: #97511a; /* labels, 5.5:1 on cream */
+  --teal: #088db5; /* CTA and link hue */
+  --teal-ink: #066f8f; /* CTA fill and link text, 5.2:1 on cream */
+  --error: #a3341f;
 
-  --background: var(--paper);
-  --foreground: var(--ink);
+  --background: var(--cream);
+  --foreground: var(--navy);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: var(--ink);
-  --primary-foreground: var(--paper);
+  --primary: var(--teal-ink);
+  --primary-foreground: var(--cream);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
-  --destructive: var(--rust);
-  --border: var(--line);
-  --input: var(--line);
-  --ring: var(--ochre);
+  --destructive: var(--error);
+  --border: var(--rule);
+  --input: var(--slate);
+  --ring: var(--teal);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
+  --radius: 0.25rem;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
@@ -145,6 +153,20 @@
   html {
     @apply font-sans;
     scroll-behavior: smooth;
+    caret-color: var(--teal-ink);
+  }
+  ::selection {
+    background: color-mix(in oklab, var(--teal) 22%, var(--cream));
+    color: var(--navy);
+  }
+  :focus-visible {
+    outline: 2px solid var(--teal-ink);
+    outline-offset: 3px;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
   }
   @media (prefers-reduced-motion: reduce) {
     html {

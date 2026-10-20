@@ -1,52 +1,73 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import type { Project } from '@/app/_domain/entities/project'
 import type { Service } from '@/app/_domain/entities/service'
+import { AboutSection } from './about-section'
+import { FeaturedProjectSection } from './featured-project-section'
 import { Hero } from './hero'
 import { ServicesSection } from './services-section'
+import { SiteFooter } from './site-footer'
 
 const project: Project = {
   id: 'p-1',
-  slug: 'villa-sul-mare',
-  title: 'Villa sul mare',
-  summary: 'Nuova residenza affacciata sul golfo.',
-  category: 'residenziale',
-  location: 'Sorrento (NA)',
+  slug: 'appartamento-fondi',
+  title: 'Un appartamento a Fondi, ripensato da zero',
+  summary: 'Ristrutturazione completa di un appartamento anni ‘80.',
+  description: 'Un appartamento degli anni ‘80 nel centro di Fondi, trasformato in un open space luminoso.',
+  category: 'ristrutturazione',
+  location: 'Fondi (LT)',
   year: 2025,
-  coverImage: { src: '/images/placeholder.svg', alt: 'Prospetto della villa verso il mare' },
+  coverImage: { src: '/images/placeholder.svg', alt: 'Il soggiorno open space dopo i lavori' },
   gallery: [],
   serviceIds: [],
   featured: true,
 }
 
 describe('Hero', () => {
-  it('shows the featured project with its image, place and year', () => {
-    render(<Hero project={project} />)
+  it('states the promise of the studio', () => {
+    render(<Hero showProjectLink />)
 
-    expect(screen.getByRole('img', { name: 'Prospetto della villa verso il mare' })).toBeInTheDocument()
-    expect(screen.getByText('Villa sul mare')).toBeInTheDocument()
-    expect(screen.getByText('Sorrento (NA), 2025')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 1, name: 'Dove abitare prende forma.' })).toBeInTheDocument()
+    expect(screen.getByText(/Interni, ristrutturazioni e pratiche urbanistiche/)).toBeInTheDocument()
   })
 
-  it('still invites visitors to get in touch when no project is featured', () => {
-    render(<Hero project={null} />)
+  it('links to the contact form and to the featured project', () => {
+    render(<Hero showProjectLink />)
 
-    expect(screen.queryByRole('img')).not.toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Richiedi un preventivo' })).toHaveAttribute('href', '#contatti')
+    expect(screen.getByRole('link', { name: 'Richiedi una consulenza' })).toHaveAttribute('href', '#contatti')
+    expect(screen.getByRole('link', { name: 'Guarda il progetto' })).toHaveAttribute('href', '#progetto')
+  })
+
+  it('hides the project link when there is no project to show', () => {
+    render(<Hero showProjectLink={false} />)
+
+    expect(screen.queryByRole('link', { name: 'Guarda il progetto' })).not.toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Richiedi una consulenza' })).toBeInTheDocument()
+  })
+})
+
+describe('AboutSection', () => {
+  it('introduces the studio and its founder', () => {
+    render(<AboutSection />)
+
+    const section = screen.getByRole('region', { name: 'Chi siamo' })
+    expect(section).toHaveTextContent('Archilab è lo studio di architettura di Maria Pezzella')
+    expect(section).toHaveTextContent('Fondi (LT)')
   })
 })
 
 describe('ServicesSection', () => {
   const services: Service[] = [
-    { id: 's-1', slug: 'interior-design', title: 'Interior design', description: 'Arredi su misura.', icon: 'sofa', order: 0 },
-    { id: 's-2', slug: 'pratiche-edilizie', title: 'Pratiche edilizie', description: 'CILA e SCIA.', order: 1 },
+    { id: 's-1', slug: 'interior-arredo', title: 'Interior & arredo', description: 'Progettazione degli spazi interni.', order: 0 },
+    { id: 's-2', slug: 'pratiche-urbanistiche', title: 'Pratiche urbanistiche', description: 'CILA e SCIA.', order: 1 },
   ]
 
   it('lists every service with its description', () => {
     render(<ServicesSection services={services} />)
 
-    const items = screen.getAllByRole('listitem')
+    const section = screen.getByRole('region', { name: 'Servizi' })
+    const items = within(section).getAllByRole('listitem')
     expect(items).toHaveLength(2)
-    expect(items[0]).toHaveTextContent('Interior design')
+    expect(within(items[0]).getByRole('heading', { level: 3 })).toHaveTextContent('Interior & arredo')
     expect(items[1]).toHaveTextContent('CILA e SCIA.')
   })
 
@@ -54,5 +75,38 @@ describe('ServicesSection', () => {
     const { container } = render(<ServicesSection services={[]} />)
 
     expect(container).toBeEmptyDOMElement()
+  })
+})
+
+describe('FeaturedProjectSection', () => {
+  it('tells the story of the project with its image', () => {
+    render(<FeaturedProjectSection project={project} />)
+
+    const section = screen.getByRole('region', { name: project.title })
+    expect(section).toHaveAttribute('id', 'progetto')
+    expect(section).toHaveTextContent(project.description!)
+    expect(within(section).getByRole('img', { name: 'Il soggiorno open space dopo i lavori' })).toBeInTheDocument()
+  })
+
+  it('falls back to the summary when the project has no description', () => {
+    render(<FeaturedProjectSection project={{ ...project, description: undefined }} />)
+
+    expect(screen.getByText(project.summary)).toBeInTheDocument()
+  })
+
+  it('renders nothing without a project', () => {
+    const { container } = render(<FeaturedProjectSection project={null} />)
+
+    expect(container).toBeEmptyDOMElement()
+  })
+})
+
+describe('SiteFooter', () => {
+  it('names the studio and where it is', () => {
+    render(<SiteFooter />)
+
+    const footer = screen.getByRole('contentinfo')
+    expect(footer).toHaveTextContent('Archilab')
+    expect(footer).toHaveTextContent('Fondi (LT)')
   })
 })

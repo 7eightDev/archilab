@@ -7,16 +7,18 @@ import {
   initialContactFormState,
 } from '@/app/_actions/contact-form-state'
 import { Button } from '@/app/_components/ui/button'
+import { Input } from '@/app/_components/ui/input'
+import { Label } from '@/app/_components/ui/label'
+import { Textarea } from '@/app/_components/ui/textarea'
 
-type ContactAction = (state: ContactFormState, formData: FormData) => Promise<ContactFormState>
+export type ContactAction = (state: ContactFormState, formData: FormData) => Promise<ContactFormState>
 
-const inputClass =
-  'w-full border-0 border-b border-line bg-transparent px-0 py-2 text-base text-ink placeholder:text-mist/70 focus:border-ink focus:outline-none focus-visible:ring-0 aria-invalid:border-rust'
+const controlClass =
+  'rounded-sm border-slate/60 bg-cream px-4 text-base text-navy placeholder:text-slate md:text-base focus-visible:border-teal-ink focus-visible:ring-teal/30 aria-invalid:border-error aria-invalid:ring-error/15'
 
 interface FieldProps {
   name: keyof ContactFormValues
   label: string
-  hint?: string
   errors?: string[]
   children: (props: {
     id: string
@@ -26,17 +28,16 @@ interface FieldProps {
   }) => React.ReactNode
 }
 
-function Field({ name, label, hint, errors, children }: FieldProps) {
+function Field({ name, label, errors, children }: FieldProps) {
   const id = `contact-${name}`
   const errorId = `${id}-error`
   const invalid = errors !== undefined && errors.length > 0
 
   return (
-    <div className="flex flex-col gap-1">
-      <label htmlFor={id} className="text-sm text-mist">
+    <div className="flex flex-col gap-2">
+      <Label htmlFor={id} className="text-sm font-medium text-terracotta-ink">
         {label}
-        {hint && <span className="text-mist/70"> ({hint})</span>}
-      </label>
+      </Label>
       {children({
         id,
         name,
@@ -44,7 +45,7 @@ function Field({ name, label, hint, errors, children }: FieldProps) {
         'aria-describedby': invalid ? errorId : undefined,
       })}
       {invalid && (
-        <p id={errorId} className="text-sm text-rust">
+        <p id={errorId} className="text-sm text-error">
           {errors.join(' ')}
         </p>
       )}
@@ -57,69 +58,60 @@ export function ContactForm({ action }: { action: ContactAction }) {
   const { fieldErrors, formErrors, values } = state
 
   return (
-    <form action={formAction} noValidate className="flex flex-col gap-7">
-      <div className="grid gap-7 sm:grid-cols-2">
-        <Field name="name" label="Nome e cognome" errors={fieldErrors.name}>
+    <form action={formAction} noValidate className="flex flex-col gap-6">
+      <div className="grid gap-6 sm:grid-cols-2">
+        <Field name="name" label="Nome" errors={fieldErrors.name}>
           {(props) => (
-            <input {...props} type="text" autoComplete="name" defaultValue={values.name} className={inputClass} />
+            <Input {...props} type="text" autoComplete="name" defaultValue={values.name} className={`h-12 ${controlClass}`} />
           )}
         </Field>
         <Field name="email" label="Email" errors={fieldErrors.email}>
           {(props) => (
-            <input {...props} type="email" autoComplete="email" defaultValue={values.email} className={inputClass} />
+            <Input {...props} type="email" autoComplete="email" defaultValue={values.email} className={`h-12 ${controlClass}`} />
           )}
         </Field>
       </div>
-      <Field name="phone" label="Telefono" hint="facoltativo" errors={fieldErrors.phone}>
+      <Field name="message" label="Il tuo messaggio" errors={fieldErrors.message}>
         {(props) => (
-          <input {...props} type="tel" autoComplete="tel" defaultValue={values.phone} className={inputClass} />
-        )}
-      </Field>
-      <Field name="message" label="Di cosa hai bisogno?" errors={fieldErrors.message}>
-        {(props) => (
-          <textarea
+          <Textarea
             {...props}
-            rows={5}
+            rows={6}
             defaultValue={values.message}
-            placeholder="Tipo di intervento, luogo, tempi che hai in mente"
-            className={`${inputClass} resize-y`}
+            placeholder="Che tipo di intervento, dove, con quali tempi"
+            className={`min-h-40 py-4 ${controlClass}`}
           />
         )}
       </Field>
 
-      <div className="flex flex-col gap-1">
-        <label className="flex items-start gap-3 text-sm text-ink">
+      <div className="flex flex-col gap-2">
+        <label className="flex items-start gap-4 text-sm leading-relaxed text-navy">
           <input
             type="checkbox"
             name="privacyConsent"
             aria-invalid={fieldErrors.privacyConsent ? true : undefined}
             aria-describedby={fieldErrors.privacyConsent ? 'contact-privacy-error' : undefined}
-            className="mt-0.5 size-4 accent-ink"
+            className="mt-1 size-4 shrink-0 accent-teal-ink"
           />
           Acconsento al trattamento dei miei dati per essere ricontattato.
         </label>
         {fieldErrors.privacyConsent && (
-          <p id="contact-privacy-error" className="text-sm text-rust">
+          <p id="contact-privacy-error" className="text-sm text-error">
             {fieldErrors.privacyConsent.join(' ')}
           </p>
         )}
       </div>
 
-      <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-        <Button
-          type="submit"
-          disabled={pending}
-          className="h-11 rounded-none bg-ink px-6 text-base font-normal text-paper hover:bg-ink/85"
-        >
-          {pending ? 'Invio in corso…' : 'Invia la richiesta'}
+      <div className="flex flex-col items-start gap-4">
+        <Button type="submit" disabled={pending} className="min-w-32">
+          {pending ? 'Invio in corso…' : 'Invia'}
         </Button>
         {state.status === 'success' && (
-          <p role="status" className="text-sm text-ink">
-            Richiesta inviata. Ti ricontatteremo all&apos;indirizzo che hai indicato.
+          <p role="status" className="text-base text-navy">
+            Messaggio ricevuto, grazie. Ti rispondo all&apos;indirizzo email che hai indicato.
           </p>
         )}
         {formErrors.length > 0 && (
-          <p role="alert" className="text-sm text-rust">
+          <p role="alert" className="text-base text-error">
             {formErrors.join(' ')}
           </p>
         )}

@@ -1,28 +1,29 @@
 import type { Metadata } from "next";
-import { Josefin_Sans, Public_Sans } from "next/font/google";
+import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 
-const josefinSans = Josefin_Sans({
-  variable: "--font-josefin-sans",
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin"],
+  axes: ["opsz"],
 });
 
-const publicSans = Public_Sans({
-  variable: "--font-public-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Archilab | Maria Pezzella, architetto",
+  title: "Archilab | Maria Pezzella, architetto a Fondi",
   description:
-    "Progettazione architettonica, ristrutturazioni, interni e pratiche edilizie. Studio di architettura di Maria Pezzella.",
+    "Interni, ristrutturazioni e pratiche urbanistiche a Fondi (LT): lo studio di architettura di Maria Pezzella, dal primo schizzo alla posa dell'ultimo dettaglio.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="it"
-      className={`${josefinSans.variable} ${publicSans.variable} h-full antialiased`}
+      className={`${fraunces.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

@@ -3,7 +3,6 @@ import type { ContactRequestFieldErrors } from '@/app/_application/use-cases/sub
 export interface ContactFormValues {
   name: string
   email: string
-  phone: string
   message: string
 }
 
@@ -19,5 +18,5 @@ export const initialContactFormState: ContactFormState = {
   status: 'idle',
   fieldErrors: {},
   formErrors: [],
-  values: { name: '', email: '', phone: '', message: '' },
+  values: { name: '', email: '', message: '' },
 }

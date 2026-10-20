@@ -12,7 +12,6 @@ function formData(entries: Record<string, string>) {
 const validEntries = {
   name: 'Mario Bianchi',
   email: 'mario@example.com',
-  phone: '',
   message: 'Vorrei un preventivo per ristrutturare casa.',
   privacyConsent: 'on',
 }
@@ -27,7 +26,7 @@ describe('submitContact', () => {
     expect(state.values).toEqual(initialContactFormState.values)
   })
 
-  it('passes an empty phone as missing and the checkbox as a boolean', async () => {
+  it('passes the checkbox as a boolean', async () => {
     const execute = jest.spyOn(submitContactRequest, 'execute')
 
     await submitContact(initialContactFormState, formData(validEntries))
@@ -35,7 +34,6 @@ describe('submitContact', () => {
     expect(execute).toHaveBeenCalledWith({
       name: 'Mario Bianchi',
       email: 'mario@example.com',
-      phone: undefined,
       message: 'Vorrei un preventivo per ristrutturare casa.',
       privacyConsent: true,
     })
@@ -56,8 +54,7 @@ describe('submitContact', () => {
     expect(state.values).toEqual({
       name: 'Mario Bianchi',
       email: 'mario@',
-      phone: '',
-      message: 'Vorrei un preventivo per ristrutturare casa.',
+          message: 'Vorrei un preventivo per ristrutturare casa.',
     })
   })
 
