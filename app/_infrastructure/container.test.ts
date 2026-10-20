@@ -3,13 +3,13 @@ import { getFeaturedProject, listServices, submitContactRequest } from './contai
 
 describe('container', () => {
   it('wires GetFeaturedProject to the mock projects', async () => {
-    expect((await getFeaturedProject.execute())?.slug).toBe('villa-sul-mare')
+    expect((await getFeaturedProject.execute())?.slug).toBe('appartamento-fondi')
   })
 
   it('wires ListServices to the mock services', async () => {
     const services = await listServices.execute()
 
-    expect(services[0].slug).toBe('progettazione-architettonica')
+    expect(services[0].slug).toBe('interior-arredo')
   })
 
   it('accepts contact requests while email delivery is disabled', async () => {

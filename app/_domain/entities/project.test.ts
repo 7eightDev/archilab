@@ -81,6 +81,28 @@ describe('ProjectSchema', () => {
     expect(ProjectSchema.safeParse({ ...validProject, coverImage }).success).toBe(false)
   })
 
+  it('keeps the area, the scope of work and the before image when provided', () => {
+    const project = ProjectSchema.parse({
+      ...validProject,
+      areaSqm: 95,
+      scope: 'Ristrutturazione completa',
+      beforeImage: { src: '/images/prima.jpg', alt: 'Il soggiorno prima dei lavori' },
+    })
+
+    expect(project.areaSqm).toBe(95)
+    expect(project.scope).toBe('Ristrutturazione completa')
+    expect(project.beforeImage?.alt).toBe('Il soggiorno prima dei lavori')
+  })
+
+  it.each([0, -10])('rejects a non-positive area %p', (areaSqm) => {
+    expect(ProjectSchema.safeParse({ ...validProject, areaSqm }).success).toBe(false)
+  })
+
+  it('requires alt text on the before image', () => {
+    const beforeImage = { src: '/images/prima.jpg', alt: '' }
+    expect(ProjectSchema.safeParse({ ...validProject, beforeImage }).success).toBe(false)
+  })
+
   it('requires alt text on gallery images', () => {
     const gallery = [{ src: '/images/a.jpg' }]
     expect(ProjectSchema.safeParse({ ...validProject, gallery }).success).toBe(false)

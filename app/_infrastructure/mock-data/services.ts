@@ -1,35 +1,30 @@
-/** Mock content until real services are provided. */
+/** Services offered by the studio (copy approved for the MVP). */
 export const mockServices = [
   {
-    id: 's-progettazione',
-    slug: 'progettazione-architettonica',
-    title: 'Progettazione architettonica',
-    description: 'Dal concept al progetto esecutivo, per nuove costruzioni e ampliamenti.',
-    icon: 'ruler',
+    id: 's-interni',
+    slug: 'interior-arredo',
+    title: 'Interior & arredo',
+    description:
+      'Progettazione degli spazi interni, scelta di materiali e arredi, dalla singola stanza alla casa intera.',
+    icon: 'sofa',
     order: 0,
   },
   {
-    id: 's-ristrutturazione',
+    id: 's-ristrutturazioni',
     slug: 'ristrutturazioni',
     title: 'Ristrutturazioni',
-    description: 'Recupero e riqualificazione di abitazioni e locali, con direzione lavori.',
+    description:
+      'Ristrutturazioni complete o parziali di abitazioni, con coordinamento di tutte le fasi del cantiere.',
     icon: 'hammer',
     order: 1,
   },
   {
-    id: 's-interni',
-    slug: 'interior-design',
-    title: 'Interior design',
-    description: 'Progettazione degli spazi interni, arredi su misura e scelta dei materiali.',
-    icon: 'sofa',
-    order: 2,
-  },
-  {
     id: 's-pratiche',
-    slug: 'pratiche-edilizie',
-    title: 'Pratiche edilizie',
-    description: 'CILA, SCIA, permessi di costruire, sanatorie e pratiche catastali.',
+    slug: 'pratiche-urbanistiche',
+    title: 'Pratiche urbanistiche',
+    description:
+      'Pratiche edilizie e urbanistiche — CILA, SCIA, permessi di costruire — per partire con il piede giusto.',
     icon: 'file-text',
-    order: 3,
+    order: 2,
   },
 ]

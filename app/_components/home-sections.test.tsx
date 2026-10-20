@@ -88,6 +88,25 @@ describe('FeaturedProjectSection', () => {
     expect(within(section).getByRole('img', { name: 'Il soggiorno open space dopo i lavori' })).toBeInTheDocument()
   })
 
+  it('lists area, place and scope of work', () => {
+    render(<FeaturedProjectSection project={{ ...project, areaSqm: 95, scope: 'Ristrutturazione completa' }} />)
+
+    expect(screen.getByText('95 mq · Fondi (LT) · Ristrutturazione completa')).toBeInTheDocument()
+  })
+
+  it('compares the space before and after the works', () => {
+    render(
+      <FeaturedProjectSection
+        project={{ ...project, beforeImage: { src: '/images/placeholder.svg', alt: 'Il soggiorno prima dei lavori' } }}
+      />,
+    )
+
+    const before = screen.getByRole('figure', { name: 'Prima' })
+    const after = screen.getByRole('figure', { name: 'Dopo' })
+    expect(within(before).getByRole('img', { name: 'Il soggiorno prima dei lavori' })).toBeInTheDocument()
+    expect(within(after).getByRole('img', { name: 'Il soggiorno open space dopo i lavori' })).toBeInTheDocument()
+  })
+
   it('falls back to the summary when the project has no description', () => {
     render(<FeaturedProjectSection project={{ ...project, description: undefined }} />)
 

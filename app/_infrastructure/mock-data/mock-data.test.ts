@@ -18,6 +18,26 @@ describe('mock data', () => {
     expect((await repository.findFeatured()).length).toBeGreaterThan(0)
   })
 
+  it('lists the three services of the studio in order', async () => {
+    const services = await new InMemoryServiceRepository(mockServices).findAll()
+
+    expect(services.map((service) => service.title)).toEqual([
+      'Interior & arredo',
+      'Ristrutturazioni',
+      'Pratiche urbanistiche',
+    ])
+  })
+
+  it('features the apartment in Fondi', async () => {
+    const [featured] = await new InMemoryProjectRepository(mockProjects).findFeatured()
+
+    expect(featured.title).toBe('Un appartamento a Fondi, ripensato da zero')
+    expect(featured.areaSqm).toBe(95)
+    expect(featured.location).toBe('Fondi (LT)')
+    expect(featured.scope).toBe('Ristrutturazione completa')
+    expect(featured.beforeImage).toBeDefined()
+  })
+
   it('links projects only to existing services', async () => {
     const serviceIds = new Set(
       (await new InMemoryServiceRepository(mockServices).findAll()).map((service) => service.id),

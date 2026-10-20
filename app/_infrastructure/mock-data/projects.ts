@@ -1,64 +1,25 @@
+// Placeholder images until the real before/after photos are provided.
 const placeholder = '/images/placeholder.svg'
 
-/** Mock content until real projects and photos are provided. */
+/** Projects shown on the site (copy approved for the MVP). */
 export const mockProjects = [
   {
-    id: 'p-villa-mare',
-    slug: 'villa-sul-mare',
-    title: 'Villa sul mare',
-    summary: 'Nuova residenza unifamiliare affacciata sul golfo, con ampie vetrate e terrazze.',
+    id: 'p-appartamento-fondi',
+    slug: 'appartamento-fondi',
+    title: 'Un appartamento a Fondi, ripensato da zero',
+    summary:
+      'Ristrutturazione completa di un appartamento anni ‘80 nel centro di Fondi, trasformato in un open space luminoso.',
     description:
-      'Progetto di una villa su due livelli che privilegia la luce naturale e il rapporto con il paesaggio.',
-    category: 'residenziale',
-    location: 'Sorrento (NA)',
-    year: 2025,
-    coverImage: { src: placeholder, alt: 'Prospetto della villa verso il mare' },
-    serviceIds: ['s-progettazione', 's-interni'],
-    featured: true,
-  },
-  {
-    id: 'p-appartamento-vomero',
-    slug: 'appartamento-vomero',
-    title: 'Appartamento al Vomero',
-    summary: 'Ristrutturazione completa di un appartamento anni Cinquanta con nuova distribuzione.',
+      'Un appartamento degli anni ‘80 nel centro di Fondi, con ambienti chiusi e poca luce naturale, trasformato in uno spazio open space luminoso. Sono stati rifatti impianti, pavimenti e infissi, abbattuta una parete tra cucina e soggiorno, e curato ogni dettaglio dell’arredo su misura.',
     category: 'ristrutturazione',
-    location: 'Napoli',
-    year: 2024,
-    coverImage: { src: placeholder, alt: 'Soggiorno open space dopo la ristrutturazione' },
-    serviceIds: ['s-ristrutturazione', 's-pratiche'],
+    location: 'Fondi (LT)',
+    areaSqm: 95,
+    scope: 'Ristrutturazione completa',
+    // TODO: confirm the completion year with the studio; it is not shown on the site.
+    year: 2025,
+    coverImage: { src: placeholder, alt: 'Il soggiorno open space con la cucina, dopo i lavori' },
+    beforeImage: { src: placeholder, alt: 'Cucina e soggiorno separati da una parete, prima dei lavori' },
+    serviceIds: ['s-ristrutturazioni', 's-interni'],
     featured: true,
-  },
-  {
-    id: 'p-loft-chiaia',
-    slug: 'loft-chiaia',
-    title: 'Loft a Chiaia',
-    summary: 'Interni minimali per un loft su due livelli, con arredi realizzati su misura.',
-    category: 'interni',
-    location: 'Napoli',
-    year: 2023,
-    coverImage: { src: placeholder, alt: 'Scala in legno e soppalco del loft' },
-    serviceIds: ['s-interni'],
-  },
-  {
-    id: 'p-bottega-centro',
-    slug: 'bottega-centro-storico',
-    title: 'Bottega nel centro storico',
-    summary: 'Riqualificazione di un locale commerciale nel rispetto dei vincoli storici.',
-    category: 'commerciale',
-    location: 'Napoli',
-    year: 2022,
-    coverImage: { src: placeholder, alt: 'Vetrina della bottega su strada' },
-    serviceIds: ['s-ristrutturazione', 's-pratiche'],
-  },
-  {
-    id: 'p-biblioteca',
-    slug: 'biblioteca-comunale',
-    title: 'Biblioteca comunale',
-    summary: 'Adeguamento funzionale e abbattimento delle barriere architettoniche.',
-    category: 'pubblico',
-    location: 'Pozzuoli (NA)',
-    year: 2021,
-    coverImage: { src: placeholder, alt: 'Sala lettura della biblioteca' },
-    serviceIds: ['s-progettazione'],
   },
 ]
