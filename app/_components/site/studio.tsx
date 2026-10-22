@@ -10,7 +10,7 @@ export function Studio() {
     : `${studio.architect} · ${studio.order}`
 
   const heading = (
-    <h3 className="font-heading text-[26px] leading-[1.2] tracking-[.02em] lg:text-[32px]">
+    <h3 className="font-heading text-[28px] leading-[1.2] tracking-[.02em]">
       Sono Maria, architetto a Fondi. Ti seguo dalla prima idea alle chiavi.
     </h3>
   )

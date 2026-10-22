@@ -1,0 +1,382 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-22T17:49:10.464702+00:00",
+  "title": "Design System: Archilab",
+  "extensions": {
+    "colorMeta": {
+      "petrolio": {
+        "role": "neutral",
+        "displayName": "Petrolio",
+        "canonical": "oklch(32.1% 0.054 222.7)",
+        "tonalRamp": [
+          "#000e14",
+          "#032934",
+          "#1a4654",
+          "#396574",
+          "#598595",
+          "#7aa6b7",
+          "#9fcdde",
+          "#d8f4ff"
+        ]
+      },
+      "petrolio-2": {
+        "role": "neutral",
+        "displayName": "Petrolio chiaro",
+        "canonical": "oklch(32.1% 0.050 227.6)",
+        "tonalRamp": [
+          "#000d14",
+          "#012837",
+          "#204554",
+          "#3e6374",
+          "#5d8495",
+          "#7ea5b7",
+          "#a3cbde",
+          "#daf3ff"
+        ]
+      },
+      "petrolio-3": {
+        "role": "neutral",
+        "displayName": "Petrolio profondo",
+        "canonical": "oklch(25.0% 0.038 228.9)",
+        "tonalRamp": [
+          "#000d15",
+          "#0e2733",
+          "#2a4450",
+          "#47626f",
+          "#66828f",
+          "#87a3b1",
+          "#acc9d8",
+          "#dbf3ff"
+        ]
+      },
+      "linea": {
+        "role": "neutral",
+        "displayName": "Linea",
+        "canonical": "oklch(40.3% 0.060 225.6)",
+        "tonalRamp": [
+          "#000d14",
+          "#032835",
+          "#144658",
+          "#356577",
+          "#558599",
+          "#76a7bb",
+          "#9bcde2",
+          "#daf3fe"
+        ]
+      },
+      "linea-forte": {
+        "role": "neutral",
+        "displayName": "Linea forte",
+        "canonical": "oklch(57.6% 0.042 224.2)",
+        "tonalRamp": [
+          "#000d14",
+          "#072833",
+          "#254550",
+          "#436370",
+          "#628390",
+          "#83a5b2",
+          "#a7cbd9",
+          "#daf3fe"
+        ]
+      },
+      "testo": {
+        "role": "neutral",
+        "displayName": "Carta",
+        "canonical": "oklch(96.2% 0.010 81.8)",
+        "tonalRamp": [
+          "#0d0b07",
+          "#27241e",
+          "#423f3a",
+          "#605d57",
+          "#807d77",
+          "#a29e97",
+          "#c7c4bd",
+          "#f2eee7"
+        ]
+      },
+      "testo-2": {
+        "role": "neutral",
+        "displayName": "Carta velata",
+        "canonical": "oklch(86.8% 0.016 222.7)",
+        "tonalRamp": [
+          "#050d10",
+          "#1c262a",
+          "#374246",
+          "#546064",
+          "#748084",
+          "#94a1a6",
+          "#bac7cc",
+          "#e4f1f6"
+        ]
+      },
+      "testo-3": {
+        "role": "neutral",
+        "displayName": "Carta chiara",
+        "canonical": "oklch(93.8% 0.009 214.3)",
+        "tonalRamp": [
+          "#070c0d",
+          "#1f2527",
+          "#3b4143",
+          "#585f61",
+          "#787f80",
+          "#98a0a2",
+          "#bec6c8",
+          "#e8f0f2"
+        ]
+      },
+      "ottone": {
+        "role": "primary",
+        "displayName": "Ottone",
+        "canonical": "oklch(70.5% 0.084 79.2)",
+        "tonalRamp": [
+          "#120900",
+          "#312102",
+          "#543b09",
+          "#77571e",
+          "#987740",
+          "#bb9961",
+          "#e1be85",
+          "#feeccf"
+        ]
+      },
+      "rame": {
+        "role": "secondary",
+        "displayName": "Rame",
+        "canonical": "oklch(55.3% 0.096 47.9)",
+        "tonalRamp": [
+          "#190500",
+          "#3e1701",
+          "#672c05",
+          "#894b29",
+          "#ac6b49",
+          "#d08c69",
+          "#f8b18d",
+          "#feeae0"
+        ]
+      },
+      "errore": {
+        "role": "error",
+        "displayName": "Pesca",
+        "canonical": "oklch(85.4% 0.065 52.9)",
+        "tonalRamp": [
+          "#170600",
+          "#3b1901",
+          "#5a351d",
+          "#7b533a",
+          "#9c7359",
+          "#bf9479",
+          "#e7b99d",
+          "#ffeadd"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Solo il titolo dell'apertura."
+      },
+      "headline": {
+        "displayName": "Titolo di sezione",
+        "purpose": "Titoli 01–05 in maiuscolo, seconda parola in ottone."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Frase-voce sotto il titolo di sezione."
+      },
+      "title": {
+        "displayName": "Titolo interno",
+        "purpose": "Nomi dei servizi e presentazione di Maria."
+      },
+      "figure": {
+        "displayName": "Cifra",
+        "purpose": "La sola cifra grande del progetto (95 m²)."
+      },
+      "body": {
+        "displayName": "Testo",
+        "purpose": "Paragrafi, circa 62 caratteri per riga."
+      },
+      "body-sm": {
+        "displayName": "Testo piccolo",
+        "purpose": "Elenchi, passi, pulsanti."
+      },
+      "caption": {
+        "displayName": "Didascalia",
+        "purpose": "Didascalie, firma, footer."
+      },
+      "label": {
+        "displayName": "Etichetta",
+        "purpose": "Cartiglio, indirizzo, galleria: maiuscolo ottone."
+      },
+      "nav": {
+        "displayName": "Menu",
+        "purpose": "Voci dell'header."
+      },
+      "numeral": {
+        "displayName": "Numerale",
+        "purpose": "Numeri dei passi di \"Come lavoro\"."
+      },
+      "caption-display": {
+        "displayName": "Didascalia su foto",
+        "purpose": "Didascalie sovrapposte alle foto della galleria."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "fade-slide",
+        "value": "opacity .5s ease-in-out",
+        "purpose": "Dissolvenza tra le foto dell'apertura."
+      },
+      {
+        "name": "grow-column",
+        "value": "flex-grow .3s ease-in-out",
+        "purpose": "La colonna sotto il mouse si allarga nella galleria (desktop)."
+      },
+      {
+        "name": "bar-slide",
+        "value": "transform .3s ease-out",
+        "purpose": "Ingresso della barra contatti su telefono."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "transition-duration: 0s",
+        "purpose": "Con prefers-reduced-motion tutte le transizioni si annullano."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Pulsante primario",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Azione principale: blocco color carta pieno su petrolio, con freccia quando porta da qualche parte.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Raccontami la tua idea <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></a>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 32px;background:var(--testo,#f6f2eb);color:var(--petrolio-2,#123847);font:500 15px/1 Montserrat,sans-serif;letter-spacing:.04em;text-decoration:none;border:0;border-radius:0;transition:background .15s}.ds-btn-primary:hover{background:#fff}.ds-btn-primary:focus-visible{outline:none;box-shadow:0 0 0 3px var(--ottone,#bc9a62)}"
+    },
+    {
+      "name": "Pulsante a bordo (carosello)",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Quadrato da 44px con bordo linea forte e icona, per le frecce del carosello.",
+      "html": "<button class=\"ds-btn-outline\" type=\"button\" aria-label=\"Immagine successiva\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></button>",
+      "css": ".ds-btn-outline{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;background:transparent;color:var(--testo,#f6f2eb);border:1px solid var(--linea-forte,#5e7f8c);border-radius:0;cursor:pointer;transition:border-color .15s}.ds-btn-outline:hover{border-color:var(--testo,#f6f2eb)}.ds-btn-outline:focus-visible{outline:2px solid var(--testo,#f6f2eb);outline-offset:3px}"
+    },
+    {
+      "name": "Contattami (header)",
+      "kind": "button",
+      "refersTo": "header-contact",
+      "description": "Versione compatta del primario nell'header.",
+      "html": "<a class=\"ds-header-contact\" href=\"#\">Contattami</a>",
+      "css": ".ds-header-contact{display:inline-flex;align-items:center;height:44px;padding:0 18px;background:var(--testo,#f6f2eb);color:var(--petrolio-2,#123847);font:500 13px/1 Montserrat,sans-serif;letter-spacing:.08em;text-decoration:none;border-radius:0;transition:background .15s}.ds-header-contact:hover{background:#fff}"
+    },
+    {
+      "name": "Campo di testo",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Campo del modulo: petrolio, bordo linea forte, anello carta al focus, bordo pesca da 2px in errore.",
+      "html": "<label class=\"ds-field\">Email *<input class=\"ds-input\" type=\"email\" placeholder=\"nome@esempio.it\"><span class=\"ds-field-error\"></span></label><label class=\"ds-field\">Nome *<input class=\"ds-input\" aria-invalid=\"true\" value=\"\"><span class=\"ds-field-error\">Scrivi il tuo nome</span></label>",
+      "css": ".ds-field{display:flex;flex-direction:column;gap:8px;color:var(--testo,#f6f2eb);font:500 14px/1.4 Montserrat,sans-serif}.ds-input{height:52px;padding:0 14px;background:var(--petrolio,#0a3947);color:var(--testo,#f6f2eb);border:1px solid var(--linea-forte,#5e7f8c);border-radius:0;font:400 17px Montserrat,sans-serif;outline:none}.ds-input::placeholder{color:var(--testo-2,#c9d6db)}.ds-input:focus-visible{box-shadow:0 0 0 3px var(--testo,#f6f2eb)}.ds-input[aria-invalid=\"true\"]{border:2px solid var(--errore,#f2c4a8)}.ds-field-error{min-height:16px;color:var(--errore,#f2c4a8);font:400 13px Montserrat,sans-serif}"
+    },
+    {
+      "name": "Select",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Tipo di intervento: stesso stile del campo, freccia a icona staccata 16px dal bordo.",
+      "html": "<span class=\"ds-select-wrap\"><select class=\"ds-select\"><option>Non so ancora</option><option>Architettura</option><option>Interior</option><option>Pratiche urbanistiche</option></select><span class=\"ds-select-icon\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m6 9 6 6 6-6\"/></svg></span></span>",
+      "css": ".ds-select-wrap{position:relative;display:block;width:280px}.ds-select{width:100%;height:52px;padding:0 48px 0 14px;appearance:none;background:var(--petrolio,#0a3947);color:var(--testo,#f6f2eb);border:1px solid var(--linea-forte,#5e7f8c);border-radius:0;font:400 17px Montserrat,sans-serif;outline:none}.ds-select:focus-visible{box-shadow:0 0 0 3px var(--testo,#f6f2eb)}.ds-select-icon{position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--testo,#f6f2eb);pointer-events:none;display:flex}"
+    },
+    {
+      "name": "Navigazione",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Voci dell'header in Oswald maiuscolo, ottone in hover.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\">STUDIO</a><a href=\"#\">SERVIZI</a><a href=\"#\">PROGETTI</a></nav>",
+      "css": ".ds-nav{display:flex;gap:28px;background:var(--petrolio,#0a3947);padding:0 24px}.ds-nav a{display:inline-flex;align-items:center;min-height:44px;color:var(--testo,#f6f2eb);font:400 13px/1 Oswald,sans-serif;letter-spacing:.16em;text-decoration:none;transition:color .15s}.ds-nav a:hover{color:var(--ottone,#bc9a62)}.ds-nav a:focus-visible{outline:2px solid var(--testo,#f6f2eb);outline-offset:3px}"
+    },
+    {
+      "name": "Etichetta galleria",
+      "kind": "chip",
+      "refersTo": "tag-chip",
+      "description": "Etichetta ottone su fondo pieno, leggibile anche sulle foto chiare.",
+      "html": "<span class=\"ds-tag\">CANTIERE</span>",
+      "css": ".ds-tag{display:inline-block;padding:6px 8px;background:var(--petrolio,#0a3947);color:var(--ottone,#bc9a62);font:500 11px/1 Montserrat,sans-serif;letter-spacing:.16em}"
+    },
+    {
+      "name": "Cartiglio",
+      "kind": "custom",
+      "description": "Scheda tecnica del progetto come il riquadro dati di una tavola.",
+      "html": "<dl class=\"ds-cartiglio\"><div><dt>LUOGO</dt><dd>Fondi (LT)</dd></div><div><dt>SUPERFICIE</dt><dd>95 m²</dd></div><div><dt>INTERVENTO</dt><dd>Ristrutturazione completa, anni ’80</dd></div><div><dt>SERVIZI</dt><dd>Architettura · Interior · Pratiche urbanistiche</dd></div></dl>",
+      "css": ".ds-cartiglio{display:grid;grid-template-columns:1fr 1fr;margin:0;max-width:520px;border:1px solid var(--linea-forte,#5e7f8c);background:var(--petrolio,#0a3947)}.ds-cartiglio div{padding:14px 16px;border-right:1px solid var(--linea-forte,#5e7f8c);border-bottom:1px solid var(--linea-forte,#5e7f8c);margin:0 -1px -1px 0}.ds-cartiglio dt{margin-bottom:8px;color:var(--ottone,#bc9a62);font:500 10px/1 Montserrat,sans-serif;letter-spacing:.16em}.ds-cartiglio dd{margin:0;color:var(--testo,#f6f2eb);font:400 15px/1.4 Montserrat,sans-serif}"
+    },
+    {
+      "name": "Barra contatti su telefono",
+      "kind": "custom",
+      "description": "Barra fissa in basso su telefono con Scrivimi e WhatsApp.",
+      "html": "<div class=\"ds-mobile-bar\"><a class=\"ds-mb-primary\" href=\"#\">Scrivimi</a><a class=\"ds-mb-outline\" href=\"#\">WhatsApp</a></div>",
+      "css": ".ds-mobile-bar{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:343px;padding:12px 16px;background:var(--petrolio,#0a3947);border-top:1px solid var(--linea,#1e4f61)}.ds-mobile-bar a{display:flex;align-items:center;justify-content:center;min-height:48px;font:500 15px/1 Montserrat,sans-serif;letter-spacing:.04em;text-decoration:none}.ds-mb-primary{background:var(--testo,#f6f2eb);color:var(--petrolio-2,#123847)}.ds-mb-outline{color:var(--testo,#f6f2eb);border:1px solid var(--linea-forte,#5e7f8c)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Lo studio a Fondi",
+    "overview": "Il sito è lo studio di una persona sola, raccontato con i colori del suo biglietto da visita: il petrolio come fondo, l'ottone come la finitura che si nota per ultima, il rame solo nel marchio. Non è una vetrina di agenzia: è Maria che parla in prima persona, con la precisione di chi porta le pratiche in Comune e il calore di chi entra in casa delle persone.\n\nIl carattere è caldo e diretto, con controlli netti e decisi. Il fondo è sempre scuro e pieno; la luce arriva dal testo color carta, dalle fotografie e da pochi tratti d'ottone. Gli spigoli sono vivi ovunque, come in un disegno tecnico, e non c'è nessuna ombra: la profondità nasce dal passaggio tra due petroli e da linee sottili. Il disegno d'architettura resta nei dettagli (il cartiglio, le quote, la linea delle fasi), non come costume.\n\nIl ritmo è generoso ma non dispersivo: sezioni numerate 01–05 che seguono il percorso dalla conoscenza al contatto, ognuna con un solo compito, e il modulo come destinazione.",
+    "keyCharacteristics": [
+      "Solo tema scuro: petrolio come fondo, testo color carta, ottone come unico accento.",
+      "Spigoli vivi (raggio 0) su tutto, tranne i pallini della timeline e la maniglia dello slider.",
+      "Nessuna ombra: profondità per tono (petrolio → petrolio-2 → petrolio-3) e linee da 1px.",
+      "Oswald leggero per la voce dei titoli, Montserrat per leggere e per i controlli.",
+      "Controlli netti: pulsante color carta pieno su petrolio, bordi visibili, stati evidenti."
+    ],
+    "rules": [
+      {
+        "name": "The Un Solo Metallo Rule",
+        "body": "L'ottone è l'unico accento. Niente altri colori saturi, niente blu per i link: un link si riconosce dal colore carta e dall'hover in ottone.",
+        "section": "colors"
+      },
+      {
+        "name": "The Rame Solo Nel Marchio Rule",
+        "body": "Il rame vive solo nel logo. Usarlo altrove diluisce l'unico punto in cui il marchio parla.",
+        "section": "colors"
+      },
+      {
+        "name": "The Maiuscolo Solo Per Etichette Rule",
+        "body": "La spaziatura ampia (oltre +0.2em) è riservata ai titoli di sezione. Etichette e menu stanno a +0.16em; il testo in minuscolo non si spazia mai oltre +0.04em.",
+        "section": "typography"
+      },
+      {
+        "name": "The Numeri Che Contano Rule",
+        "body": "I numeri 01–05 marcano le sezioni e i passi di \"Come lavoro\", dove l'ordine è informazione. Non si numerano elenchi, servizi o immagini.",
+        "section": "typography"
+      },
+      {
+        "name": "The Niente Ombre Rule",
+        "body": "Nessun `box-shadow` decorativo. L'unico \"alone\" ammesso è l'anello di focus (3px color carta sui campi, 3px ottone sul pulsante d'invio), che è un segnale e non una profondità.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** tenere ogni superficie su un tono di petrolio; il testo color carta (#f6f2eb) è la luce della pagina.",
+      "**Do** usare l'ottone per numeri di sezione, linee e etichette, sempre in piccole dosi.",
+      "**Do** tenere gli spigoli a 0 su pulsanti, campi e immagini.",
+      "**Do** mostrare solo dati reali: quando un recapito, un numero d'iscrizione o una foto non esistono ancora, l'elemento si omette.",
+      "**Do** garantire 44px di area di tocco a ogni link e controllo, 52px al pulsante primario."
+    ],
+    "donts": [
+      "**Don't** usare ombre, angoli arrotondati o gradienti decorativi; l'unica sfumatura ammessa è quella sulle foto per leggere il testo, più la cifra \"95\".",
+      "**Don't** mostrare segnaposto come \"[DA FORNIRE]\" ai visitatori.",
+      "**Don't** numerare elenchi, servizi o immagini con 01/02/03.",
+      "**Don't** spaziare il testo in minuscolo o usare spaziature oltre +0.2em fuori dai titoli di sezione.",
+      "**Don't** usare caratteri Unicode (→, ⇔) al posto delle icone.",
+      "**Don't** introdurre un tema chiaro: il sito è solo scuro."
+    ]
+  }
+}

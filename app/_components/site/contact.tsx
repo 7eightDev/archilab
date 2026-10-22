@@ -3,7 +3,7 @@ import { ContactForm } from './contact-form'
 import { studio } from './content'
 import { SectionHeading, SectionLead, containerClass, microLabelClass } from './section-heading'
 
-const labelClass = `${microLabelClass} mb-1.5 text-[10px]`
+const labelClass = `${microLabelClass} mb-1.5`
 /** Contact links without underline: they brighten to brass on hover instead. */
 const plainLinkClass = 'inline-flex items-center transition-colors hover:text-ottone'
 // 44px touch target that does not push the value away from its label.

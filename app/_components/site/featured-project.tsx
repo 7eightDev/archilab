@@ -77,7 +77,7 @@ export function FeaturedProject({ project, services }: { project: Project; servi
             <dl aria-label="Scheda tecnica" className="grid grid-cols-2 border border-input">
               {sheet.map((entry) => (
                 <div key={entry.label} className="-mr-px -mb-px border-r border-b border-input px-4 py-3.5">
-                  <dt className={`${microLabelClass} mb-2 text-[10px]`}>{entry.label}</dt>
+                  <dt className={`${microLabelClass} mb-2`}>{entry.label}</dt>
                   <dd className="text-[15px] leading-[1.4]">{entry.value}</dd>
                 </div>
               ))}
