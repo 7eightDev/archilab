@@ -1,7 +1,6 @@
 import type { Service } from '@/app/_domain/entities/service'
 import { phases } from './content'
-import { pad } from './format'
-import { SectionHeading, SectionLead, containerClass, microLabelClass } from './section-heading'
+import { SectionHeading, SectionLead, containerClass } from './section-heading'
 
 /** 02 Un solo percorso: the five phases on a brass line, then one column per area. */
 export function ServicesPath({ services }: { services: Service[] }) {
@@ -26,12 +25,11 @@ export function ServicesPath({ services }: { services: Service[] }) {
       </ol>
 
       <div className="grid border-t border-border sm:grid-cols-2 sm:gap-x-8 lg:grid-cols-3 lg:gap-x-0">
-        {services.map((service, index) => (
+        {services.map((service) => (
           <article
             key={service.id}
             className="flex flex-col gap-3.5 border-b border-border py-8 sm:last:odd:col-span-2 lg:pr-7 lg:last:odd:col-span-1"
           >
-            <span className={microLabelClass}>{pad(index + 1)}</span>
             <h3 className="font-heading text-[28px] leading-[1.1] tracking-[.04em]">{service.title}</h3>
             <p className="text-base leading-[1.6] text-muted-foreground">{service.description}</p>
             {service.items.length > 0 && (

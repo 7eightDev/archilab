@@ -1,17 +1,17 @@
-import { AreasBar } from '@/app/_components/site/areas-bar'
 import { Contact } from '@/app/_components/site/contact'
 import { heroSlides, studio } from '@/app/_components/site/content'
 import { FeaturedProject } from '@/app/_components/site/featured-project'
 import { GridLines } from '@/app/_components/site/grid-lines'
 import { Hero } from '@/app/_components/site/hero'
 import { Method } from '@/app/_components/site/method'
+import { MobileContactBar } from '@/app/_components/site/mobile-contact-bar'
 import { ServicesPath } from '@/app/_components/site/services-path'
 import { SiteFooter } from '@/app/_components/site/site-footer'
 import { SiteHeader } from '@/app/_components/site/site-header'
 import { Studio } from '@/app/_components/site/studio'
 import { getFeaturedProject, listServices } from '@/app/_infrastructure/container'
 
-// schema.org description of the studio for search engines; complete it as the [DA FORNIRE] data arrives.
+// schema.org description of the studio for search engines; extend it as the studio supplies more details.
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'Architect',
@@ -48,10 +48,9 @@ export default async function Home() {
       <SiteHeader links={links} />
       <main className="flex-1">
         <Hero slides={heroSlides} showProjectLink={project !== null} />
-        {services.length > 0 && <AreasBar services={services} />}
         <div className="relative">
           <GridLines />
-          <Studio services={services} />
+          <Studio />
           {services.length > 0 && <ServicesPath services={services} />}
         </div>
         {project && <FeaturedProject project={project} services={services} />}
@@ -59,6 +58,7 @@ export default async function Home() {
         <Contact />
       </main>
       <SiteFooter />
+      <MobileContactBar />
     </>
   )
 }

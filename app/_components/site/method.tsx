@@ -14,7 +14,7 @@ export function Method() {
           {methodSteps.map((step, index) => (
             <li key={step.title} className="flex flex-col gap-2.5 border-t border-input pt-5">
               <span className="font-heading text-[44px] leading-none font-light text-ottone">{pad(index + 1)}</span>
-              <h3 className="font-heading text-xl leading-[1.2] tracking-[.12em]">{step.title}</h3>
+              <h3 className="font-heading text-xl leading-[1.2] tracking-[.02em]">{step.title}</h3>
               <p className="text-[15px] leading-[1.6] text-muted-foreground">{step.detail}</p>
             </li>
           ))}

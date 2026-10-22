@@ -1,5 +1,6 @@
 'use client'
 
+import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react'
 import Image from 'next/image'
 import { useRef, useState } from 'react'
 import type { HeroSlide } from './content'
@@ -10,7 +11,7 @@ import { containerClass } from './section-heading'
 const SWIPE_THRESHOLD_PX = 50
 
 const carouselButtonClass =
-  'min-h-11 border border-input px-3.5 font-heading text-xs tracking-[.26em] transition-colors hover:border-foreground'
+  'flex size-11 items-center justify-center border border-input transition-colors hover:border-foreground'
 
 
 /** Full-bleed opening: three photos that cross-fade, with the studio's promise over them. */
@@ -58,8 +59,12 @@ export function Hero({ slides, showProjectLink }: { slides: HeroSlide[]; showPro
         className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(10,57,71,.92)_0%,rgba(10,57,71,.7)_45%,rgba(10,57,71,.25)_100%)] mask-[linear-gradient(to_bottom,#000_80%,transparent_96%)] max-sm:bg-[linear-gradient(180deg,rgba(10,57,71,.55)_0%,rgba(10,57,71,.85)_55%,rgba(10,57,71,.95)_100%)]"
       />
 
-      <div className={`${containerClass} relative z-10 flex flex-col justify-between gap-12 pt-14 pb-[72px]`}>
-        <div className="flex items-start gap-6">
+      <div className={`${containerClass} relative z-10 flex flex-col justify-between gap-10 pt-12 pb-14 lg:gap-12`}>
+        {/* Margin note of the drawing sheet: kept out of the flow so it does not push the content below the fold. */}
+        <span className="absolute top-12 right-6 hidden rotate-180 text-[11px] leading-none font-medium tracking-[.24em] text-muted-foreground [writing-mode:vertical-rl] sm:block">
+          ARCHITETTO · FONDI (LT)
+        </span>
+        <div>
           <p className="flex items-start gap-2" aria-label={`Immagine ${index + 1} di ${slides.length}`}>
             <span aria-hidden className="font-heading text-5xl leading-[.9] font-light text-ottone sm:text-[clamp(48px,7vw,84px)]">
               {pad(index + 1)}
@@ -68,13 +73,10 @@ export function Hero({ slides, showProjectLink }: { slides: HeroSlide[]; showPro
               / {pad(slides.length)}
             </span>
           </p>
-          <span className="mt-1 hidden rotate-180 text-[11px] leading-none font-medium tracking-[.32em] text-muted-foreground [writing-mode:vertical-rl] sm:block">
-            ARCHITETTO · FONDI (LT)
-          </span>
         </div>
 
         <div className="flex max-w-[700px] flex-col gap-[22px]">
-          <span className="font-heading text-[13px] leading-[1.3] tracking-[.32em] text-ottone">{slide.kicker}</span>
+          <span className="font-heading text-[13px] leading-[1.3] tracking-[.2em] text-ottone">{slide.kicker}</span>
           <h1 className="font-heading text-[clamp(34px,5.2vw,64px)] leading-[1.06] font-light tracking-[.02em]">
             Dal progetto alle pratiche in Comune, un solo architetto per tutta la casa.
           </h1>
@@ -84,7 +86,7 @@ export function Hero({ slides, showProjectLink }: { slides: HeroSlide[]; showPro
           </p>
           <div className="flex flex-wrap items-center gap-6">
             <a href="#contatti" className={`${ctaLinkClass} max-sm:w-full`}>
-              Raccontami la tua idea <span aria-hidden>→</span>
+              Raccontami la tua idea <ArrowRightIcon aria-hidden />
             </a>
             {showProjectLink && (
               <a href="#progetti" className={`${textLinkClass} inline-flex min-h-11 items-center text-[15px] font-medium`}>
@@ -96,10 +98,10 @@ export function Hero({ slides, showProjectLink }: { slides: HeroSlide[]; showPro
 
         <div className="flex flex-wrap items-center gap-2">
           <button type="button" onClick={() => go(-1)} aria-label="Immagine precedente" className={carouselButtonClass}>
-            ← PREC.
+            <ArrowLeftIcon aria-hidden className="size-5" />
           </button>
           <button type="button" onClick={() => go(1)} aria-label="Immagine successiva" className={carouselButtonClass}>
-            SUCC. →
+            <ArrowRightIcon aria-hidden className="size-5" />
           </button>
           <span aria-live="polite" className="text-[13px] text-muted-foreground max-sm:basis-full sm:ml-3">
             {slide.caption}

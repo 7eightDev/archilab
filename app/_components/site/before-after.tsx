@@ -1,10 +1,11 @@
 'use client'
 
+import { ChevronsLeftRightIcon } from 'lucide-react'
 import Image from 'next/image'
 import { useState } from 'react'
 import type { Image as ImageData } from '@/app/_domain/entities/shared'
 
-const badgeClass = 'pointer-events-none absolute top-3.5 px-2.5 py-1.5 text-[11px] leading-none font-medium tracking-[.26em]'
+const badgeClass = 'pointer-events-none absolute top-3.5 px-2.5 py-1.5 text-[11px] leading-none font-medium tracking-[.16em]'
 const sizes = '(min-width: 1024px) 560px, 100vw'
 
 /** Before/after comparison: an invisible range input drives how much of the "after" photo is uncovered. */
@@ -21,7 +22,7 @@ export function BeforeAfter({ before, after }: { before: ImageData; after: Image
       <span className={`${badgeClass} right-3.5 bg-primary text-primary-foreground`}>DOPO</span>
       <div aria-hidden className="pointer-events-none absolute inset-y-0 -ml-px w-0.5 bg-primary" style={{ left: `${position}%` }}>
         <div className="absolute top-1/2 -left-[22px] -mt-[22px] flex size-11 items-center justify-center rounded-full bg-primary text-base text-primary-foreground">
-          ⇔
+          <ChevronsLeftRightIcon aria-hidden className="size-5" />
         </div>
       </div>
       <input

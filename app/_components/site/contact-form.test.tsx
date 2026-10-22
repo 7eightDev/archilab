@@ -17,7 +17,7 @@ async function fillValidForm() {
   await user.type(screen.getByLabelText('Email *'), filledValues.email)
   await user.selectOptions(screen.getByLabelText('Tipo di intervento'), 'Pratiche urbanistiche')
   await user.type(screen.getByLabelText('Raccontami l’idea *'), filledValues.message)
-  await user.click(screen.getByRole('checkbox', { name: /informativa privacy/ }))
+  await user.click(screen.getByRole('checkbox', { name: /trattamento dei miei dati/ }))
   return user
 }
 
@@ -30,7 +30,7 @@ describe('ContactForm', () => {
     expect(screen.getByRole('textbox', { name: 'Telefono (facoltativo)' })).not.toBeRequired()
     expect(screen.getByRole('combobox', { name: 'Tipo di intervento' })).toHaveValue('non-so')
     expect(screen.getByRole('textbox', { name: 'Raccontami l’idea *' })).toBeRequired()
-    expect(screen.getByRole('checkbox', { name: /informativa privacy/ })).toBeRequired()
+    expect(screen.getByRole('checkbox', { name: /trattamento dei miei dati/ })).toBeRequired()
   })
 
   it('checks the form with the domain schema before calling the action', async () => {

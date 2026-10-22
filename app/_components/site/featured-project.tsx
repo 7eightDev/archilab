@@ -2,7 +2,6 @@ import Image from 'next/image'
 import type { Project } from '@/app/_domain/entities/project'
 import type { Service } from '@/app/_domain/entities/service'
 import { BeforeAfter } from './before-after'
-import { pad } from './format'
 import { SectionHeading, SectionLead, containerClass, microLabelClass } from './section-heading'
 
 /** Title block entries ("cartiglio") derived from the project; missing data leaves its cell out. */
@@ -33,7 +32,7 @@ export function FeaturedProject({ project, services }: { project: Project; servi
       {project.gallery.length > 0 && (
         // Phones: stacked 4:3 · tablet: 2×2 grid · desktop: one row whose hovered column widens.
         <div className="grid sm:grid-cols-2 lg:flex">
-          {project.gallery.map((image, index) => (
+          {project.gallery.map((image) => (
             <figure
               key={image.src}
               className="relative aspect-[4/3] overflow-hidden border-background sm:aspect-auto sm:min-h-80 lg:min-h-[440px] lg:flex-1 lg:border-r lg:transition-[flex-grow] lg:duration-300 lg:ease-in-out lg:hover:grow-[1.7]"
@@ -41,13 +40,10 @@ export function FeaturedProject({ project, services }: { project: Project; servi
               <Image src={image.src} alt={image.alt} fill sizes="(min-width: 1024px) 40vw, (min-width: 640px) 50vw, 100vw" className="object-cover" />
               <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-3/5 bg-linear-to-b from-[rgba(10,57,71,.85)] to-transparent" />
               {(image.tag || image.caption) && (
-                <figcaption className="pointer-events-none absolute top-6 right-5 left-6 flex flex-col gap-2">
-                  {image.tag && (
-                    <span className={microLabelClass}>
-                      {pad(index + 1)} · {image.tag}
-                    </span>
-                  )}
-                  {image.caption && <span className="font-heading text-[19px] leading-[1.2] tracking-[.1em]">{image.caption}</span>}
+                <figcaption className="pointer-events-none absolute top-6 right-5 left-6 flex flex-col items-start gap-2.5">
+                  {/* Solid chip: the tag stays legible on light photos too. */}
+                  {image.tag && <span className={`${microLabelClass} bg-background px-2 py-1.5`}>{image.tag}</span>}
+                  {image.caption && <span className="font-heading text-[19px] leading-[1.2] tracking-[.02em]">{image.caption}</span>}
                 </figcaption>
               )}
             </figure>
@@ -70,7 +66,7 @@ export function FeaturedProject({ project, services }: { project: Project; servi
               <span className="bg-[linear-gradient(135deg,#ECE5DA_10%,var(--ottone)_55%,#D8CDBF_90%)] inline-block bg-clip-text pt-[.06em] font-heading text-[clamp(96px,12vw,150px)] leading-none font-medium text-transparent">
                 {project.areaSqm}
               </span>
-              <span className="pb-1.5 font-heading text-[15px] leading-normal tracking-[.2em]">
+              <span className="pb-1.5 font-heading text-[15px] leading-normal tracking-[.16em]">
                 <span className="text-ottone">M² RIPENSATI</span>
                 <br />
                 DA ZERO

@@ -1,3 +1,4 @@
+import { ArrowRightIcon } from 'lucide-react'
 import { ContactForm } from './contact-form'
 import { studio } from './content'
 import { SectionHeading, SectionLead, containerClass, microLabelClass } from './section-heading'
@@ -42,7 +43,7 @@ export function Contact() {
               </a>
             </div>
             <a href={studio.mapsUrl} target="_blank" rel="noopener" className={`${plainLinkClass} min-h-11 self-start font-medium`}>
-              Apri in Google Maps <span aria-hidden>&nbsp;→</span>
+              Apri in Google Maps <ArrowRightIcon aria-hidden className="ml-2 size-4" />
             </a>
           </address>
           <div className="min-w-0 lg:col-span-2">

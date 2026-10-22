@@ -1,6 +1,6 @@
 'use client'
 
-import { ChevronDownIcon } from 'lucide-react'
+import { ArrowRightIcon, ChevronDownIcon } from 'lucide-react'
 import { useActionState, useEffect, useRef, useState } from 'react'
 import { z } from 'zod'
 import { type ContactFormState, type ContactFormValues, initialContactFormState } from '@/app/_actions/contact-form-state'
@@ -11,6 +11,7 @@ import { Input } from '@/app/_components/ui/input'
 import { Label } from '@/app/_components/ui/label'
 import { Textarea } from '@/app/_components/ui/textarea'
 import { ContactRequestSchema, interventionTypeLabels, interventionTypes } from '@/app/_domain/entities/contact-request'
+import { studio } from './content'
 import { textLinkClass } from './link-styles'
 
 export type ContactAction = (state: ContactFormState, formData: FormData) => Promise<ContactFormState>
@@ -79,7 +80,7 @@ function Sent({ name, onReset }: { name: string; onReset: () => void }) {
     <div ref={ref} role="status" tabIndex={-1} className="flex flex-col gap-3 border border-input p-6 outline-none sm:p-10">
       <p className="font-heading text-[26px] leading-[1.2] tracking-[.04em]">Grazie {name.trim()}, ho ricevuto il tuo messaggio.</p>
       <p className="text-base leading-[1.6] text-muted-foreground">
-        Ti rispondo appena posso, di solito entro un paio di giorni lavorativi. [DA CONFERMARE]
+        Ti rispondo appena posso.
       </p>
       <button
         type="button"
@@ -182,14 +183,17 @@ function Form({ action, onReset }: { action: ContactAction; onReset: () => void 
             aria-describedby={errors.privacyConsent ? 'contact-privacy-error' : undefined}
             className="size-[22px] flex-none cursor-pointer accent-foreground"
           />
-          <span>
-            {/* TODO: link the privacy notice once the studio provides it. */}
-            Ho letto l’
-            <a href="#contatti" className={textLinkClass}>
-              informativa privacy
-            </a>{' '}
-            e acconsento al trattamento dei dati per essere ricontattato. *
-          </span>
+          {studio.privacyUrl ? (
+            <span>
+              Ho letto l’
+              <a href={studio.privacyUrl} className={textLinkClass}>
+                informativa privacy
+              </a>{' '}
+              e acconsento al trattamento dei dati per essere ricontattato. *
+            </span>
+          ) : (
+            <span>Acconsento al trattamento dei miei dati per essere ricontattato. *</span>
+          )}
         </label>
         <p id="contact-privacy-error" className="min-h-4 pl-[34px] text-[13px] text-destructive">
           {errors.privacyConsent?.join(' ')}
@@ -215,7 +219,7 @@ function Form({ action, onReset }: { action: ContactAction; onReset: () => void 
           disabled={pending}
           className="focus-visible:ring-0 focus-visible:shadow-[0_0_0_3px_var(--ottone)] max-sm:w-full"
         >
-          {pending ? 'Invio in corso…' : <>Invia il messaggio <span aria-hidden>→</span></>}
+          {pending ? 'Invio in corso…' : <>Invia il messaggio <ArrowRightIcon aria-hidden /></>}
         </Button>
       </div>
     </form>

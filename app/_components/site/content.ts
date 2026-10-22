@@ -3,7 +3,7 @@ import { unsplash } from '@/app/_lib/unsplash'
 
 /**
  * Editorial copy of the one-page site that is not domain data (services and the featured project
- * come from the use cases). Values marked [DA FORNIRE] are still to be supplied by the studio.
+ * come from the use cases). Details the studio has not supplied yet are `null`, and the page leaves them out.
  */
 
 export interface HeroSlide {
@@ -40,7 +40,7 @@ export const phases = [
 ]
 
 export const methodSteps = [
-  { title: 'Primo incontro', detail: 'Mi racconti cosa hai in mente, anche solo a grandi linee. [Gratuito? DA DEFINIRE]' },
+  { title: 'Primo incontro', detail: 'Mi racconti cosa hai in mente, anche solo a grandi linee.' },
   { title: 'Sopralluogo', detail: 'Vengo a vedere la casa o il locale e verifico cosa si può fare.' },
   { title: 'Proposta', detail: 'Ti spiego cosa serve, quali pratiche, tempi e costi, in modo chiaro.' },
   { title: 'Incarico', detail: 'Da qui ci penso io: progetto, Comune, cantiere, consegna.' },
@@ -57,9 +57,12 @@ export const studio = {
   phoneHref: 'tel:+393287489645',
   whatsappHref: 'https://wa.me/393287489645',
   email: 'archipezzella@gmail.com',
-  vatNumber: '[DA FORNIRE]',
-  registration: 'Ordine degli Architetti PPC di Latina n. [DA FORNIRE]',
+  vatNumber: null as string | null,
+  order: 'Ordine degli Architetti PPC di Latina',
+  registrationNumber: null as string | null,
+  /** Privacy notice page; the consent checkbox and the footer link to it once it exists. */
+  privacyUrl: null as string | null,
   mapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('Via Romano Antoniazzo 19, 04022 Fondi LT')}`,
-  /** 4:5 portrait of Maria; until it is provided the Studio section shows an empty frame. */
+  /** 4:5 portrait of Maria; the Studio section shows it only once it is provided. */
   portrait: null as Image | null,
 }

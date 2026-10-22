@@ -92,3 +92,20 @@ describe('Home page contacts', () => {
     expect(whatsapp).toHaveAttribute('target', '_blank')
   })
 })
+
+describe('Home page details still to be supplied', () => {
+  it('never shows a bracketed placeholder to visitors', async () => {
+    const { container } = render(await Home())
+
+    expect(container.textContent).not.toMatch(/\[[^\]]*(FORNIRE|DEFINIRE|CONFERMARE)[^\]]*\]/)
+  })
+
+  it('leaves out the portrait, the VAT number and the privacy links until they exist', async () => {
+    render(await Home())
+
+    expect(screen.queryByText(/Ritratto/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/P\.IVA/)).not.toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: /privacy|cookie/i })).not.toBeInTheDocument()
+    expect(screen.getByRole('contentinfo')).toHaveTextContent('Ordine degli Architetti PPC di Latina')
+  })
+})
