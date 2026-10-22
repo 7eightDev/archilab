@@ -1,4 +1,6 @@
-import { submitContactRequest } from '@/app/_infrastructure/container'
+import { deliveryFailedMessage, deliveryUnavailableMessage } from '@/app/_actions/contact-delivery-messages'
+import { ContactDeliveryUnavailableError } from '@/app/_domain/repositories/contact-request-repository'
+import { contactFallbackEmail, submitContactRequest } from '@/app/_infrastructure/container'
 import type { ContactApiErrorCode, ContactApiResponse } from './contract'
 
 function reply(body: ContactApiResponse, status: number) {
@@ -29,7 +31,12 @@ export async function POST(request: Request) {
       formErrors: result.formErrors,
     })
   } catch (error) {
+    if (error instanceof ContactDeliveryUnavailableError) {
+      const fallbackEmail = contactFallbackEmail()
+      const message = deliveryUnavailableMessage(fallbackEmail)
+      return fail(503, 'DELIVERY_UNAVAILABLE', message, fallbackEmail ? { fallbackEmail } : {})
+    }
     console.error('Contact request delivery failed', error)
-    return fail(500, 'DELIVERY_FAILED', 'Non è stato possibile inviare il messaggio. Riprova tra qualche minuto.')
+    return fail(500, 'DELIVERY_FAILED', deliveryFailedMessage)
   }
 }

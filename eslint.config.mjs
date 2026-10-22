@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Design reference from the handoff: vendor scripts that only render the HTML mock-up.
+    "design_handoff_archilab_sito/**",
   ]),
 ]);
 

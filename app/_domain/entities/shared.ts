@@ -10,3 +10,11 @@ export const ImageSchema = z.object({
 })
 
 export type Image = z.infer<typeof ImageSchema>
+
+/** A gallery picture with an optional caption and a short uppercase tag, e.g. "CANTIERE". */
+export const GalleryImageSchema = ImageSchema.extend({
+  caption: z.string().min(1).optional(),
+  tag: z.string().min(1).optional(),
+})
+
+export type GalleryImage = z.infer<typeof GalleryImageSchema>

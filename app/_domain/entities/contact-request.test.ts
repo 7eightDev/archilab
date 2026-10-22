@@ -1,4 +1,4 @@
-import { ContactRequestSchema } from './contact-request'
+import { ContactRequestSchema, interventionTypes } from './contact-request'
 
 const validRequest = {
   name: 'Mario Bianchi',
@@ -43,6 +43,13 @@ describe('ContactRequestSchema', () => {
     expect(ContactRequestSchema.safeParse({ ...validRequest, email: 'mario@' }).success).toBe(false)
   })
 
+  it('asks for the email when it is missing, rather than calling it invalid', () => {
+    const result = ContactRequestSchema.safeParse({ ...validRequest, email: '  ' })
+
+    expect(result.success).toBe(false)
+    expect(result.error?.issues.map((issue) => issue.message)).toEqual(['Scrivi il tuo indirizzo email'])
+  })
+
   it('rejects a message shorter than 10 characters', () => {
     expect(ContactRequestSchema.safeParse({ ...validRequest, message: 'Ciao' }).success).toBe(false)
   })
@@ -51,6 +58,20 @@ describe('ContactRequestSchema', () => {
     expect(ContactRequestSchema.safeParse({ ...validRequest, message: 'a'.repeat(2001) }).success).toBe(
       false,
     )
+  })
+
+  it.each(interventionTypes)('keeps the intervention type %p', (interventionType) => {
+    expect(ContactRequestSchema.parse({ ...validRequest, interventionType }).interventionType).toBe(
+      interventionType,
+    )
+  })
+
+  it('leaves the intervention type optional', () => {
+    expect(ContactRequestSchema.parse(validRequest).interventionType).toBeUndefined()
+  })
+
+  it('rejects an unknown intervention type', () => {
+    expect(ContactRequestSchema.safeParse({ ...validRequest, interventionType: 'giardino' }).success).toBe(false)
   })
 
   it('requires privacy consent', () => {

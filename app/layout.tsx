@@ -1,29 +1,42 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Montserrat, Oswald } from "next/font/google";
+import { heroSlides } from "@/app/_components/site/content";
 import "./globals.css";
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+const oswald = Oswald({
+  variable: "--font-oswald",
   subsets: ["latin"],
-  axes: ["opsz"],
+  weight: ["300", "400", "500"],
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
+
+const title = "Archilab — Architetto a Fondi (LT) | Progetto, interni e pratiche";
+const description =
+  "Arch. Maria Pezzella, Fondi (LT): architettura, interni e pratiche urbanistiche con un solo architetto, dalla prima idea alla consegna delle chiavi.";
 
 export const metadata: Metadata = {
-  title: "Archilab | Maria Pezzella, architetto a Fondi",
-  description:
-    "Interni, ristrutturazioni e pratiche urbanistiche a Fondi (LT): lo studio di architettura di Maria Pezzella, dal primo schizzo alla posa dell'ultimo dettaglio.",
+  title,
+  description,
+  openGraph: {
+    title,
+    description,
+    type: "website",
+    locale: "it_IT",
+    siteName: "Archilab",
+    images: [{ url: heroSlides[0].image.src, alt: heroSlides[0].image.alt }],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="it"
-      className={`${fraunces.variable} ${inter.variable} h-full antialiased`}
+      className={`${oswald.variable} ${montserrat.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

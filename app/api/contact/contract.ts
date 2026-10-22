@@ -1,7 +1,7 @@
 import type { ContactRequestFieldErrors } from '@/app/_application/use-cases/submit-contact-request'
 
 /** Wire format of POST /api/contact, shared by the route handler and the browser client. */
-export type ContactApiErrorCode = 'INVALID_BODY' | 'VALIDATION_FAILED' | 'DELIVERY_FAILED'
+export type ContactApiErrorCode = 'INVALID_BODY' | 'VALIDATION_FAILED' | 'DELIVERY_UNAVAILABLE' | 'DELIVERY_FAILED'
 
 export type ContactApiResponse =
   | { ok: true }
@@ -13,5 +13,7 @@ export type ContactApiResponse =
         message: string
         fieldErrors?: ContactRequestFieldErrors
         formErrors?: string[]
+        /** Studio address the visitor can write to instead, sent with DELIVERY_UNAVAILABLE when known. */
+        fallbackEmail?: string
       }
     }

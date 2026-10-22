@@ -103,6 +103,35 @@ describe('ProjectSchema', () => {
     expect(ProjectSchema.safeParse({ ...validProject, beforeImage }).success).toBe(false)
   })
 
+  it('keeps the after image of the before/after pair', () => {
+    const project = ProjectSchema.parse({
+      ...validProject,
+      beforeImage: { src: '/images/prima.jpg', alt: 'Il soggiorno prima dei lavori' },
+      afterImage: { src: '/images/dopo.jpg', alt: 'Il soggiorno dopo i lavori' },
+    })
+
+    expect(project.afterImage?.alt).toBe('Il soggiorno dopo i lavori')
+  })
+
+  it('requires alt text on the after image', () => {
+    const afterImage = { src: '/images/dopo.jpg', alt: '' }
+    expect(ProjectSchema.safeParse({ ...validProject, afterImage }).success).toBe(false)
+  })
+
+  it('keeps caption and tag on gallery images', () => {
+    const project = ProjectSchema.parse({
+      ...validProject,
+      gallery: [{ src: '/images/a.jpg', alt: 'Cantiere', caption: 'I lavori, seguiti ogni settimana', tag: 'CANTIERE' }],
+    })
+
+    expect(project.gallery[0]).toMatchObject({ caption: 'I lavori, seguiti ogni settimana', tag: 'CANTIERE' })
+  })
+
+  it('rejects an empty gallery tag', () => {
+    const gallery = [{ src: '/images/a.jpg', alt: 'Cantiere', tag: '' }]
+    expect(ProjectSchema.safeParse({ ...validProject, gallery }).success).toBe(false)
+  })
+
   it('requires alt text on gallery images', () => {
     const gallery = [{ src: '/images/a.jpg' }]
     expect(ProjectSchema.safeParse({ ...validProject, gallery }).success).toBe(false)

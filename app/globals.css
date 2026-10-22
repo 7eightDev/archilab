@@ -7,19 +7,12 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
-  --font-display: var(--font-fraunces);
-  --font-heading: var(--font-fraunces);
-  --color-cream: var(--cream);
-  --color-linen: var(--linen);
-  --color-navy: var(--navy);
-  --color-slate: var(--slate);
-  --color-rule: var(--rule);
-  --color-terracotta: var(--terracotta);
-  --color-terracotta-ink: var(--terracotta-ink);
-  --color-teal: var(--teal);
-  --color-teal-ink: var(--teal-ink);
-  --color-error: var(--error);
+  --font-sans: var(--font-montserrat);
+  --font-heading: var(--font-oswald);
+  --color-ottone: var(--ottone);
+  --color-rame: var(--rame);
+  --color-petrolio-3: var(--petrolio-3);
+  --color-testo-3: var(--testo-3);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -59,88 +52,58 @@
 }
 
 :root {
-  /*
-   * Brand palette. The pure brand hues (terracotta, teal) fall below 4.5:1 on cream,
-   * so text and filled controls use the darker "-ink" shades; the pure hues are kept
-   * for rules, graphics and large type.
-   */
-  --cream: #faf6f0;
-  --linen: #f2ebe1; /* alternate section background */
-  --navy: #1c2b3a; /* text and structure */
-  --slate: #4a5866; /* secondary text, 6.7:1 on cream */
-  --rule: #d8cdbf; /* hairlines and input borders on light grounds */
-  --terracotta: #b5651d; /* accents, graphics */
-  --terracotta-ink: #97511a; /* labels, 5.5:1 on cream */
-  --teal: #088db5; /* CTA and link hue */
-  --teal-ink: #066f8f; /* CTA fill and link text, 5.2:1 on cream */
-  --error: #a3341f;
+  /* Archilab palette: a dark-only site on the brand petrolio (see design_handoff_archilab_sito/README.md). */
+  --petrolio: #0a3947; /* main background */
+  --petrolio-2: #123847; /* alternate bands, image slots */
+  --petrolio-3: #0b2530; /* footer */
+  --linea: #1e4f61; /* borders and dividers */
+  --linea-forte: #5e7f8c; /* input borders, title block, secondary buttons */
+  --testo: #f6f2eb; /* main text, primary button fill */
+  --testo-2: #c9d6db; /* secondary paragraphs, captions */
+  --testo-3: #e4ecee; /* hero subtitle */
+  --ottone: #bc9a62; /* accent: section numbers, kickers, rules, highlighted words */
+  --rame: #a0603e; /* logo only */
+  --errore: #f2c4a8; /* error messages and borders */
 
-  --background: var(--cream);
-  --foreground: var(--navy);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: var(--teal-ink);
-  --primary-foreground: var(--cream);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: var(--error);
-  --border: var(--rule);
-  --input: var(--slate);
-  --ring: var(--teal);
+  --background: var(--petrolio);
+  --foreground: var(--testo);
+  --card: var(--petrolio-2);
+  --card-foreground: var(--testo);
+  --popover: var(--petrolio-2);
+  --popover-foreground: var(--testo);
+  --primary: var(--testo);
+  --primary-foreground: var(--petrolio-2);
+  --secondary: var(--petrolio-2);
+  --secondary-foreground: var(--testo);
+  --muted: var(--petrolio-2);
+  --muted-foreground: var(--testo-2);
+  --accent: var(--ottone);
+  --accent-foreground: var(--petrolio-2);
+  --destructive: var(--errore);
+  --border: var(--linea);
+  --input: var(--linea-forte);
+  --ring: var(--testo);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
-  --radius: 0.25rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --radius: 0;
+  --sidebar: var(--petrolio-2);
+  --sidebar-foreground: var(--testo);
+  --sidebar-primary: var(--testo);
+  --sidebar-primary-foreground: var(--petrolio-2);
+  --sidebar-accent: var(--linea);
+  --sidebar-accent-foreground: var(--testo);
+  --sidebar-border: var(--linea);
+  --sidebar-ring: var(--testo);
+  --header-height: 4rem;
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+@media (min-width: 640px) {
+  :root {
+    --header-height: 4.5rem;
+  }
 }
 
 @layer base {
@@ -153,14 +116,14 @@
   html {
     @apply font-sans;
     scroll-behavior: smooth;
-    caret-color: var(--teal-ink);
+    scroll-padding-top: var(--header-height);
   }
   ::selection {
-    background: color-mix(in oklab, var(--teal) 22%, var(--cream));
-    color: var(--navy);
+    background: var(--ottone);
+    color: var(--petrolio-2);
   }
   :focus-visible {
-    outline: 2px solid var(--teal-ink);
+    outline: 2px solid var(--testo);
     outline-offset: 3px;
   }
   h1,
@@ -174,6 +137,11 @@
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0s !important;
     }
   }
 }

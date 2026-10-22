@@ -23,6 +23,8 @@ afterEach(() => jest.restoreAllMocks())
 
 describe('POST /api/contact', () => {
   it('accepts a valid request', async () => {
+    jest.spyOn(submitContactRequest, 'execute').mockResolvedValue({ ok: true })
+
     const response = await post(JSON.stringify(validRequest))
 
     expect(response.status).toBe(200)
@@ -30,7 +32,7 @@ describe('POST /api/contact', () => {
   })
 
   it('hands the parsed body to the use case', async () => {
-    const execute = jest.spyOn(submitContactRequest, 'execute')
+    const execute = jest.spyOn(submitContactRequest, 'execute').mockResolvedValue({ ok: true })
 
     await post(JSON.stringify(validRequest))
 
@@ -44,8 +46,8 @@ describe('POST /api/contact', () => {
     const body = await response.json()
     expect(body.ok).toBe(false)
     expect(body.error.code).toBe('VALIDATION_FAILED')
-    expect(body.error.fieldErrors.email).toEqual(['Indirizzo email non valido'])
-    expect(body.error.fieldErrors.privacyConsent).toEqual(["Devi accettare l'informativa sulla privacy"])
+    expect(body.error.fieldErrors.email).toEqual(['Indirizzo email non valido: controlla che sia completo'])
+    expect(body.error.fieldErrors.privacyConsent).toEqual(['Serve il tuo consenso per poterti ricontattare'])
   })
 
   it.each(['non è json', '"una stringa"', '[]', 'null'])('rejects a body that is not a JSON object (%p) with 400', async (body) => {
@@ -65,5 +67,38 @@ describe('POST /api/contact', () => {
     const body = await response.json()
     expect(body.error.code).toBe('DELIVERY_FAILED')
     expect(JSON.stringify(body)).not.toContain('SMTP')
+  })
+
+  describe('while delivery is not configured', () => {
+    const originalEmail = process.env.CONTACT_EMAIL
+    afterEach(() => {
+      process.env.CONTACT_EMAIL = originalEmail
+    })
+
+    it('tells the visitor the message did not leave, with 503', async () => {
+      const response = await post(JSON.stringify(validRequest))
+
+      expect(response.status).toBe(503)
+      const body = await response.json()
+      expect(body.error.code).toBe('DELIVERY_UNAVAILABLE')
+      expect(body.error.message).toMatch(/non è partito/)
+    })
+
+    it('offers the studio address when one is configured', async () => {
+      process.env.CONTACT_EMAIL = 'studio@example.com'
+
+      const body = await (await post(JSON.stringify(validRequest))).json()
+
+      expect(body.error.fallbackEmail).toBe('studio@example.com')
+    })
+
+    it('sends no address when none is configured', async () => {
+      delete process.env.CONTACT_EMAIL
+
+      const body = await (await post(JSON.stringify(validRequest))).json()
+
+      expect(body.error).not.toHaveProperty('fallbackEmail')
+      expect(body.error.message).toMatch(/Riprova tra qualche giorno/)
+    })
   })
 })

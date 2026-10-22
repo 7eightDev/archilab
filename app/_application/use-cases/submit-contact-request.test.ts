@@ -39,8 +39,8 @@ describe('SubmitContactRequest', () => {
     expect(repository.saved).toEqual([])
     expect(result.ok).toBe(false)
     if (result.ok) return
-    expect(result.fieldErrors.email).toEqual(['Indirizzo email non valido'])
-    expect(result.fieldErrors.privacyConsent).toEqual(["Devi accettare l'informativa sulla privacy"])
+    expect(result.fieldErrors.email).toEqual(['Indirizzo email non valido: controlla che sia completo'])
+    expect(result.fieldErrors.privacyConsent).toEqual(['Serve il tuo consenso per poterti ricontattare'])
     expect(result.fieldErrors.name).toBeUndefined()
   })
 

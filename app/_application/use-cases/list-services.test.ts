@@ -15,7 +15,7 @@ class InMemoryServiceRepository implements ServiceRepository {
 }
 
 function makeService(id: string, order: number): Service {
-  return { id, slug: id, title: id, description: `Descrizione ${id}`, order }
+  return { id, slug: id, title: id, description: `Descrizione ${id}`, items: [], order }
 }
 
 describe('ListServices', () => {
