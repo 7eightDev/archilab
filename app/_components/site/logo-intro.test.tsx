@@ -1,5 +1,5 @@
 import { act, fireEvent, render } from '@testing-library/react'
-import { INTRO_FLY_AT_MS, INTRO_STORAGE_KEY, LogoIntro } from './logo-intro'
+import { INTRO_FADE_AT_MS, INTRO_STORAGE_KEY, LogoIntro } from './logo-intro'
 
 function mockReducedMotion(reduce: boolean) {
   window.matchMedia = jest.fn().mockReturnValue({ matches: reduce, addEventListener: jest.fn(), removeEventListener: jest.fn() })
@@ -26,10 +26,10 @@ describe('LogoIntro', () => {
     expect(overlay()).toHaveAttribute('aria-hidden', 'true')
   })
 
-  it('hands over to the header once the logo is drawn and remembers the visit', () => {
+  it('fades away once the logo is drawn and remembers the visit', () => {
     render(<LogoIntro />)
 
-    act(() => jest.advanceTimersByTime(INTRO_FLY_AT_MS))
+    act(() => jest.advanceTimersByTime(INTRO_FADE_AT_MS))
 
     expect(overlay()).not.toBeInTheDocument()
     expect(document.documentElement).not.toHaveAttribute('data-intro')

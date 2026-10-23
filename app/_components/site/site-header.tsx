@@ -51,8 +51,7 @@ export function SiteHeader({ links }: { links: NavLink[] }) {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background">
       <div className={`${containerClass} flex min-h-[var(--header-height)] items-center justify-between gap-6`}>
-        {/* data-intro-target: where the first-visit intro lands the mark (logo-intro.tsx). */}
-        <a href="#top" aria-label="Archilab, torna all'inizio" data-intro-target className="flex items-center py-2">
+        <a href="#top" aria-label="Archilab, torna all'inizio" className="flex items-center py-2">
           <Logo className="h-10 w-auto sm:h-[52px]" />
         </a>
         <nav aria-label="Principale" className="flex items-center gap-7">
