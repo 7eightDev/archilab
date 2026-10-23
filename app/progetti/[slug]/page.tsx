@@ -40,7 +40,7 @@ export default async function ProjectPage({ params }: PageProps<'/progetti/[slug
     <>
       <ProjectDetail project={project} services={services} previous={previous} next={next} related={related} />
       <ClosingCta
-        title={project.category === 'ristrutturazione' ? 'Hai una casa da ripensare? Scrivimi.' : 'Hai un progetto simile? Scrivimi.'}
+        title={project.category === 'ristrutturazione' ? 'Hai una casa da ripensare?' : 'Hai un progetto simile?'}
       />
     </>
   )

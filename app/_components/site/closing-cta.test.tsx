@@ -10,7 +10,7 @@ jest.mock('@/app/_actions/submit-contact-form', () => ({ submitContactForm: jest
 function renderCta() {
   return render(
     <ContactDrawerProvider>
-      <ClosingCta title="Hai un progetto simile? Scrivimi." />
+      <ClosingCta title="Hai un progetto simile?" />
     </ContactDrawerProvider>,
   )
 }

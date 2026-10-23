@@ -117,7 +117,7 @@ export default function ProjectsPage({ searchParams }: { searchParams: SearchPar
           <ProjectsList searchParams={searchParams} />
         </Suspense>
       </div>
-      <ClosingCta title="Hai un progetto simile? Scrivimi." />
+      <ClosingCta title="Hai un progetto simile?" />
     </>
   )
 }
