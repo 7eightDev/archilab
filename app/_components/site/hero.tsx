@@ -3,12 +3,16 @@
 import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react'
 import Image from 'next/image'
 import { useRef, useState } from 'react'
+import Crosshair from '@/app/_components/ui/crosshair'
 import type { HeroSlide } from './content'
 import { pad } from './format'
 import { ctaLinkClass, textLinkClass } from './link-styles'
 import { containerClass, screenHeightClass } from './section-heading'
 
 const SWIPE_THRESHOLD_PX = 50
+
+// Hex of --ottone: the canvas cannot resolve CSS variables.
+const CROSSHAIR_COLOR = '#bc9a62'
 
 const carouselButtonClass =
   'flex size-11 cursor-pointer items-center justify-center border border-input transition-colors hover:border-foreground'
@@ -18,11 +22,13 @@ const carouselButtonClass =
 export function Hero({ slides, showProjectLink }: { slides: HeroSlide[]; showProjectLink: boolean }) {
   const [index, setIndex] = useState(0)
   const touchStartX = useRef<number | null>(null)
+  const sectionRef = useRef<HTMLElement>(null)
   const slide = slides[index]
   const go = (step: number) => setIndex((current) => (current + step + slides.length) % slides.length)
 
   return (
     <section
+      ref={sectionRef}
       id="top"
       aria-label="Apertura"
       aria-roledescription="carosello"
@@ -57,6 +63,15 @@ export function Hero({ slides, showProjectLink }: { slides: HeroSlide[]; showPro
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(10,57,71,.92)_0%,rgba(10,57,71,.7)_45%,rgba(10,57,71,.25)_100%)] mask-[linear-gradient(to_bottom,#000_80%,transparent_96%)] max-sm:bg-[linear-gradient(180deg,rgba(10,57,71,.55)_0%,rgba(10,57,71,.85)_55%,rgba(10,57,71,.95)_100%)]"
+      />
+      {/* Drafting-table crosshair: drawn under the content (z-10) so it never covers text or the sticky header. */}
+      <Crosshair
+        containerRef={sectionRef}
+        color={CROSSHAIR_COLOR}
+        opacity={0.6}
+        fade={0.6}
+        smoothing={0.35}
+        style={{ zIndex: 5 }}
       />
 
       <div className={`${containerClass} relative z-10 flex flex-col justify-between gap-10 pt-12 pb-14 lg:gap-12`}>
