@@ -1,7 +1,7 @@
 'use client'
 
 import { ArrowRightIcon, MenuIcon, XIcon } from 'lucide-react'
-import { useEffect, useId, useRef, useState } from 'react'
+import { type ReactNode, useEffect, useId, useRef, useState } from 'react'
 import { studio } from './content'
 import { Logo } from './logo'
 import { containerClass } from './section-heading'
@@ -9,7 +9,16 @@ import { containerClass } from './section-heading'
 export interface NavLink {
   href: string
   label: string
+  current?: boolean
 }
+
+export type ContactSlot = (props: { className: string; onClick?: () => void; children: ReactNode }) => ReactNode
+
+const defaultContact: ContactSlot = ({ className, onClick, children }) => (
+  <a href="#contatti" onClick={onClick} className={className}>
+    {children}
+  </a>
+)
 
 const contactButtonClass =
   'inline-flex min-h-11 items-center bg-primary px-3.5 text-[13px] font-medium tracking-[.08em] text-primary-foreground transition-colors hover:bg-white'
@@ -18,8 +27,17 @@ const navLinkClass = 'py-3 font-heading text-[13px] tracking-[.16em] transition-
 /**
  * Sticky header. From 1024px the section links sit in the bar; below that they move into a
  * menu that covers the whole viewport under the header, with "Contattami" and WhatsApp at the end.
+ * `contact` renders both "Contattami" controls, so the project pages can open the drawer instead.
  */
-export function SiteHeader({ links }: { links: NavLink[] }) {
+export function SiteHeader({
+  links,
+  homeHref = '#top',
+  contact = defaultContact,
+}: {
+  links: NavLink[]
+  homeHref?: string
+  contact?: ContactSlot
+}) {
   const [open, setOpen] = useState(false)
   const menuId = useId()
   const toggleRef = useRef<HTMLButtonElement>(null)
@@ -51,22 +69,24 @@ export function SiteHeader({ links }: { links: NavLink[] }) {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background">
       <div className={`${containerClass} flex min-h-[var(--header-height)] items-center justify-between gap-6`}>
-        <a href="#top" aria-label="Archilab, torna all'inizio" className="flex items-center py-2">
+        <a href={homeHref} aria-label="Archilab, torna all'inizio" className="flex items-center py-2">
           <Logo className="h-10 w-auto sm:h-[52px]" />
         </a>
         <nav aria-label="Principale" className="flex items-center gap-7">
           <ul className="hidden gap-7 lg:flex">
             {links.map((link) => (
               <li key={link.href}>
-                <a href={link.href} className={navLinkClass}>
+                <a
+                  href={link.href}
+                  aria-current={link.current ? 'page' : undefined}
+                  className={`${navLinkClass} ${link.current ? 'text-ottone' : ''}`}
+                >
                   {link.label.toUpperCase()}
                 </a>
               </li>
             ))}
           </ul>
-          <a href="#contatti" className={`${contactButtonClass} max-sm:hidden`}>
-            Contattami
-          </a>
+          {contact({ className: `${contactButtonClass} max-sm:hidden`, children: 'Contattami' })}
           <button
             ref={toggleRef}
             type="button"
@@ -93,7 +113,8 @@ export function SiteHeader({ links }: { links: NavLink[] }) {
                 <a
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="flex min-h-18 items-center justify-between font-heading text-[28px] font-light tracking-[.16em] transition-colors hover:text-ottone"
+                  aria-current={link.current ? 'page' : undefined}
+                  className={`flex min-h-18 items-center justify-between font-heading text-[28px] font-light tracking-[.16em] transition-colors hover:text-ottone ${link.current ? 'text-ottone' : ''}`}
                 >
                   {link.label.toUpperCase()}
                   <ArrowRightIcon aria-hidden className="size-5 text-ottone" />
@@ -102,13 +123,12 @@ export function SiteHeader({ links }: { links: NavLink[] }) {
             ))}
           </ul>
           <div className="grid gap-3 sm:grid-cols-2">
-            <a
-              href="#contatti"
-              onClick={() => setOpen(false)}
-              className="flex min-h-13 items-center justify-center bg-primary text-[15px] font-medium tracking-[.04em] text-primary-foreground transition-colors hover:bg-white"
-            >
-              Contattami
-            </a>
+            {contact({
+              className:
+                'flex min-h-13 items-center justify-center bg-primary text-[15px] font-medium tracking-[.04em] text-primary-foreground transition-colors hover:bg-white',
+              onClick: () => setOpen(false),
+              children: 'Contattami',
+            })}
             <a
               href={studio.whatsappHref}
               target="_blank"
