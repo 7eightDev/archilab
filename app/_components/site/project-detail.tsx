@@ -26,13 +26,6 @@ function SectionTitle({ title, accent }: { title: string; accent: string }) {
   )
 }
 
-/** "Passa sopra una fase…" when some phase has a description to uncover, otherwise the number of photos. */
-function phasesHint(project: Project): string {
-  const { gallery } = project
-  if (gallery.some((image) => image.description)) return 'Passa sopra una fase per leggere com’è andata.'
-  return gallery.length === 1 ? '1 immagine' : `${gallery.length} immagini`
-}
-
 /** Says whether "Altri progetti" are all of the same category, or filled up with recent ones. */
 function relatedNote(project: Project, related: Project[]): string {
   const category = categoryLabels[project.category]
@@ -139,7 +132,10 @@ export function ProjectDetail({ project, services, previous, next, related }: Pr
             <h2 id="fasi-title" className={sectionTitleClass}>
               LE <span className="text-ottone">FASI</span>
             </h2>
-            <span className="text-[13px] text-muted-foreground max-lg:hidden">{phasesHint(project)}</span>
+            {/* Only when some phase has a description to uncover. */}
+            {project.gallery.some((image) => image.description) && (
+              <span className="text-[13px] text-muted-foreground max-lg:hidden">Passa sopra una fase per leggere com’è andata.</span>
+            )}
           </div>
           <div className="mx-auto w-full max-w-[1440px] px-6 lg:px-0">
             <PhaseStrip images={project.gallery} />
@@ -157,7 +153,6 @@ export function ProjectDetail({ project, services, previous, next, related }: Pr
               <p className="text-[15px] leading-[1.6] text-muted-foreground lg:text-[17px]">
                 Stesso punto di vista, prima del cantiere e il giorno della consegna.
               </p>
-              <span className="text-[13px] text-muted-foreground max-lg:hidden">Trascina il cursore per confrontare.</span>
             </div>
             <BeforeAfter before={beforeImage} after={afterImage} />
           </div>

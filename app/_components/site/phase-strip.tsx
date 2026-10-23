@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import type { GalleryImage } from '@/app/_domain/entities/shared'
 import { microLabelClass } from './section-heading'
 
@@ -13,29 +13,49 @@ const photoHeightClass = {
 
 /**
  * The project's phases, from one to eight photos. Phones: a vertical timeline · tablet: two columns ·
- * desktop: one row whose hovered or focused column widens and lifts its description over the photo.
+ * desktop: one row whose hovered or focused column widens and slides its description over the photo from the right.
  */
 export function PhaseStrip({ images, height = 'detail' }: { images: GalleryImage[]; height?: 'detail' | 'home' }) {
   const [active, setActive] = useState<number | null>(null)
+  // Desktop: while a phase is open the strip keeps its resting height. The narrowed neighbours rewrap their captions
+  // onto an extra line, which would otherwise push the rest of the page down; those lines spill into the gap below.
+  const [lockedHeight, setLockedHeight] = useState<number>()
+  const stripRef = useRef<HTMLDivElement>(null)
   if (images.length === 0) return null
+
+  const open = (index: number) => {
+    if (active === null && stripRef.current && window.matchMedia?.('(min-width: 1024px)').matches) {
+      setLockedHeight(stripRef.current.offsetHeight)
+    }
+    setActive(index)
+  }
+  const close = () => {
+    setActive(null)
+    setLockedHeight(undefined)
+  }
 
   const few = images.length <= 2
   const activeGrow = few ? 1.4 : 2.2
   const heightClass = photoHeightClass[height][few ? 'few' : 'many']
 
   return (
-    <div className="grid gap-y-10 sm:grid-cols-2 sm:gap-x-6 lg:flex lg:gap-0 lg:pt-1.5" onMouseLeave={() => setActive(null)}>
+    <div
+      ref={stripRef}
+      style={lockedHeight ? { height: lockedHeight } : undefined}
+      className="grid gap-y-10 sm:grid-cols-2 sm:gap-x-6 lg:flex lg:gap-0 lg:pt-1.5"
+      onMouseLeave={close}
+    >
       {images.map((image, index) => (
         <figure
           key={`${image.src}-${index}`}
           data-active={active === index}
           // Focusable when it has a description, so the keyboard can open it too.
           tabIndex={image.description ? 0 : undefined}
-          onMouseEnter={() => setActive(index)}
-          onFocus={() => setActive(index)}
-          onBlur={() => setActive(null)}
+          onMouseEnter={() => open(index)}
+          onFocus={() => open(index)}
+          onBlur={close}
           style={{ flexGrow: active === index ? activeGrow : 1 }}
-          className="group relative grid outline-none max-sm:border-l max-sm:border-ottone max-sm:pl-5 focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-inset lg:min-w-0 lg:basis-0 lg:grid-rows-[56px_auto_auto] lg:border-r lg:border-background motion-safe:lg:transition-[flex-grow] motion-safe:lg:duration-450 motion-safe:lg:ease-in-out"
+          className="group relative grid outline-none max-sm:border-l max-sm:border-ottone max-sm:pl-5 focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-inset lg:min-w-0 lg:basis-0 lg:grid-rows-[56px_auto_1fr] lg:border-r lg:border-background motion-safe:lg:transition-[flex-grow] motion-safe:lg:duration-450 motion-safe:lg:ease-in-out"
         >
           <div className="relative pb-4 sm:h-14 sm:border-t sm:border-ottone sm:px-4 sm:pt-[22px] sm:pb-0">
             <span
@@ -59,10 +79,12 @@ export function PhaseStrip({ images, height = 'detail' }: { images: GalleryImage
             </figcaption>
           )}
           {image.description && (
-            // Desktop: clipped to its own height in the photo's cell and slid out of view until the phase is active,
-            // so it stays in the document for screen readers. Elsewhere it simply follows the caption.
-            <div className="relative z-10 lg:col-start-1 lg:row-start-2 lg:self-end lg:overflow-hidden">
-              <p className="pt-2 text-[15px] leading-[1.55] text-testo-3 sm:px-4 lg:translate-y-full lg:border-t lg:border-border lg:bg-background lg:px-[22px] lg:pt-[22px] lg:pb-6 motion-safe:lg:transition-transform motion-safe:lg:duration-450 motion-safe:lg:ease-in-out lg:group-data-[active=true]:translate-y-0">
+            // Desktop: a full-height drawer, two thirds of the photo wide, clipped to the photo's cell and slid in from
+            // the right once the phase is active, so it stays in the document for screen readers. Translucent petrolio
+            // plus blur keeps the text legible over any photo. Absolute, so its text never stretches the photo's row and
+            // pushes the caption down. Elsewhere it simply follows the caption.
+            <div className="relative z-10 lg:col-start-1 lg:row-start-2 lg:overflow-hidden">
+              <p className="pt-2 text-[15px] leading-[1.55] text-testo-3 sm:px-4 lg:absolute lg:inset-y-0 lg:right-0 lg:flex lg:w-2/3 lg:translate-x-full lg:flex-col lg:justify-end lg:border-l lg:border-ottone/50 lg:bg-[rgba(10,57,71,.7)] lg:px-[22px] lg:pt-[22px] lg:pb-8 lg:text-foreground lg:backdrop-blur-md motion-safe:lg:transition-transform motion-safe:lg:duration-450 motion-safe:lg:ease-out lg:group-data-[active=true]:translate-x-0 motion-safe:lg:group-data-[active=true]:delay-150">
                 {image.description}
               </p>
             </div>

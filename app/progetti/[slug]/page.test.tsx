@@ -110,13 +110,11 @@ describe('ProjectPage', () => {
     expect(screen.getByText('Pubblico e altri progetti recenti')).toBeInTheDocument()
   })
 
-  it('hints at the phase descriptions only when there are some', async () => {
-    const { unmount } = await renderProject('appartamento-fondi')
-    expect(screen.getByText('Passa sopra una fase per leggere com’è andata.')).toBeInTheDocument()
-    unmount()
-
+  it('hints at the phase descriptions, without counting the photos', async () => {
     await renderProject('cucina-monte-san-biagio')
-    expect(screen.getByText('2 immagini')).toBeInTheDocument()
+
+    expect(screen.getByText('Passa sopra una fase per leggere com’è andata.')).toBeInTheDocument()
+    expect(screen.queryByText('2 immagini')).not.toBeInTheDocument()
   })
 
   it('calls notFound for an unknown slug', async () => {
