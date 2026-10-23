@@ -6,12 +6,12 @@ import { useRef, useState } from 'react'
 import type { HeroSlide } from './content'
 import { pad } from './format'
 import { ctaLinkClass, textLinkClass } from './link-styles'
-import { containerClass } from './section-heading'
+import { containerClass, screenHeightClass } from './section-heading'
 
 const SWIPE_THRESHOLD_PX = 50
 
 const carouselButtonClass =
-  'flex size-11 items-center justify-center border border-input transition-colors hover:border-foreground'
+  'flex size-11 cursor-pointer items-center justify-center border border-input transition-colors hover:border-foreground'
 
 
 /** Full-bleed opening: three photos that cross-fade, with the studio's promise over them. */
@@ -26,7 +26,7 @@ export function Hero({ slides, showProjectLink }: { slides: HeroSlide[]; showPro
       id="top"
       aria-label="Apertura"
       aria-roledescription="carosello"
-      className="relative flex min-h-[88svh] overflow-hidden bg-background sm:min-h-[min(88vh,780px)]"
+      className={`${screenHeightClass} relative flex overflow-hidden bg-background`}
       onTouchStart={(event) => {
         touchStartX.current = event.touches[0].clientX
       }}

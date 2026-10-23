@@ -1,11 +1,11 @@
 import { methodSteps } from './content'
 import { pad } from './format'
-import { SectionHeading, SectionLead, containerClass } from './section-heading'
+import { SectionHeading, SectionLead, containerClass, screenSectionClass } from './section-heading'
 
 /** 04 Come lavoro: four numbered steps on the alternate band. */
 export function Method() {
   return (
-    <section id="metodo" aria-labelledby="metodo-title" className="border-t border-border bg-secondary">
+    <section id="metodo" aria-labelledby="metodo-title" className={`${screenSectionClass} border-t border-border bg-secondary`}>
       <div className={`${containerClass} py-16 sm:py-24`}>
         <SectionHeading id="metodo-title" number="04" title="Come" accent="Lavoro">
           <SectionLead>Se sei all’inizio va benissimo: si parte da una chiacchierata.</SectionLead>

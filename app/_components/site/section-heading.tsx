@@ -43,3 +43,9 @@ export const microLabelClass = 'text-[11px] leading-none font-medium tracking-[.
 
 /** 1200px column with the 24px gutter used by every section. */
 export const containerClass = 'mx-auto w-full max-w-[1200px] px-6'
+
+/** At least one screen tall below the sticky header. */
+export const screenHeightClass = 'min-h-[calc(100svh-var(--header-height))]'
+
+/** Full-screen section whose content sits in the vertical middle. */
+export const screenSectionClass = `${screenHeightClass} flex flex-col justify-center`

@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { studio } from './content'
-import { SectionHeading, containerClass } from './section-heading'
+import { SectionHeading, containerClass, screenSectionClass } from './section-heading'
 
 /** 01 Lo studio: who Maria is, with her portrait once the studio provides it. */
 export function Studio() {
@@ -28,7 +28,7 @@ export function Studio() {
   )
 
   return (
-    <section id="studio" aria-labelledby="studio-title" className={`${containerClass} relative pt-16 pb-16 sm:pt-28 sm:pb-24`}>
+    <section id="studio" aria-labelledby="studio-title" className={`${containerClass} ${screenSectionClass} relative pt-16 pb-16 sm:pt-28 sm:pb-24`}>
       <SectionHeading id="studio-title" number="01" title="Lo" accent="Studio" className="sm:mb-16" />
       {portrait ? (
         <div className="grid items-start gap-x-8 gap-y-12 lg:grid-cols-12">

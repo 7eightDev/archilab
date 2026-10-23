@@ -1,11 +1,11 @@
 import type { Service } from '@/app/_domain/entities/service'
 import { phases } from './content'
-import { SectionHeading, SectionLead, containerClass } from './section-heading'
+import { SectionHeading, SectionLead, containerClass, screenSectionClass } from './section-heading'
 
 /** 02 Un solo percorso: the five phases on a brass line, then one column per area. */
 export function ServicesPath({ services }: { services: Service[] }) {
   return (
-    <section id="servizi" aria-labelledby="servizi-title" className={`${containerClass} relative pt-8 pb-16 sm:pt-16 sm:pb-28`}>
+    <section id="servizi" aria-labelledby="servizi-title" className={`${containerClass} ${screenSectionClass} relative pt-8 pb-16 sm:pt-16 sm:pb-28`}>
       <SectionHeading id="servizi-title" number="02" title="Un solo" accent="Percorso">
         <SectionLead>Tre competenze, un unico incarico. Ogni fase passa dalle stesse mani.</SectionLead>
       </SectionHeading>
@@ -24,11 +24,12 @@ export function ServicesPath({ services }: { services: Service[] }) {
         ))}
       </ol>
 
+      {/* Each card spans three subgrid rows (title, description, list) so the lists line up across columns. */}
       <div className="grid border-t border-border sm:grid-cols-2 sm:gap-x-8 lg:grid-cols-3 lg:gap-x-0">
         {services.map((service) => (
           <article
             key={service.id}
-            className="flex flex-col gap-3.5 border-b border-border py-8 sm:last:odd:col-span-2 lg:pr-7 lg:last:odd:col-span-1"
+            className="row-span-3 grid grid-rows-subgrid gap-y-3.5 border-b border-border py-8 sm:last:odd:col-span-2 lg:pr-7 lg:last:odd:col-span-1"
           >
             <h3 className="font-heading text-[28px] leading-[1.1] tracking-[.04em]">{service.title}</h3>
             <p className="text-base leading-[1.6] text-muted-foreground">{service.description}</p>

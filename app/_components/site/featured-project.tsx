@@ -2,7 +2,7 @@ import Image from 'next/image'
 import type { Project } from '@/app/_domain/entities/project'
 import type { Service } from '@/app/_domain/entities/service'
 import { BeforeAfter } from './before-after'
-import { SectionHeading, SectionLead, containerClass, microLabelClass } from './section-heading'
+import { SectionHeading, SectionLead, containerClass, microLabelClass, screenSectionClass } from './section-heading'
 
 /** Title block entries ("cartiglio") derived from the project; missing data leaves its cell out. */
 function technicalSheet(project: Project, services: Service[]) {
@@ -24,7 +24,7 @@ export function FeaturedProject({ project, services }: { project: Project; servi
   const { beforeImage, afterImage } = project
 
   return (
-    <section id="progetti" aria-labelledby="progetti-title" className="pb-16 sm:pb-28">
+    <section id="progetti" aria-labelledby="progetti-title" className={`${screenSectionClass} pb-16 sm:pb-28`}>
       <SectionHeading id="progetti-title" number="03" title="Il" accent="Progetto" className={`${containerClass} pt-16 sm:mb-12`}>
         <SectionLead display>{project.title}</SectionLead>
       </SectionHeading>

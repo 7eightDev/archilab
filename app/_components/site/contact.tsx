@@ -1,7 +1,7 @@
 import { ArrowRightIcon } from 'lucide-react'
 import { ContactForm } from './contact-form'
 import { studio } from './content'
-import { SectionHeading, SectionLead, containerClass, microLabelClass } from './section-heading'
+import { SectionHeading, SectionLead, containerClass, microLabelClass, screenSectionClass } from './section-heading'
 
 const labelClass = `${microLabelClass} mb-1.5`
 /** Contact links without underline: they brighten to brass on hover instead. */
@@ -12,7 +12,7 @@ const valueLinkClass = `${plainLinkClass} -my-2.5 py-2.5`
 /** 05 Scrivimi: studio details beside the contact form (stacked below 1024px). */
 export function Contact() {
   return (
-    <section id="contatti" aria-labelledby="contatti-title" className="border-t border-border">
+    <section id="contatti" aria-labelledby="contatti-title" className={`${screenSectionClass} border-t border-border`}>
       <div className={`${containerClass} pt-16 pb-16 sm:pt-28 sm:pb-24`}>
         <SectionHeading id="contatti-title" number="05" title="Scrivi" accent="mi" joiner="">
           <SectionLead display>Scrivimi due righe, anche se l’idea è ancora confusa.</SectionLead>
