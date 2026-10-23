@@ -35,7 +35,7 @@ export function PhaseStrip({ images, height = 'detail' }: { images: GalleryImage
           onFocus={() => setActive(index)}
           onBlur={() => setActive(null)}
           style={{ flexGrow: active === index ? activeGrow : 1 }}
-          className="group relative grid outline-none max-sm:border-l max-sm:border-ottone max-sm:pl-5 focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-inset lg:min-w-0 lg:basis-0 lg:grid-rows-[56px_auto_auto] lg:border-r lg:border-background lg:transition-[flex-grow] lg:duration-450 lg:ease-in-out motion-reduce:transition-none"
+          className="group relative grid outline-none max-sm:border-l max-sm:border-ottone max-sm:pl-5 focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-inset lg:min-w-0 lg:basis-0 lg:grid-rows-[56px_auto_auto] lg:border-r lg:border-background motion-safe:lg:transition-[flex-grow] motion-safe:lg:duration-450 motion-safe:lg:ease-in-out"
         >
           <div className="relative pb-4 sm:h-14 sm:border-t sm:border-ottone sm:px-4 sm:pt-[22px] sm:pb-0">
             <span
@@ -62,7 +62,7 @@ export function PhaseStrip({ images, height = 'detail' }: { images: GalleryImage
             // Desktop: clipped to its own height in the photo's cell and slid out of view until the phase is active,
             // so it stays in the document for screen readers. Elsewhere it simply follows the caption.
             <div className="relative z-10 lg:col-start-1 lg:row-start-2 lg:self-end lg:overflow-hidden">
-              <p className="pt-2 text-[15px] leading-[1.55] text-testo-3 sm:px-4 lg:translate-y-full lg:border-t lg:border-border lg:bg-background lg:px-[22px] lg:pt-[22px] lg:pb-6 lg:transition-transform lg:duration-450 lg:ease-in-out lg:group-data-[active=true]:translate-y-0 motion-reduce:transition-none">
+              <p className="pt-2 text-[15px] leading-[1.55] text-testo-3 sm:px-4 lg:translate-y-full lg:border-t lg:border-border lg:bg-background lg:px-[22px] lg:pt-[22px] lg:pb-6 motion-safe:lg:transition-transform motion-safe:lg:duration-450 motion-safe:lg:ease-in-out lg:group-data-[active=true]:translate-y-0">
                 {image.description}
               </p>
             </div>

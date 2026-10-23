@@ -1,5 +1,6 @@
 import { render, screen, within } from '@testing-library/react'
 import { notFound } from 'next/navigation'
+import { MISSING_PROJECT_SLUG } from '../missing-project'
 import ProjectNotFound from './not-found'
 import ProjectPage, { generateMetadata, generateStaticParams, instant } from './page'
 
@@ -27,11 +28,12 @@ describe('route config', () => {
 })
 
 describe('generateStaticParams', () => {
-  it('generates a page for every project', async () => {
+  it('generates a page for every project, and the one the proxy sends unknown slugs to', async () => {
     const params = await generateStaticParams()
 
-    expect(params).toHaveLength(10)
+    expect(params).toHaveLength(11)
     expect(params).toContainEqual({ slug: 'appartamento-fondi' })
+    expect(params).toContainEqual({ slug: MISSING_PROJECT_SLUG })
   })
 })
 

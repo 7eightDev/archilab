@@ -3,15 +3,19 @@ import { notFound } from 'next/navigation'
 import { ClosingCta } from '@/app/_components/site/closing-cta'
 import { ProjectDetail } from '@/app/_components/site/project-detail'
 import { getProject, listProjects, listServices } from '@/app/_infrastructure/container'
+import { MISSING_PROJECT_SLUG } from '../missing-project'
 
-// Everything on the page depends on the slug, and every page is built ahead of time: the navigation
-// waits for it instead of showing a shell, which also keeps a real 404 status for unknown slugs.
+// Everything on the page depends on the slug and every page is built ahead of time, so the navigation
+// waits for the page instead of showing a shell.
 export const instant = false
 
-/** Every project page is built ahead of time. */
+/**
+ * Every project page is built ahead of time, plus the page the proxy sends unknown slugs to: built as a
+ * 404, it answers with that status from the first request.
+ */
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
   const { projects } = await listProjects.execute()
-  return projects.map(({ slug }) => ({ slug }))
+  return [...projects.map(({ slug }) => ({ slug })), { slug: MISSING_PROJECT_SLUG }]
 }
 
 export async function generateMetadata({ params }: PageProps<'/progetti/[slug]'>): Promise<Metadata> {

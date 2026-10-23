@@ -52,4 +52,14 @@ describe('PhaseStrip', () => {
     expect(figures[2]).toHaveAttribute('data-active', 'true')
     expect(figures[0]).toHaveAttribute('data-active', 'false')
   })
+  // Tailwind emits lg: rules after motion-reduce:, so a plain lg:transition would win over transition-none.
+  it('animates the desktop strip only when motion is welcome', () => {
+    render(<PhaseStrip images={makeImages(3)} />)
+
+    const animated = [...document.querySelectorAll('figure'), ...document.querySelectorAll('figure p')]
+    for (const element of animated) {
+      const transitions = element.className.split(' ').filter((name) => /(^|:)transition/.test(name) && !name.includes('transition-none'))
+      for (const name of transitions) expect(name).toMatch(/^motion-safe:/)
+    }
+  })
 })
