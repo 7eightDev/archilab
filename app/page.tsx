@@ -11,7 +11,7 @@ import { ServicesPath } from '@/app/_components/site/services-path'
 import { SiteFooter } from '@/app/_components/site/site-footer'
 import { SiteHeader } from '@/app/_components/site/site-header'
 import { Studio } from '@/app/_components/site/studio'
-import { getFeaturedProject, listHeroProjects, listServices } from '@/app/_infrastructure/container'
+import { getFeaturedProject, listHeroProjects, listProjects, listServices } from '@/app/_infrastructure/container'
 
 // schema.org description of the studio for search engines; extend it as the studio supplies more details.
 const structuredData = (image: string) => ({
@@ -33,17 +33,18 @@ const structuredData = (image: string) => ({
 })
 
 export default async function Home() {
-  const [project, services, heroProjects] = await Promise.all([
+  const [project, services, heroProjects, { total }] = await Promise.all([
     getFeaturedProject.execute(),
     listServices.execute(),
     listHeroProjects.execute(),
+    listProjects.execute(),
   ])
   const slides = heroProjects.map(toHeroSlide)
 
   const links = [
     { href: '#studio', label: 'Studio' },
     ...(services.length > 0 ? [{ href: '#servizi', label: 'Servizi' }] : []),
-    ...(project ? [{ href: '#progetti', label: 'Caso studio' }] : []),
+    { href: '/progetti', label: 'Progetti' },
   ]
 
   return (
@@ -62,7 +63,7 @@ export default async function Home() {
           <Studio />
           {services.length > 0 && <ServicesPath services={services} />}
         </div>
-        {project && <FeaturedProject project={project} services={services} />}
+        {project && <FeaturedProject project={project} services={services} total={total} />}
         <Method />
         <Contact />
       </main>
