@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { Suspense } from 'react'
 import { ClosingCta } from '@/app/_components/site/closing-cta'
 import { FilterChips } from '@/app/_components/site/filter-chips'
@@ -65,9 +66,9 @@ export async function ProjectsList({ searchParams }: { searchParams: SearchParam
         {projects.length === 0 ? (
           <p className="flex flex-col items-center gap-4 py-12 text-center text-[17px] text-muted-foreground">
             Non ci sono ancora progetti in questa categoria.
-            <a href="/progetti" className={textLinkClass}>
+            <Link href="/progetti" className={textLinkClass}>
               Tutti i progetti
-            </a>
+            </Link>
           </p>
         ) : (
           <>

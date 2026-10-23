@@ -1,4 +1,5 @@
 import { ArrowRightIcon } from 'lucide-react'
+import Link from 'next/link'
 import { buttonVariants } from '@/app/_components/ui/button'
 import type { Project } from '@/app/_domain/entities/project'
 import type { Service } from '@/app/_domain/entities/service'
@@ -38,9 +39,9 @@ export function FeaturedProject({ project, services, total }: { project: Project
           <a href={`/progetti/${project.slug}`} className={buttonVariants({ variant: 'outline', size: 'cta' })}>
             Leggi il caso studio <ArrowRightIcon aria-hidden />
           </a>
-          <a href="/progetti" className={`${textLinkClass} text-[15px]`}>
+          <Link href="/progetti" className={`${textLinkClass} text-[15px]`}>
             Tutti i progetti · {total}
-          </a>
+          </Link>
         </div>
       </div>
     </section>
