@@ -37,7 +37,7 @@ export default async function Home() {
   const links = [
     { href: '#studio', label: 'Studio' },
     ...(services.length > 0 ? [{ href: '#servizi', label: 'Servizi' }] : []),
-    ...(project ? [{ href: '#progetti', label: 'Progetti' }] : []),
+    ...(project ? [{ href: '#progetti', label: 'Il progetto' }] : []),
   ]
 
   return (
@@ -50,7 +50,7 @@ export default async function Home() {
       <LogoIntro />
       <SiteHeader links={links} />
       <main className="flex-1">
-        <Hero slides={heroSlides} showProjectLink={project !== null} />
+        <Hero slides={heroSlides} />
         <div className="relative">
           <GridLines />
           <Studio />

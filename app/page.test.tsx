@@ -54,7 +54,6 @@ describe('Home page', () => {
     render(await Home())
 
     expect(screen.queryByRole('region', { name: 'Il Progetto' })).not.toBeInTheDocument()
-    expect(screen.queryByRole('link', { name: 'Guarda un progetto' })).not.toBeInTheDocument()
     expect(document.querySelector('a[href="#progetti"], a[href="#servizi"]')).toBeNull()
   })
 })

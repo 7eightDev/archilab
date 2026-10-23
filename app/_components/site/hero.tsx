@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import Crosshair from '@/app/_components/ui/crosshair';
 import type { HeroSlide } from './content';
 import { pad } from './format';
-import { ctaLinkClass, textLinkClass } from './link-styles';
+import { ctaLinkClass } from './link-styles';
 import { containerClass, screenHeightClass } from './section-heading';
 
 const SWIPE_THRESHOLD_PX = 50;
@@ -19,13 +19,7 @@ const carouselButtonClass =
   'flex size-11 cursor-pointer items-center justify-center border border-input transition-colors hover:border-foreground';
 
 /** Full-bleed opening: three photos that cross-fade, with the studio's promise over them. */
-export function Hero({
-  slides,
-  showProjectLink
-}: {
-  slides: HeroSlide[];
-  showProjectLink: boolean;
-}) {
+export function Hero({ slides }: { slides: HeroSlide[] }) {
   const [index, setIndex] = useState(0);
   const touchStartX = useRef<number | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
@@ -148,14 +142,6 @@ export function Hero({
             <a href="#contatti" className={`${ctaLinkClass} max-sm:w-full`}>
               Raccontami la tua idea <ArrowRightIcon aria-hidden />
             </a>
-            {showProjectLink && (
-              <a
-                href="#progetti"
-                className={`${textLinkClass} inline-flex min-h-11 items-center text-[15px] font-medium`}
-              >
-                Guarda un progetto
-              </a>
-            )}
           </div>
         </div>
 

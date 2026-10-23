@@ -30,7 +30,7 @@ describe('Hero', () => {
   afterEach(() => jest.useRealTimers())
 
   it('advances to the next image every 6 seconds and wraps around', () => {
-    render(<Hero slides={slides} showProjectLink />)
+    render(<Hero slides={slides} />)
 
     expect(counter()).toHaveAccessibleName('Immagine 1 di 3')
     wait(5999)
@@ -43,7 +43,7 @@ describe('Hero', () => {
   })
 
   it('restarts the countdown after a manual step', () => {
-    render(<Hero slides={slides} showProjectLink />)
+    render(<Hero slides={slides} />)
 
     wait(4000)
     fireEvent.click(screen.getByRole('button', { name: 'Immagine successiva' }))
@@ -54,7 +54,7 @@ describe('Hero', () => {
   })
 
   it('holds still while the pointer is over the hero', () => {
-    render(<Hero slides={slides} showProjectLink />)
+    render(<Hero slides={slides} />)
 
     fireEvent.mouseEnter(screen.getByRole('region', { name: 'Apertura' }))
     wait(18000)
@@ -67,7 +67,7 @@ describe('Hero', () => {
 
   it('does not rotate on its own when the visitor prefers reduced motion', () => {
     mockReducedMotion(true)
-    render(<Hero slides={slides} showProjectLink />)
+    render(<Hero slides={slides} />)
 
     wait(18000)
     expect(counter()).toHaveAccessibleName('Immagine 1 di 3')
