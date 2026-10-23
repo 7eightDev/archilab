@@ -178,7 +178,7 @@ export function Hero({ slides: projectSlides }: { slides: HeroSlide[] }) {
               <a
                 href={slide.project.href}
                 aria-label={`Guarda il progetto: ${slide.project.title}`}
-                className="flex min-h-11 flex-col justify-center gap-1 px-1.5 text-sm text-foreground outline-offset-4 transition-colors hover:text-ottone focus-visible:outline-2 focus-visible:outline-foreground sm:flex-row sm:items-center sm:justify-start sm:gap-3.5"
+                className="flex min-h-11 flex-col justify-center gap-1 px-1.5 text-sm text-foreground outline-offset-4 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-foreground sm:flex-row sm:items-center sm:justify-start sm:gap-3.5"
               >
                 {slide.caption && (
                   <>
