@@ -1,13 +1,31 @@
 import { unsplash } from '@/app/_lib/unsplash'
 
-// Provisional photos (Unsplash) until the studio provides the real ones: Nolan Issac (before),
-// Amsterdam City Archives (plan), Andrew Neel (site), Christian Lue (after), Home Makers Interior (living).
-const photos = {
-  before: { src: unsplash('photo-1444419988131-046ed4e5ffd6'), alt: 'Stanza spoglia con pavimento rovinato, prima dei lavori' },
-  plan: { src: unsplash('photo-1721244653652-268631ec049a'), alt: 'Disegni di pianta e sezione' },
-  site: { src: unsplash('photo-1625585598750-3535fe40efb3'), alt: 'Ambiente in cantiere con sgabello e pianta' },
-  light: { src: unsplash('photo-1757742690834-aa581b9f53b2'), alt: 'Stanza luminosa con grandi finestre e parquet' },
-  living: { src: unsplash('photo-1742367539759-6e4fc2e39209'), alt: 'Zona giorno aperta, dopo i lavori' },
+// Provisional photos (Unsplash) until the studio provides the real ones; the ids come from the
+// Claude Design mockup of the projects pages. Every project is a sample, texts included.
+const ids = {
+  living: 'photo-1742367539759-6e4fc2e39209',
+  dark: 'photo-1748679767437-00b5c0327b1a',
+  draft: 'photo-1503387762-592deb58ef4e',
+  old: 'photo-1444419988131-046ed4e5ffd6',
+  plan: 'photo-1721244653652-268631ec049a',
+  site: 'photo-1625585598750-3535fe40efb3',
+  light: 'photo-1757742690834-aa581b9f53b2',
+  sea: 'photo-1600585154340-be6161a56a0c',
+  cafe: 'photo-1554118811-1e0d58224f24',
+  cafe2: 'photo-1501339847302-ac426a4a7cbb',
+  villa: 'photo-1580587771525-78b9dba3b914',
+  kitchen: 'photo-1556909114-f6e7ad7d3136',
+  kitchen2: 'photo-1484154218962-a197022b5858',
+  hall: 'photo-1497366216548-37526070297c',
+  attic: 'photo-1600210492486-724fe5c67fb0',
+  bedroom: 'photo-1505691938895-1758d7feb511',
+  interior: 'photo-1586023492125-27b2c045efd7',
+  interior2: 'photo-1600607687939-ce8a6c25118c',
+  kitchen3: 'photo-1600566753190-17f0baa2a6c3',
+}
+
+function photo(id: keyof typeof ids, alt: string) {
+  return { src: unsplash(ids[id]), alt }
 }
 
 /** Projects shown on the site. */
@@ -17,51 +35,246 @@ export const projects = [
     slug: 'appartamento-fondi',
     title: 'Un appartamento a Fondi, ripensato da zero',
     summary:
-      'Ristrutturazione completa di un appartamento anni ’80 nel centro di Fondi, trasformato in un open space luminoso.',
+      'Stanze piccole e un corridoio lungo e buio. Ho aperto la zona giorno verso la luce, ridisegnato cucina e arredi su misura e seguito la CILA fino alla fine dei lavori.',
     // [Racconto da completare con Maria]
     description:
-      'Un appartamento degli anni ’80 con stanze piccole e un corridoio lungo e buio. Ho aperto la zona giorno verso la luce, ridisegnato la cucina e gli arredi su misura, e seguito la CILA fino alla fine dei lavori.',
+      'Quando sono entrata la prima volta, la luce arrivava solo in fondo al corridoio. La famiglia voleva una cucina dove stare insieme, non un cucinino da cui portare i piatti in sala.\n\nHo tolto due tramezzi, spostato la cucina sulla parete della finestra grande e disegnato un’unica parete attrezzata che fa da libreria, dispensa e ingresso. In Comune è bastata una CILA; il cantiere è durato sette mesi e l’ho seguito ogni settimana.',
     category: 'ristrutturazione',
     location: 'Fondi (LT)',
     areaSqm: 95,
     scope: 'Ristrutturazione completa, anni ’80',
-    // TODO: confirm the completion year with the studio; it is not shown on the site.
+    // TODO: confirm the completion year with the studio; it is shown on the site.
     year: 2025,
-    coverImage: photos.light,
-    beforeImage: photos.before,
-    afterImage: photos.living,
+    durationMonths: 7,
+    permits: ['CILA'],
+    coverImage: photo('living', 'Zona giorno aperta e luminosa, dopo i lavori'),
+    beforeImage: photo('old', 'Stanza spoglia con pavimento rovinato, prima dei lavori'),
+    afterImage: photo('living', 'La stessa zona giorno, aperta e arredata dopo i lavori'),
     // [Descrizioni delle fasi da confermare con Maria]
     gallery: [
       {
-        ...photos.before,
+        ...photo('old', 'Stanza spoglia con pavimento rovinato, prima dei lavori'),
         tag: 'RILIEVO',
-        caption: 'Prima: l’appartamento anni ’80',
-        description:
-          'Ho misurato ogni stanza e verificato impianti e muri portanti: il punto di partenza per capire cosa si poteva aprire.',
+        caption: 'Lo stato di fatto: corridoio e tre stanze chiuse',
+        description: 'Ho misurato tutto e fotografato ogni stanza: è la base su cui si decide cosa si può togliere.',
       },
       {
-        ...photos.plan,
+        ...photo('plan', 'Disegni di pianta e sezione'),
         tag: 'ARCHITETTURA',
-        caption: 'La pianta ripensata',
-        description:
-          'Ho eliminato il corridoio e unito cucina e soggiorno in un unico ambiente, poi ho seguito la CILA con il Comune.',
+        caption: 'La nuova pianta, aperta verso la finestra',
+        description: 'Tre versioni della pianta, discusse al tavolo con la famiglia prima di scegliere.',
       },
       {
-        ...photos.site,
+        ...photo('draft', 'Tavolo da disegno con squadre e progetti stampati'),
+        tag: 'PRATICHE',
+        caption: 'La CILA all’Ufficio Tecnico di Fondi',
+      },
+      {
+        ...photo('site', 'Ambiente in cantiere con sgabello e pianta'),
         tag: 'CANTIERE',
-        caption: 'I lavori, seguiti ogni settimana',
-        description:
-          'Una visita a settimana con l’impresa per controllare tempi, costi e dettagli, senza sorprese a fine lavori.',
+        caption: 'Demolizioni e nuovi impianti',
+        description: 'Sette mesi di lavori, con un sopralluogo ogni settimana e un verbale per l’impresa.',
       },
       {
-        ...photos.light,
+        ...photo('dark', 'Campioni di materiali e luce calda su un piano di lavoro'),
         tag: 'INTERIOR',
-        caption: 'Dopo: la zona giorno aperta alla luce',
-        description:
-          'Arredi su misura, materiali e luci scelti insieme: la casa consegnata finita, pronta da abitare.',
+        caption: 'Materiali e luci scelti insieme',
+        description: 'Rovere chiaro, intonaco a calce e una sola lampada sospesa sul tavolo.',
+      },
+      {
+        ...photo('light', 'Stanza luminosa con grandi finestre e parquet'),
+        tag: 'CONSEGNA',
+        caption: 'La zona giorno, a lavori finiti',
       },
     ],
     serviceIds: ['s-architettura', 's-interior', 's-pratiche'],
     featured: true,
+    heroPosition: 1,
+    heroKicker: 'UN APPARTAMENTO A FONDI',
+  },
+  {
+    id: 'p-casa-sperlonga',
+    slug: 'casa-sperlonga',
+    title: 'Una casa sul mare a Sperlonga',
+    summary:
+      'Una casa nuova su due piani, con il soggiorno rivolto verso il mare e le camere protette dal sole del pomeriggio.',
+    category: 'residenziale',
+    location: 'Sperlonga (LT)',
+    areaSqm: 160,
+    scope: 'Nuova costruzione su due livelli',
+    year: 2024,
+    durationMonths: 18,
+    permits: ['Permesso di costruire'],
+    coverImage: photo('sea', 'Casa bianca su due piani con piscina e grandi vetrate'),
+    gallery: [
+      { ...photo('plan', 'Disegni di pianta e sezione'), tag: 'ARCHITETTURA', caption: 'Il progetto dei due livelli' },
+      { ...photo('site', 'Ambiente in cantiere con sgabello e pianta'), tag: 'CANTIERE', caption: 'La struttura' },
+      {
+        ...photo('sea', 'Casa bianca su due piani con piscina e grandi vetrate'),
+        tag: 'CONSEGNA',
+        caption: 'La casa finita',
+      },
+    ],
+    serviceIds: ['s-architettura', 's-pratiche'],
+    heroPosition: 2,
+  },
+  {
+    id: 'p-bar-fondi',
+    slug: 'bar-fondi',
+    title: 'Un bar nel centro storico di Fondi',
+    summary:
+      'Un locale stretto e profondo sotto le mura. Ho portato il bancone in fondo per liberare l’ingresso e seguito le pratiche per l’apertura.',
+    category: 'commerciale',
+    location: 'Fondi (LT)',
+    areaSqm: 48,
+    scope: 'Nuovo progetto del locale e degli arredi',
+    year: 2023,
+    durationMonths: 3,
+    permits: ['SCIA'],
+    coverImage: photo('cafe', 'Interno di un bar con bancone in legno e sedute'),
+    gallery: [
+      { ...photo('cafe2', 'Bancone di un bar con sgabelli e luci sospese'), tag: 'INTERIOR', caption: 'Il bancone e le sedute' },
+      { ...photo('cafe', 'Interno di un bar con bancone in legno e sedute'), tag: 'CONSEGNA', caption: 'Il bar aperto' },
+    ],
+    serviceIds: ['s-interior', 's-pratiche'],
+    heroPosition: 3,
+    heroKicker: 'UN BAR NEL CENTRO STORICO',
+  },
+  {
+    id: 'p-villetta-terracina',
+    slug: 'villetta-terracina',
+    title: 'Una villetta anni ’70 a Terracina',
+    summary:
+      'Cappotto, nuovi infissi e una cucina aperta sul giardino: la casa consuma meno della metà e si vive tutto l’anno.',
+    category: 'ristrutturazione',
+    location: 'Terracina (LT)',
+    areaSqm: 140,
+    scope: 'Ristrutturazione ed efficientamento energetico',
+    year: 2022,
+    durationMonths: 9,
+    permits: ['CILA'],
+    coverImage: photo('villa', 'Villetta a due piani con giardino e prato curato'),
+    gallery: [
+      {
+        ...photo('site', 'Ambiente in cantiere con sgabello e pianta'),
+        tag: 'CANTIERE',
+        caption: 'Il cappotto e i nuovi infissi',
+      },
+      { ...photo('kitchen3', 'Cucina chiara con isola e sgabelli'), tag: 'INTERIOR', caption: 'La cucina sul giardino' },
+      { ...photo('villa', 'Villetta a due piani con giardino e prato curato'), tag: 'CONSEGNA', caption: 'La villetta oggi' },
+    ],
+    serviceIds: ['s-architettura', 's-pratiche'],
+    heroPosition: 4,
+    heroKicker: 'UNA VILLETTA ANNI ’70',
+  },
+  {
+    id: 'p-cucina-monte-san-biagio',
+    slug: 'cucina-monte-san-biagio',
+    title: 'Una cucina su misura a Monte San Biagio',
+    summary:
+      'Una cucina disegnata intorno a chi la usa ogni giorno: piano di lavoro sotto la finestra, dispensa a tutta altezza e niente pensili sopra il tavolo.',
+    category: 'interni',
+    location: 'Monte San Biagio (LT)',
+    scope: 'Cucina e arredo su misura',
+    year: 2024,
+    coverImage: photo('kitchen', 'Cucina con piano di lavoro sotto la finestra'),
+    gallery: [
+      {
+        ...photo('kitchen2', 'Parete attrezzata di una cucina con mensole e stoviglie'),
+        tag: 'INTERIOR',
+        caption: 'Il disegno della parete attrezzata',
+      },
+      { ...photo('kitchen', 'Cucina con piano di lavoro sotto la finestra'), tag: 'CONSEGNA', caption: 'La cucina finita' },
+    ],
+    serviceIds: ['s-interior'],
+  },
+  {
+    id: 'p-sala-civica',
+    slug: 'sala-civica',
+    title: 'La sala civica di Monte San Biagio',
+    summary:
+      'Una sala per il consiglio comunale e per le associazioni, ripensata per essere luminosa, accessibile e semplice da riallestire.',
+    category: 'pubblico',
+    location: 'Monte San Biagio (LT)',
+    areaSqm: 210,
+    scope: 'Riqualificazione della sala civica comunale',
+    year: 2021,
+    durationMonths: 10,
+    coverImage: photo('hall', 'Sala ampia e luminosa con tavoli e sedie'),
+    gallery: [
+      {
+        ...photo('draft', 'Tavolo da disegno con squadre e progetti stampati'),
+        tag: 'ARCHITETTURA',
+        caption: 'Il progetto per il Comune',
+      },
+      { ...photo('hall', 'Sala ampia e luminosa con tavoli e sedie'), tag: 'CONSEGNA', caption: 'La sala riallestita' },
+    ],
+    serviceIds: ['s-architettura', 's-pratiche'],
+    heroPosition: 5,
+  },
+  {
+    id: 'p-attico-latina',
+    slug: 'attico-latina',
+    title: 'Un attico a Latina, aperto sulla terrazza',
+    summary:
+      'Soggiorno e terrazza diventano un unico spazio: stesso pavimento, una vetrata scorrevole e arredi pensati per stare fuori metà dell’anno.',
+    category: 'interni',
+    location: 'Latina',
+    areaSqm: 110,
+    scope: 'Interni e terrazza',
+    year: 2026,
+    coverImage: photo('attic', 'Soggiorno con divano chiaro e vetrata verso la terrazza'),
+    gallery: [
+      {
+        ...photo('attic', 'Soggiorno con divano chiaro e vetrata verso la terrazza'),
+        tag: 'CONSEGNA',
+        caption: 'Il soggiorno',
+      },
+    ],
+    serviceIds: ['s-interior', 's-architettura'],
+  },
+  {
+    id: 'p-sottotetto-fondi',
+    slug: 'sottotetto-fondi',
+    title: 'Un sottotetto a Fondi diventato camera',
+    summary:
+      'Un deposito sotto il tetto trasformato in camera con bagno, con due lucernari e l’isolamento rifatto.',
+    category: 'ristrutturazione',
+    location: 'Fondi (LT)',
+    areaSqm: 38,
+    scope: 'Recupero del sottotetto',
+    year: 2019,
+    durationMonths: 4,
+    permits: ['SCIA'],
+    coverImage: photo('bedroom', 'Camera da letto con lenzuola bianche e luce naturale'),
+    serviceIds: ['s-architettura', 's-pratiche'],
+  },
+  {
+    id: 'p-casa-vacanze-sperlonga',
+    slug: 'casa-vacanze-sperlonga',
+    title: 'Gli interni di una casa per l’estate a Sperlonga',
+    summary: 'Materiali che non temono sabbia e salsedine, luci basse per la sera e una cucina piccola ma completa.',
+    category: 'interni',
+    location: 'Sperlonga (LT)',
+    scope: 'Arredo e luci',
+    year: 2020,
+    coverImage: photo('interior', 'Soggiorno con poltrona, pianta e pareti chiare'),
+    serviceIds: ['s-interior'],
+  },
+  {
+    id: 'p-casa-terracina',
+    slug: 'casa-terracina',
+    title: 'Una casa di paese nel centro di Terracina',
+    summary:
+      'Muri in pietra da consolidare e solai da rifare: ho tenuto le volte originali e portato luce al piano terra.',
+    category: 'ristrutturazione',
+    location: 'Terracina (LT)',
+    areaSqm: 120,
+    scope: 'Ristrutturazione e consolidamento',
+    year: 2018,
+    durationMonths: 12,
+    permits: ['SCIA', 'Autorizzazione sismica'],
+    coverImage: photo('interior2', 'Soggiorno con pareti chiare e grande finestra'),
+    serviceIds: ['s-architettura', 's-pratiche'],
   },
 ]

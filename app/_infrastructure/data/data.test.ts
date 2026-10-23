@@ -22,15 +22,49 @@ describe('studio data', () => {
     expect((await repository.findFeatured()).length).toBeGreaterThan(0)
   })
 
-  it('features the apartment in Fondi with its before/after pair and tagged gallery', async () => {
-    const [featured] = await new InMemoryProjectRepository(projects).findFeatured()
+  it('features only the apartment in Fondi', async () => {
+    const featured = await new InMemoryProjectRepository(projects).findFeatured()
 
-    expect(featured.title).toBe('Un appartamento a Fondi, ripensato da zero')
-    expect(featured.areaSqm).toBe(95)
-    expect(featured.location).toBe('Fondi (LT)')
-    expect(featured.beforeImage).toBeDefined()
-    expect(featured.afterImage).toBeDefined()
-    expect(featured.gallery.map((image) => image.tag)).toEqual(['RILIEVO', 'ARCHITETTURA', 'CANTIERE', 'INTERIOR'])
+    expect(featured.map((project) => project.slug)).toEqual(['appartamento-fondi'])
+    const [apartment] = featured
+    expect(apartment.beforeImage).toBeDefined()
+    expect(apartment.afterImage).toBeDefined()
+    expect(apartment.gallery.map((image) => image.tag)).toEqual([
+      'RILIEVO',
+      'ARCHITETTURA',
+      'PRATICHE',
+      'CANTIERE',
+      'INTERIOR',
+      'CONSEGNA',
+    ])
+    expect(apartment.durationMonths).toBe(7)
+    expect(apartment.permits).toEqual(['CILA'])
+  })
+
+  it('lists ten projects', async () => {
+    expect(await new InMemoryProjectRepository(projects).findAll()).toHaveLength(10)
+  })
+
+  it('fills the hero positions 1 to 5 without gaps', async () => {
+    const hero = await new InMemoryProjectRepository(projects).findInHero()
+
+    expect(hero.map((project) => project.slug)).toEqual([
+      'appartamento-fondi',
+      'casa-sperlonga',
+      'bar-fondi',
+      'villetta-terracina',
+      'sala-civica',
+    ])
+    expect(hero.map((project) => project.heroPosition)).toEqual([1, 2, 3, 4, 5])
+  })
+
+  it('keeps a project with minimal data', async () => {
+    const kitchen = await new InMemoryProjectRepository(projects).findBySlug('cucina-monte-san-biagio')
+
+    expect(kitchen?.areaSqm).toBeUndefined()
+    expect(kitchen?.description).toBeUndefined()
+    expect(kitchen?.beforeImage).toBeUndefined()
+    expect(kitchen?.gallery).toHaveLength(2)
   })
 
   it('links projects only to existing services', async () => {
