@@ -178,9 +178,9 @@ export function Hero({ slides: projectSlides }: { slides: HeroSlide[] }) {
               <a
                 href={slide.project.href}
                 aria-label={`Guarda il progetto: ${slide.project.title}`}
-                // Hover lifts the link off the photo with a lighter, translucent petrolio, while the rule lengthens and
-                // the arrow steps out: the text is already near white, so a colour change alone would not show.
-                className="group flex min-h-11 flex-col justify-center gap-1 px-1.5 text-sm transition-colors hover:bg-[rgba(39,81,93,.7)] hover:backdrop-blur-sm sm:px-3 text-foreground outline-offset-4 focus-visible:outline-2 focus-visible:outline-foreground sm:flex-row sm:items-center sm:justify-start sm:gap-3.5"
+                // Hover lifts the link off the photo with a light frosted tint, while the rule lengthens and the
+                // arrow steps out: the text is already near white, so a colour change alone would not show.
+                className="group flex min-h-11 flex-col justify-center gap-1 px-1.5 text-sm transition-colors hover:bg-white/10 hover:backdrop-blur-sm sm:px-3 text-foreground outline-offset-4 focus-visible:outline-2 focus-visible:outline-foreground sm:flex-row sm:items-center sm:justify-start sm:gap-3.5"
               >
                 {slide.caption && (
                   <>
@@ -191,7 +191,7 @@ export function Hero({ slides: projectSlides }: { slides: HeroSlide[] }) {
                   </>
                 )}
                 <span className="inline-flex items-center gap-2 font-medium">
-                  <span className="underline decoration-1 underline-offset-[6px]">Guarda il progetto</span>
+                  <span>Guarda il progetto</span>
                   <ArrowUpRightIcon aria-hidden className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </span>
               </a>
