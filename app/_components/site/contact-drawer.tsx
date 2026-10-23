@@ -1,6 +1,7 @@
 'use client'
 
 import { XIcon } from 'lucide-react'
+import Link from 'next/link'
 import { createContext, type MouseEvent, type ReactNode, useCallback, useContext, useMemo, useRef, useState } from 'react'
 import { Dialog, DialogClose, DialogOverlay, DialogPortal, DialogTitle } from '@/app/_components/ui/dialog'
 import { Dialog as DialogPrimitive } from '@base-ui/react/dialog'
@@ -102,8 +103,8 @@ export function ContactDrawerTrigger({
   }
 
   return (
-    <a href="/#contatti" onClick={handleClick} className={className}>
+    <Link href="/#contatti" onClick={handleClick} className={className}>
       {children}
-    </a>
+    </Link>
   )
 }
