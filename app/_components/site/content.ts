@@ -85,6 +85,8 @@ export const studio = {
   /** Privacy notice page; the consent checkbox and the footer link to it once it exists. */
   privacyUrl: null as string | null,
   mapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('Via Romano Antoniazzo 19, 04022 Fondi LT')}`,
+  /** Same place as `mapsUrl`, in the keyless embed form shown inside the map dialog. */
+  mapsEmbedUrl: `https://www.google.com/maps?q=${encodeURIComponent('Via Romano Antoniazzo 19, 04022 Fondi LT')}&output=embed`,
   /** 4:5 portrait of Maria; the Studio section shows it only once it is provided. */
   portrait: null as Image | null
 };

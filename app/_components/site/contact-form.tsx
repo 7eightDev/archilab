@@ -37,6 +37,17 @@ function validate(formData: FormData): ContactRequestFieldErrors {
   return result.success ? {} : z.flattenError(result.error).fieldErrors
 }
 
+/** Whether every required field holds something; the schema still checks the format on submit. */
+function requiredFilled(values: Pick<ContactFormValues, 'name' | 'email' | 'message'>, consent: boolean): boolean {
+  return consent && [values.name, values.email, values.message].every((value) => value.trim() !== '')
+}
+
+function requiredFilledIn(form: HTMLFormElement, consent = new FormData(form).get('privacyConsent') === 'on'): boolean {
+  const formData = new FormData(form)
+  const text = (name: string) => String(formData.get(name) ?? '')
+  return requiredFilled({ name: text('name'), email: text('email'), message: text('message') }, consent)
+}
+
 function errorSummary(count: number): string {
   return count === 1 ? 'Controlla il campo evidenziato.' : `Controlla i ${count} campi evidenziati.`
 }
@@ -99,6 +110,8 @@ function Form({ action, onReset }: { action: ContactAction; onReset: () => void 
   const [state, formAction, pending] = useActionState(action, initialContactFormState)
   const [errors, setErrors] = useState<ContactRequestFieldErrors>({})
   const [seenState, setSeenState] = useState(state)
+  // Send stays disabled until the required fields are filled; format errors still surface on submit.
+  const [complete, setComplete] = useState(() => requiredFilled(state.values, state.consentGiven ?? false))
   const formRef = useRef<HTMLFormElement>(null)
 
   // A new reply from the server replaces whatever the client-side check found.
@@ -122,6 +135,7 @@ function Form({ action, onReset }: { action: ContactAction; onReset: () => void 
       ref={formRef}
       action={formAction}
       noValidate
+      onChange={(event) => setComplete(requiredFilledIn(event.currentTarget))}
       onSubmit={(event) => {
         const clientErrors = validate(new FormData(event.currentTarget))
         setErrors(clientErrors)
@@ -142,9 +156,9 @@ function Form({ action, onReset }: { action: ContactAction; onReset: () => void 
       <Field name="phone" label="Telefono (facoltativo)" errors={errors.phone}>
         {(props) => <Input {...props} type="tel" autoComplete="tel" defaultValue={values.phone} className={`h-13 ${controlClass}`} />}
       </Field>
-      <Field name="interventionType" label="Tipo di intervento" errors={errors.interventionType}>
+      <Field name="interventionType" label="Tipo di intervento *" errors={errors.interventionType}>
         {({ id, name, ...props }) => (
-          <Select id={id} name={name} items={interventionTypeLabels} defaultValue={values.interventionType}>
+          <Select id={id} name={name} required items={interventionTypeLabels} defaultValue={values.interventionType}>
             <SelectTrigger
               {...props}
               className={`h-13 w-full pr-4 data-[size=default]:h-13 [&>svg]:size-5 [&>svg]:text-foreground ${controlClass}`}
@@ -188,6 +202,8 @@ function Form({ action, onReset }: { action: ContactAction; onReset: () => void 
             name="privacyConsent"
             required
             defaultChecked={state.consentGiven}
+            // Its hidden input is not updated yet when this fires, so pass the new state along.
+            onCheckedChange={(checked) => formRef.current && setComplete(requiredFilledIn(formRef.current, checked))}
             aria-invalid={errors.privacyConsent ? true : undefined}
             aria-describedby={errors.privacyConsent ? 'contact-privacy-error' : undefined}
             className="mt-px cursor-pointer data-checked:bg-ottone focus-visible:ring-0 focus-visible:shadow-[0_0_0_2px_var(--background),0_0_0_3px_var(--ottone)]"
@@ -225,7 +241,8 @@ function Form({ action, onReset }: { action: ContactAction; onReset: () => void 
         <Button
           type="submit"
           size="cta"
-          disabled={pending}
+          data-crosshair-target
+          disabled={pending || !complete}
           className="focus-visible:ring-0 focus-visible:shadow-[0_0_0_3px_var(--ottone)] max-sm:w-full"
         >
           {pending ? 'Invio in corso…' : <>Invia il messaggio <ArrowRightIcon aria-hidden /></>}

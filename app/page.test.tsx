@@ -1,4 +1,5 @@
-import { render, screen, within } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { getFeaturedProject, listServices } from '@/app/_infrastructure/container'
 import Home from './page'
 
@@ -65,23 +66,35 @@ describe('Home page contacts', () => {
     expect(screen.getByRole('link', { name: '328 7489 645' })).toHaveAttribute('href', 'tel:+393287489645')
   })
 
-  it('shows the studio address with a link to Google Maps', async () => {
+  it('shows the studio address and opens its map in a dialog', async () => {
     render(await Home())
 
     const address = screen.getByText(/Via Romano Antoniazzo, 19/).closest('address')!
     expect(address).toHaveTextContent('Via Romano Antoniazzo, 1904022 Fondi (LT)')
-    expect(within(address).getByRole('link', { name: /Apri in Google Maps/ }).getAttribute('href')).toBe(
+    expect(screen.queryByTitle(/Mappa dello studio/)).not.toBeInTheDocument()
+
+    await userEvent.click(within(address).getByRole('button', { name: 'Vieni a trovarmi' }))
+
+    const dialog = await screen.findByRole('dialog', { name: 'Ti aspetto a Fondi' })
+    expect(within(dialog).getByTitle(/Mappa dello studio/)).toHaveAttribute(
+      'src',
+      'https://www.google.com/maps?q=Via%20Romano%20Antoniazzo%2019%2C%2004022%20Fondi%20LT&output=embed',
+    )
+    expect(within(dialog).getByRole('link', { name: /Apri in Google Maps/ })).toHaveAttribute(
+      'href',
       'https://www.google.com/maps/search/?api=1&query=Via%20Romano%20Antoniazzo%2019%2C%2004022%20Fondi%20LT',
     )
+
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Chiudi la mappa' }))
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
   })
 
-  it('lets visitors write to the studio email', async () => {
+  it('shows the studio email as plain text, leaving the form as the way to write', async () => {
     render(await Home())
 
-    expect(screen.getByRole('link', { name: 'archipezzella@gmail.com' })).toHaveAttribute(
-      'href',
-      'mailto:archipezzella@gmail.com',
-    )
+    const address = screen.getByText(/Via Romano Antoniazzo, 19/).closest('address')!
+    expect(address).toHaveTextContent('archipezzella@gmail.com')
+    expect(within(address).queryByRole('link', { name: 'archipezzella@gmail.com' })).not.toBeInTheDocument()
   })
 
   it('opens a WhatsApp chat with the studio in a new tab', async () => {
