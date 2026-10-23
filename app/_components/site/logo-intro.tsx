@@ -4,8 +4,8 @@ import { useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react'
 import { Logo } from './logo'
 
 export const INTRO_STORAGE_KEY = 'archilab:intro-seen'
-// The last lettering in logo.tsx ends at 2.9s; a short hold on the finished mark, then it flies.
-export const INTRO_FLY_AT_MS = 3300
+// The last lettering in logo.tsx ends at 2.9s; the finished mark holds for a second, then it flies.
+export const INTRO_FLY_AT_MS = 3900
 const FLY_MS = 800
 const SKIPPED_FLY_MS = 450
 const FLY_EASING = 'cubic-bezier(.65,0,.35,1)'
