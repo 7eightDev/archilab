@@ -1,6 +1,6 @@
 'use client'
 
-import { ArrowRightIcon, ChevronDownIcon } from 'lucide-react'
+import { ArrowRightIcon } from 'lucide-react'
 import { useActionState, useEffect, useRef, useState } from 'react'
 import { z } from 'zod'
 import { type ContactFormState, type ContactFormValues, initialContactFormState } from '@/app/_actions/contact-form-state'
@@ -9,6 +9,8 @@ import type { ContactRequestFieldErrors } from '@/app/_application/use-cases/sub
 import { Button } from '@/app/_components/ui/button'
 import { Input } from '@/app/_components/ui/input'
 import { Label } from '@/app/_components/ui/label'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/_components/ui/select'
+import { Switch } from '@/app/_components/ui/switch'
 import { Textarea } from '@/app/_components/ui/textarea'
 import { ContactRequestSchema, interventionTypeLabels, interventionTypes } from '@/app/_domain/entities/contact-request'
 import { studio } from './content'
@@ -19,7 +21,7 @@ export type ContactAction = (state: ContactFormState, formData: FormData) => Pro
 type FieldName = keyof ContactFormValues
 
 const controlClass =
-  'rounded-none border-input bg-background px-3.5 text-[17px] text-foreground md:text-[17px] placeholder:text-muted-foreground focus-visible:border-input focus-visible:ring-0 focus-visible:shadow-[0_0_0_3px_var(--testo)] aria-invalid:border-2 aria-invalid:border-destructive aria-invalid:focus-visible:border-destructive aria-invalid:ring-0'
+  'rounded-none border-input bg-background px-3.5 text-[17px] text-foreground md:text-[17px] placeholder:text-muted-foreground focus-visible:border-input focus-visible:ring-0 focus-visible:shadow-[0_0_0_1px_var(--ottone)] aria-invalid:border-2 aria-invalid:border-destructive aria-invalid:focus-visible:border-destructive aria-invalid:ring-0'
 
 /** Same rules as the server: the domain schema decides what is valid and what the messages say. */
 function validate(formData: FormData): ContactRequestFieldErrors {
@@ -141,22 +143,29 @@ function Form({ action, onReset }: { action: ContactAction; onReset: () => void 
         {(props) => <Input {...props} type="tel" autoComplete="tel" defaultValue={values.phone} className={`h-13 ${controlClass}`} />}
       </Field>
       <Field name="interventionType" label="Tipo di intervento" errors={errors.interventionType}>
-        {(props) => (
-          <div className="relative">
-            <select
+        {({ id, name, ...props }) => (
+          <Select id={id} name={name} items={interventionTypeLabels} defaultValue={values.interventionType}>
+            <SelectTrigger
               {...props}
-              defaultValue={values.interventionType}
-              className={`h-13 w-full appearance-none border pr-12 outline-none ${controlClass}`}
+              className={`h-13 w-full pr-4 data-[size=default]:h-13 [&>svg]:size-5 [&>svg]:text-foreground ${controlClass}`}
+            >
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent
+              alignItemWithTrigger={false}
+              className="border border-input bg-background p-0 shadow-none ring-0"
             >
               {interventionTypes.map((type) => (
-                <option key={type} value={type}>
+                <SelectItem
+                  key={type}
+                  value={type}
+                  className="rounded-none px-3.5 py-2.5 text-[17px] text-foreground"
+                >
                   {interventionTypeLabels[type]}
-                </option>
+                </SelectItem>
               ))}
-            </select>
-            {/* Custom arrow: the native one sits flush against the border. */}
-            <ChevronDownIcon aria-hidden className="pointer-events-none absolute top-1/2 right-4 size-5 -translate-y-1/2" />
-          </div>
+            </SelectContent>
+          </Select>
         )}
       </Field>
       <Field name="message" label="Raccontami l’idea *" errors={errors.message} className="sm:col-span-2">
@@ -167,21 +176,21 @@ function Form({ action, onReset }: { action: ContactAction; onReset: () => void 
             rows={5}
             defaultValue={values.message}
             placeholder="Es. vorrei ristrutturare il bagno e capire se serve una pratica"
-            className={`min-h-36 py-3.5 leading-normal ${controlClass}`}
+            className={`min-h-36 py-3.5 leading-normal ${controlClass} placeholder:text-[15px] placeholder:text-muted-foreground/60`}
           />
         )}
       </Field>
 
-      <div className="flex flex-col gap-2 sm:col-span-2">
-        <label className="flex cursor-pointer items-start gap-3 text-sm leading-normal">
-          <input
-            type="checkbox"
+      {/* Pulled up so the consent reads as part of the message, not a separate row. */}
+      <div className="-mt-3 flex flex-col gap-2 sm:col-span-2">
+        <label className="flex cursor-pointer items-start gap-3 text-[13px] leading-normal text-muted-foreground">
+          <Switch
             name="privacyConsent"
             required
             defaultChecked={state.consentGiven}
             aria-invalid={errors.privacyConsent ? true : undefined}
             aria-describedby={errors.privacyConsent ? 'contact-privacy-error' : undefined}
-            className="size-[22px] flex-none cursor-pointer accent-foreground"
+            className="mt-px cursor-pointer data-checked:bg-ottone focus-visible:ring-0 focus-visible:shadow-[0_0_0_2px_var(--background),0_0_0_3px_var(--ottone)]"
           />
           {studio.privacyUrl ? (
             <span>
@@ -195,7 +204,7 @@ function Form({ action, onReset }: { action: ContactAction; onReset: () => void 
             <span>Acconsento al trattamento dei miei dati per essere ricontattato. *</span>
           )}
         </label>
-        <p id="contact-privacy-error" className="min-h-4 pl-[34px] text-[13px] text-destructive">
+        <p id="contact-privacy-error" className="min-h-4 pl-11 text-[13px] text-destructive">
           {errors.privacyConsent?.join(' ')}
         </p>
       </div>

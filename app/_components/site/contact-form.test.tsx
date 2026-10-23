@@ -15,9 +15,10 @@ async function fillValidForm() {
   const user = userEvent.setup()
   await user.type(screen.getByLabelText('Nome *'), filledValues.name)
   await user.type(screen.getByLabelText('Email *'), filledValues.email)
-  await user.selectOptions(screen.getByLabelText('Tipo di intervento'), 'Pratiche urbanistiche')
+  await user.click(screen.getByRole('combobox', { name: 'Tipo di intervento' }))
+  await user.click(await screen.findByRole('option', { name: 'Pratiche urbanistiche' }))
   await user.type(screen.getByLabelText('Raccontami l’idea *'), filledValues.message)
-  await user.click(screen.getByRole('checkbox', { name: /trattamento dei miei dati/ }))
+  await user.click(screen.getByRole('switch', { name: /trattamento dei miei dati/ }))
   return user
 }
 
@@ -28,9 +29,9 @@ describe('ContactForm', () => {
     expect(screen.getByRole('textbox', { name: 'Nome *' })).toBeRequired()
     expect(screen.getByRole('textbox', { name: 'Email *' })).toBeRequired()
     expect(screen.getByRole('textbox', { name: 'Telefono (facoltativo)' })).not.toBeRequired()
-    expect(screen.getByRole('combobox', { name: 'Tipo di intervento' })).toHaveValue('non-so')
+    expect(screen.getByRole('combobox', { name: 'Tipo di intervento' })).toHaveTextContent('Non so ancora')
     expect(screen.getByRole('textbox', { name: 'Raccontami l’idea *' })).toBeRequired()
-    expect(screen.getByRole('checkbox', { name: /trattamento dei miei dati/ })).toBeRequired()
+    expect(screen.getByRole('switch', { name: /trattamento dei miei dati/ })).toHaveAttribute('aria-required', 'true')
   })
 
   it('checks the form with the domain schema before calling the action', async () => {
@@ -45,7 +46,7 @@ describe('ContactForm', () => {
     expect(name).toHaveAttribute('aria-invalid', 'true')
     expect(name).toHaveAccessibleDescription('Scrivi il tuo nome')
     expect(screen.getByLabelText('Email *')).toHaveAccessibleDescription('Scrivi il tuo indirizzo email')
-    expect(screen.getByRole('checkbox')).toHaveAccessibleDescription('Serve il tuo consenso per poterti ricontattare')
+    expect(screen.getByRole('switch')).toHaveAccessibleDescription('Serve il tuo consenso per poterti ricontattare')
     expect(screen.getByLabelText('Telefono (facoltativo)')).not.toHaveAttribute('aria-invalid')
     await waitFor(() => expect(name).toHaveFocus())
   })
@@ -94,7 +95,7 @@ describe('ContactForm', () => {
     await user.click(await screen.findByRole('button', { name: 'Scrivi un altro messaggio' }))
 
     expect(screen.getByLabelText('Nome *')).toHaveValue('')
-    expect(screen.getByRole('checkbox')).not.toBeChecked()
+    expect(screen.getByRole('switch')).not.toBeChecked()
   })
 
   it('shows the errors returned by the server under each field', async () => {
@@ -115,7 +116,7 @@ describe('ContactForm', () => {
     const email = await screen.findByDisplayValue('mario@example')
     expect(email).toHaveAccessibleDescription('Indirizzo email non valido: controlla che sia completo')
     expect(screen.getByText('Controlla il campo evidenziato.')).toBeInTheDocument()
-    expect(screen.getByRole('checkbox')).toBeChecked()
+    expect(screen.getByRole('switch')).toBeChecked()
     await waitFor(() => expect(email).toHaveFocus())
   })
 
