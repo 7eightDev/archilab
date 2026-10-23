@@ -77,4 +77,26 @@ describe('InMemoryProjectRepository', () => {
 
     expect(projects.map((project) => project.id)).toEqual(['p-1', 'p-3'])
   })
+
+  it('returns the hero projects ordered by position', async () => {
+    const repository = new InMemoryProjectRepository([
+      rawProject({ id: 'a', slug: 'terzo', heroPosition: 3 }),
+      rawProject({ id: 'b', slug: 'fuori' }),
+      rawProject({ id: 'c', slug: 'primo', heroPosition: 1 }),
+    ])
+
+    const projects = await repository.findInHero()
+
+    expect(projects.map((project) => project.slug)).toEqual(['primo', 'terzo'])
+  })
+
+  it('refuses two projects with the same hero position', () => {
+    expect(
+      () =>
+        new InMemoryProjectRepository([
+          rawProject({ id: 'a', slug: 'uno', heroPosition: 2 }),
+          rawProject({ id: 'b', slug: 'due', heroPosition: 2 }),
+        ]),
+    ).toThrow("Posizione nell'Hero duplicata: 2")
+  })
 })

@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { type Project, ProjectSchema } from '@/app/_domain/entities/project'
 import type { ProjectFilter, ProjectRepository } from '@/app/_domain/repositories/project-repository'
+import { assertUniqueHeroPositions } from './assert-unique-hero-positions'
 import { assertUniqueSlugs } from './assert-unique-slugs'
 
 /** Serves projects from in-memory seed data, validated against the domain schema at construction. */
@@ -10,6 +11,7 @@ export class InMemoryProjectRepository implements ProjectRepository {
   constructor(seed: unknown[]) {
     this.projects = z.array(ProjectSchema).parse(seed)
     assertUniqueSlugs(this.projects)
+    assertUniqueHeroPositions(this.projects)
   }
 
   async findAll(filter: ProjectFilter = {}) {
@@ -25,5 +27,12 @@ export class InMemoryProjectRepository implements ProjectRepository {
 
   async findFeatured() {
     return this.projects.filter((project) => project.featured).map((project) => structuredClone(project))
+  }
+
+  async findInHero() {
+    return this.projects
+      .filter((project) => project.heroPosition !== undefined)
+      .sort((a, b) => a.heroPosition! - b.heroPosition!)
+      .map((project) => structuredClone(project))
   }
 }
