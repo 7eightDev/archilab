@@ -106,7 +106,7 @@ function Sent({ name, onReset }: { name: string; onReset: () => void }) {
   )
 }
 
-function Form({ action, onReset }: { action: ContactAction; onReset: () => void }) {
+function Form({ action, onReset, compact }: { action: ContactAction; onReset: () => void; compact: boolean }) {
   const [state, formAction, pending] = useActionState(action, initialContactFormState)
   const [errors, setErrors] = useState<ContactRequestFieldErrors>({})
   const [seenState, setSeenState] = useState(state)
@@ -128,6 +128,8 @@ function Form({ action, onReset }: { action: ContactAction; onReset: () => void 
   if (state.status === 'success') return <Sent name={state.values.name} onReset={onReset} />
 
   const { values, formErrors } = state
+  // Rows that span both columns, whether the pairs start at once (compact) or from the container's @xl.
+  const wideClass = compact ? 'col-span-2' : '@xl:col-span-2'
   const errorCount = Object.values(errors).filter((messages) => messages && messages.length > 0).length
 
   return (
@@ -141,9 +143,14 @@ function Form({ action, onReset }: { action: ContactAction; onReset: () => void 
         setErrors(clientErrors)
         if (Object.keys(clientErrors).length > 0) event.preventDefault()
       }}
-      className="grid min-w-0 gap-5 @xl:grid-cols-2"
+      // Compact: as much air as a phone allows, a little more on screens at least 880px tall.
+      className={
+        compact
+          ? 'grid min-w-0 grid-cols-2 gap-x-4 gap-y-4 [@media(min-height:880px)]:gap-y-6'
+          : 'grid min-w-0 gap-5 @xl:grid-cols-2'
+      }
     >
-      <p aria-live="assertive" className="text-[15px] text-destructive empty:hidden @xl:col-span-2">
+      <p aria-live="assertive" className={`text-[15px] text-destructive empty:hidden ${wideClass}`}>
         {errorCount > 0 && errorSummary(errorCount)}
       </p>
 
@@ -161,7 +168,8 @@ function Form({ action, onReset }: { action: ContactAction; onReset: () => void 
           <Select id={id} name={name} required items={interventionTypeLabels} defaultValue={values.interventionType}>
             <SelectTrigger
               {...props}
-              className={`h-13 w-full pr-4 data-[size=default]:h-13 [&>svg]:size-5 [&>svg]:text-foreground ${controlClass}`}
+              // In compact pairs on a phone the column is too narrow for "Non so ancora" at 17px.
+              className={`h-13 w-full pr-4 data-[size=default]:h-13 [&>svg]:size-5 [&>svg]:text-foreground ${controlClass} ${compact ? '@max-md:pr-3 @max-md:text-[15px]' : ''}`}
             >
               <SelectValue />
             </SelectTrigger>
@@ -182,21 +190,21 @@ function Form({ action, onReset }: { action: ContactAction; onReset: () => void 
           </Select>
         )}
       </Field>
-      <Field name="message" label="Raccontami l’idea *" errors={errors.message} className="@xl:col-span-2">
+      <Field name="message" label="Raccontami l’idea *" errors={errors.message} className={wideClass}>
         {(props) => (
           <Textarea
             {...props}
             required
-            rows={5}
+            rows={compact ? 4 : 5}
             defaultValue={values.message}
             placeholder="Es. vorrei ristrutturare il bagno e capire se serve una pratica"
-            className={`min-h-36 py-3.5 leading-normal ${controlClass} placeholder:text-[15px] placeholder:text-muted-foreground/60`}
+            className={`${compact ? 'min-h-28 [@media(min-height:880px)]:min-h-36' : 'min-h-36'} py-3.5 leading-normal ${controlClass} placeholder:text-[15px] placeholder:text-muted-foreground/60`}
           />
         )}
       </Field>
 
       {/* Pulled up so the consent reads as part of the message, not a separate row. */}
-      <div className="-mt-3 flex flex-col gap-2 @xl:col-span-2">
+      <div className={`-mt-3 flex flex-col gap-2 ${wideClass}`}>
         <label className="flex cursor-pointer items-start gap-3 text-[13px] leading-normal text-muted-foreground">
           <Switch
             name="privacyConsent"
@@ -226,7 +234,7 @@ function Form({ action, onReset }: { action: ContactAction; onReset: () => void 
       </div>
 
       {formErrors.length > 0 && (
-        <div role="alert" className="flex flex-col gap-2 @xl:col-span-2">
+        <div role="alert" className={`flex flex-col gap-2 ${wideClass}`}>
           <p className="text-[15px] text-destructive">{formErrors.join(' ')}</p>
           {state.fallbackEmail && (
             <a href={mailtoHref(state.fallbackEmail, values)} className={`${textLinkClass} text-[15px]`}>
@@ -236,7 +244,10 @@ function Form({ action, onReset }: { action: ContactAction; onReset: () => void 
         </div>
       )}
 
-      <div className="flex flex-wrap items-center justify-between gap-5 @xl:col-span-2">
+      {/* In the drawer the send row stands apart from the fields. */}
+      <div
+        className={`flex flex-wrap items-center justify-between gap-5 ${wideClass} ${compact ? 'mt-4 [@media(min-height:880px)]:mt-10' : ''}`}
+      >
         <span className="text-[13px] text-muted-foreground">* campi obbligatori</span>
         <Button
           type="submit"
@@ -253,13 +264,14 @@ function Form({ action, onReset }: { action: ContactAction; onReset: () => void 
 }
 
 /** Contact form: checked in the browser with the domain schema, then submitted to the Server Action. */
-export function ContactForm({ action = submitContactForm }: { action?: ContactAction }) {
+/** `compact` pairs the fields from the start and shortens the message box, so the drawer fits the screen. */
+export function ContactForm({ action = submitContactForm, compact = false }: { action?: ContactAction; compact?: boolean }) {
   // Remounting the form is the simplest way to start over after a message has been sent.
   const [round, setRound] = useState(0)
   // A container query, not a media query: in the narrow drawer the fields stay one per row.
   return (
     <div className="@container min-w-0">
-      <Form key={round} action={action} onReset={() => setRound((current) => current + 1)} />
+      <Form key={round} action={action} compact={compact} onReset={() => setRound((current) => current + 1)} />
     </div>
   )
 }

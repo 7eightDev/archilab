@@ -46,7 +46,7 @@ export function ContactDrawerProvider({ children }: { children: ReactNode }) {
           <DialogOverlay className="bg-petrolio-3/85 supports-backdrop-filter:backdrop-blur-none" />
           <DialogPrimitive.Popup
             finalFocus={openerRef}
-            className="fixed inset-y-0 right-0 z-50 flex w-full max-w-[560px] flex-col gap-10 overflow-y-auto overscroll-contain border-l border-border bg-background px-6 pt-6 pb-[max(32px,env(safe-area-inset-bottom))] outline-none transition-transform duration-300 ease-out data-ending-style:translate-x-full data-starting-style:translate-x-full motion-reduce:transition-none sm:px-10"
+            className="fixed inset-y-0 right-0 z-50 flex w-full max-w-[560px] flex-col gap-6 overflow-y-auto overscroll-contain border-l border-border bg-background px-6 pt-6 pb-[max(32px,env(safe-area-inset-bottom))] outline-none transition-transform duration-300 ease-out data-ending-style:translate-x-full data-starting-style:translate-x-full motion-reduce:transition-none sm:px-10"
           >
             <div className="flex items-start justify-between gap-6">
               <div className="flex flex-col gap-3 pt-2">
@@ -73,7 +73,7 @@ export function ContactDrawerProvider({ children }: { children: ReactNode }) {
                 </span>
               </a>
             </div>
-            <ContactForm />
+            <ContactForm compact />
           </DialogPrimitive.Popup>
         </DialogPortal>
       </Dialog>

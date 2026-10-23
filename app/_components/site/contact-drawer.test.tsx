@@ -34,6 +34,16 @@ describe('ContactDrawer', () => {
     expect(document.querySelector('[data-slot="dialog-overlay"]')).toHaveClass('bg-petrolio-3/85')
   })
 
+  // The whole panel has to fit the screen without scrolling.
+  it('lays the form out compactly: fields in pairs and a shorter message box', async () => {
+    renderDrawer()
+    await userEvent.click(trigger())
+    const dialog = await screen.findByRole('dialog', { name: 'Scrivimi' })
+
+    expect(dialog.querySelector('form')).toHaveClass('grid-cols-2')
+    expect(within(dialog).getByRole('textbox', { name: /Raccontami/ })).toHaveAttribute('rows', '4')
+  })
+
   it('opens the drawer from a trigger', async () => {
     renderDrawer()
 
