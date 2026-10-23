@@ -40,3 +40,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 !.env.example
+
+# local design and tooling material, kept out of the repo
+/.claude/
+/.impeccable/critique/
+/PRODUCT.md
+/design/Archilab Sito - pagina completa.png
+/design/Archilab website wireframes.zip
+/design_handoff_archilab_sito/
