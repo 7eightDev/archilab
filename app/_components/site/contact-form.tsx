@@ -141,9 +141,9 @@ function Form({ action, onReset }: { action: ContactAction; onReset: () => void 
         setErrors(clientErrors)
         if (Object.keys(clientErrors).length > 0) event.preventDefault()
       }}
-      className="grid min-w-0 gap-5 sm:grid-cols-2"
+      className="grid min-w-0 gap-5 @xl:grid-cols-2"
     >
-      <p aria-live="assertive" className="text-[15px] text-destructive empty:hidden sm:col-span-2">
+      <p aria-live="assertive" className="text-[15px] text-destructive empty:hidden @xl:col-span-2">
         {errorCount > 0 && errorSummary(errorCount)}
       </p>
 
@@ -182,7 +182,7 @@ function Form({ action, onReset }: { action: ContactAction; onReset: () => void 
           </Select>
         )}
       </Field>
-      <Field name="message" label="Raccontami l’idea *" errors={errors.message} className="sm:col-span-2">
+      <Field name="message" label="Raccontami l’idea *" errors={errors.message} className="@xl:col-span-2">
         {(props) => (
           <Textarea
             {...props}
@@ -196,7 +196,7 @@ function Form({ action, onReset }: { action: ContactAction; onReset: () => void 
       </Field>
 
       {/* Pulled up so the consent reads as part of the message, not a separate row. */}
-      <div className="-mt-3 flex flex-col gap-2 sm:col-span-2">
+      <div className="-mt-3 flex flex-col gap-2 @xl:col-span-2">
         <label className="flex cursor-pointer items-start gap-3 text-[13px] leading-normal text-muted-foreground">
           <Switch
             name="privacyConsent"
@@ -226,7 +226,7 @@ function Form({ action, onReset }: { action: ContactAction; onReset: () => void 
       </div>
 
       {formErrors.length > 0 && (
-        <div role="alert" className="flex flex-col gap-2 sm:col-span-2">
+        <div role="alert" className="flex flex-col gap-2 @xl:col-span-2">
           <p className="text-[15px] text-destructive">{formErrors.join(' ')}</p>
           {state.fallbackEmail && (
             <a href={mailtoHref(state.fallbackEmail, values)} className={`${textLinkClass} text-[15px]`}>
@@ -236,7 +236,7 @@ function Form({ action, onReset }: { action: ContactAction; onReset: () => void 
         </div>
       )}
 
-      <div className="flex flex-wrap items-center justify-between gap-5 sm:col-span-2">
+      <div className="flex flex-wrap items-center justify-between gap-5 @xl:col-span-2">
         <span className="text-[13px] text-muted-foreground">* campi obbligatori</span>
         <Button
           type="submit"
@@ -256,5 +256,10 @@ function Form({ action, onReset }: { action: ContactAction; onReset: () => void 
 export function ContactForm({ action = submitContactForm }: { action?: ContactAction }) {
   // Remounting the form is the simplest way to start over after a message has been sent.
   const [round, setRound] = useState(0)
-  return <Form key={round} action={action} onReset={() => setRound((current) => current + 1)} />
+  // A container query, not a media query: in the narrow drawer the fields stay one per row.
+  return (
+    <div className="@container min-w-0">
+      <Form key={round} action={action} onReset={() => setRound((current) => current + 1)} />
+    </div>
+  )
 }
