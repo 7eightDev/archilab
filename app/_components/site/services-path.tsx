@@ -31,7 +31,7 @@ export function ServicesPath({ services }: { services: Service[] }) {
             key={service.id}
             className="row-span-3 grid grid-rows-subgrid gap-y-3.5 border-b border-border py-8 sm:last:odd:col-span-2 lg:pr-7 lg:last:odd:col-span-1"
           >
-            <h3 className="font-heading text-[28px] leading-[1.1] tracking-[.04em]">{service.title}</h3>
+            <h3 className="font-heading text-[28px] leading-[1.1] tracking-[.04em] text-ottone">{service.title}</h3>
             <p className="text-base leading-[1.6] text-muted-foreground">{service.description}</p>
             {service.items.length > 0 && (
               <ul className="flex flex-col">
