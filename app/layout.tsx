@@ -37,6 +37,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="it"
       className={`${oswald.variable} ${montserrat.variable} h-full antialiased`}
+      // The logo intro's inline script sets data-intro before hydration.
+      suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

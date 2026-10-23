@@ -3,6 +3,7 @@ import { heroSlides, studio } from '@/app/_components/site/content'
 import { FeaturedProject } from '@/app/_components/site/featured-project'
 import { GridLines } from '@/app/_components/site/grid-lines'
 import { Hero } from '@/app/_components/site/hero'
+import { LogoIntro } from '@/app/_components/site/logo-intro'
 import { Method } from '@/app/_components/site/method'
 import { MobileContactBar } from '@/app/_components/site/mobile-contact-bar'
 import { ServicesPath } from '@/app/_components/site/services-path'
@@ -45,6 +46,8 @@ export default async function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, '\\u003c') }}
       />
+      {/* First, so its inline script marks the page before the header and the hero are painted. */}
+      <LogoIntro />
       <SiteHeader links={links} />
       <main className="flex-1">
         <Hero slides={heroSlides} showProjectLink={project !== null} />
