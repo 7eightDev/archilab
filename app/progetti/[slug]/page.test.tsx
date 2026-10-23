@@ -58,9 +58,12 @@ describe('ProjectPage', () => {
     expect(document.querySelectorAll('figure')).toHaveLength(6)
     expect(screen.getByRole('slider', { name: 'Confronta prima e dopo' })).toBeInTheDocument()
 
-    const services = within(section(/Cosa ho seguito/i)).getAllByRole('link')
-    expect(services).toHaveLength(3)
-    for (const link of services) expect(link).toHaveAttribute('href', '/#servizi')
+    // There are no service pages: the services are listed, not linked.
+    const services = within(section(/Cosa ho seguito/i))
+    expect(services.getAllByRole('listitem')).toHaveLength(3)
+    expect(services.getByText('Pratiche urbanistiche')).toBeInTheDocument()
+    expect(services.getByText('Permessi e rapporti con il Comune.')).toBeInTheDocument()
+    expect(services.queryAllByRole('link')).toHaveLength(0)
 
     expect(within(section(/Altri progetti/i)).getAllByRole('heading', { level: 3 })).toHaveLength(3)
     expect(screen.getByRole('link', { name: /PRECEDENTE/ })).toBeInTheDocument()

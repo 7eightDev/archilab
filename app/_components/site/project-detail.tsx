@@ -12,7 +12,7 @@ import { ProjectCard } from './project-card'
 import { categoryLabels } from './project-labels'
 import { ProjectPager } from './project-pager'
 import { containerClass, microLabelClass } from './section-heading'
-import { ServiceLinks } from './service-links'
+import { ServiceList } from './service-list'
 import { TitleBlock } from './title-block'
 
 const sectionTitleClass = 'font-heading text-2xl leading-[1.1] font-light tracking-[.24em] lg:text-[32px]'
@@ -169,7 +169,7 @@ export function ProjectDetail({ project, services, previous, next, related }: Pr
           <h2 id="seguito-title" className={sectionTitleClass}>
             COSA HO <span className="text-ottone">SEGUITO</span>
           </h2>
-          <ServiceLinks services={projectServices} />
+          <ServiceList services={projectServices} />
         </section>
       )}
 

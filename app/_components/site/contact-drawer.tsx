@@ -42,7 +42,8 @@ export function ContactDrawerProvider({ children }: { children: ReactNode }) {
       {children}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogPortal keepMounted>
-          <DialogOverlay className="bg-[rgba(10,57,71,.7)] supports-backdrop-filter:backdrop-blur-none" />
+          {/* Darker than the page's petrolio, so the panel stands apart from what is behind it. */}
+          <DialogOverlay className="bg-petrolio-3/85 supports-backdrop-filter:backdrop-blur-none" />
           <DialogPrimitive.Popup
             finalFocus={openerRef}
             className="fixed inset-y-0 right-0 z-50 flex w-full max-w-[560px] flex-col gap-10 overflow-y-auto overscroll-contain border-l border-border bg-background px-6 pt-6 pb-[max(32px,env(safe-area-inset-bottom))] outline-none transition-transform duration-300 ease-out data-ending-style:translate-x-full data-starting-style:translate-x-full motion-reduce:transition-none sm:px-10"

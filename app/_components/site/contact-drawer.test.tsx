@@ -25,6 +25,15 @@ describe('ContactDrawer', () => {
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   })
 
+  // A veil of the page's own petrolio left the panel blending in; the footer's darker tone sets it apart.
+  it('darkens the page behind the open drawer', async () => {
+    renderDrawer()
+    await userEvent.click(trigger())
+    await screen.findByRole('dialog', { name: 'Scrivimi' })
+
+    expect(document.querySelector('[data-slot="dialog-overlay"]')).toHaveClass('bg-petrolio-3/85')
+  })
+
   it('opens the drawer from a trigger', async () => {
     renderDrawer()
 

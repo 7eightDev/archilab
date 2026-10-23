@@ -148,7 +148,7 @@ Con `prefers-reduced-motion` la foto non si ingrandisce. L'intera card è un sol
    - **senza racconto**: il blocco dei dati occupa tutte le 12 colonne e il cartiglio passa a 4 colonne.
 4. **"LE FASI"** (`PhaseStrip`): solo se la galleria non è vuota.
 5. **"PRIMA E DOPO"**: il componente esistente [before-after.tsx](../../../app/_components/site/before-after.tsx), su una fascia petrolio-2, solo se ci sono entrambe le foto.
-6. **"COSA HO SEGUITO"** (`ServiceLinks`): un riquadro con bordo linea-forte per ogni servizio, con il titolo e il campo `summary` del servizio (omesso se manca), che porta a `/#servizi`. Su telefono diventa un elenco a righe.
+6. **"COSA HO SEGUITO"** (`ServiceList`): un riquadro con bordo linea-forte per ogni servizio, con il titolo e il campo `summary` del servizio (omesso se manca). Non sono link, perché non esistono pagine dei servizi. Su telefono diventa un elenco a righe.
 7. **"ALTRI PROGETTI"** (`RelatedProjects`): 3 card piccole in 3:2. La nota a destra dice "Della stessa categoria: <categoria>" se i progetti della stessa categoria sono almeno 3, altrimenti "<categoria> e altri progetti recenti".
 8. **Navigazione fra progetti** (`ProjectPager`): PRECEDENTE · Tutti i progetti · SUCCESSIVO, con i titoli. Su telefono è una griglia 2×1 con "Tutti i progetti" sotto.
 9. **Fascia finale**: "Hai una casa da ripensare? Scrivimi." per la categoria ristrutturazione, "Hai un progetto simile? Scrivimi." per le altre.
@@ -236,7 +236,7 @@ Il prima/dopo e il racconto escono dalla home.
 
 - È un pannello che entra da destra, alto quanto lo schermo, largo `min(560px, 100%)`, quindi a tutta larghezza su telefono.
 - Fondo petrolio, bordo sinistro linea, spigoli vivi, nessuna ombra.
-- Dietro il pannello c'è un velo `rgba(10,57,71,.7)`.
+- Dietro il pannello c'è un velo petrolio-3 all'85%, più scuro della pagina, così il pannello si stacca da ciò che c'è dietro.
 - Entra scorrendo in 300ms; con `prefers-reduced-motion` compare senza animazione.
 
 ### Contenuto
@@ -257,7 +257,7 @@ Il prima/dopo e il racconto escono dalla home.
 
 Tutti in `app/_components/site/` salvo dove indicato.
 
-- **Nuovi**: `ProjectCard`, `FeaturedProjectRow`, `FilterChips`, `TitleBlock` (con la funzione pura delle celle), `PhaseStrip`, `ServiceLinks`, `RelatedProjects`, `ProjectPager`, `ClosingCta`, `ContactDrawer` (con provider e trigger), `hero-slides.ts` (con `toHeroSlide` e la regola dell'occhiello).
+- **Nuovi**: `ProjectCard`, `FeaturedProjectRow`, `FilterChips`, `TitleBlock` (con la funzione pura delle celle), `PhaseStrip`, `ServiceList`, `RelatedProjects`, `ProjectPager`, `ClosingCta`, `ContactDrawer` (con provider e trigger), `hero-slides.ts` (con `toHeroSlide` e la regola dell'occhiello).
 - **Modificati**: `Hero` (link al progetto, stati con 0 e 1 slide, fascia su telefono), `FeaturedProject` (anteprima), `SiteHeader` (voci, stato attivo, "Contattami" che apre il drawer), `MobileContactBar` (riferimenti configurabili, apertura del drawer), `ContactForm` (container query), `content.ts` (via `heroSlides`).
 - **Pagine**: `app/page.tsx` (Hero dai progetti, voci del menu), `app/progetti/layout.tsx`, `app/progetti/page.tsx`, `app/progetti/[slug]/page.tsx`, `app/progetti/[slug]/not-found.tsx`.
 
