@@ -178,17 +178,22 @@ export function Hero({ slides: projectSlides }: { slides: HeroSlide[] }) {
               <a
                 href={slide.project.href}
                 aria-label={`Guarda il progetto: ${slide.project.title}`}
-                className="flex min-h-11 flex-col justify-center gap-1 px-1.5 text-sm text-foreground outline-offset-4 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-foreground sm:flex-row sm:items-center sm:justify-start sm:gap-3.5"
+                // The text is already near white, so hover is shown by shape: the caption underlines, the rule
+                // lengthens and the arrow steps out, all without giving up contrast over the photo.
+                className="group flex min-h-11 flex-col justify-center gap-1 px-1.5 text-sm text-foreground outline-offset-4 focus-visible:outline-2 focus-visible:outline-foreground sm:flex-row sm:items-center sm:justify-start sm:gap-3.5"
               >
                 {slide.caption && (
                   <>
-                    <span className="truncate max-sm:text-xs max-sm:text-muted-foreground">{slide.caption}</span>
-                    <span aria-hidden className="h-px w-7 flex-none bg-current max-sm:hidden" />
+                    {/* Padding below, offset by the margin, so the truncating box does not clip the underline. */}
+                    <span className="-mb-2 truncate pb-2 decoration-1 underline-offset-[6px] group-hover:underline max-sm:text-xs max-sm:text-muted-foreground">
+                      {slide.caption}
+                    </span>
+                    <span aria-hidden className="h-px w-7 flex-none bg-current transition-[width] group-hover:w-10 max-sm:hidden" />
                   </>
                 )}
                 <span className="inline-flex items-center gap-2 font-medium">
                   <span className="underline decoration-1 underline-offset-[6px]">Guarda il progetto</span>
-                  <ArrowUpRightIcon aria-hidden className="size-4" />
+                  <ArrowUpRightIcon aria-hidden className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </span>
               </a>
             )}
