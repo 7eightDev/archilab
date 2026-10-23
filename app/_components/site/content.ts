@@ -1,44 +1,9 @@
 import type { Image } from '@/app/_domain/entities/shared';
-import { unsplash } from '@/app/_lib/unsplash';
 
 /**
  * Editorial copy of the one-page site that is not domain data (services and the featured project
  * come from the use cases). Details the studio has not supplied yet are `null`, and the page leaves them out.
  */
-
-export interface HeroSlide {
-  kicker: string;
-  caption: string;
-  image: Image;
-}
-
-// Provisional photos (Unsplash): Home Makers Interior, The Prototype, Daniel McCullough.
-export const heroSlides: HeroSlide[] = [
-  {
-    kicker: 'UN APPARTAMENTO A FONDI',
-    caption: 'Ristrutturazione completa · 95 m²',
-    image: {
-      src: unsplash('photo-1742367539759-6e4fc2e39209'),
-      alt: 'Zona giorno luminosa con libreria a parete'
-    }
-  },
-  {
-    kicker: 'INTERNI PENSATI CON TE',
-    caption: 'Materiali, luci e arredo su misura',
-    image: {
-      src: unsplash('photo-1748679767437-00b5c0327b1a'),
-      alt: 'Interno dai toni scuri con arredo su misura'
-    }
-  },
-  {
-    kicker: 'IL PROGETTO, FINO IN COMUNE',
-    caption: 'CILA, SCIA, permessi e agibilità',
-    image: {
-      src: unsplash('photo-1503387762-592deb58ef4e'),
-      alt: 'Tavolo da disegno con tavole di progetto'
-    }
-  }
-];
 
 export const phases = [
   { name: 'IDEA', detail: 'Ascolto e sopralluogo' },
