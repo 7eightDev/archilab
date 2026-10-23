@@ -16,7 +16,7 @@ describe('Home page', () => {
     expect(within(main).getAllByRole('heading', { level: 2 }).map((heading) => heading.textContent)).toEqual([
       'Lo Studio',
       'Un solo Percorso',
-      'Il Progetto',
+      'Caso Studio',
       'Come Lavoro',
       'Scrivimi',
     ])
@@ -53,7 +53,7 @@ describe('Home page', () => {
 
     render(await Home())
 
-    expect(screen.queryByRole('region', { name: 'Il Progetto' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('region', { name: 'Caso Studio' })).not.toBeInTheDocument()
     expect(document.querySelector('a[href="#progetti"], a[href="#servizi"]')).toBeNull()
   })
 })
