@@ -23,6 +23,17 @@ describe('ProjectCard', () => {
     expect(container.querySelector('.aspect-\\[3\\/2\\]')).not.toBeNull()
     expect(container.querySelector('.aspect-\\[4\\/3\\]')).toBeNull()
   })
+
+  // Titles on one or two lines: the card fills its grid row and the place line sits at the bottom,
+  // so the rules under the cards of a row line up.
+  it('stretches to the row so the bottom rules line up', () => {
+    render(<ProjectCard project={bySlug('bar-fondi')} />)
+
+    const card = screen.getByRole('link')
+    expect(card).toHaveClass('h-full')
+    expect(screen.getByRole('heading', { level: 3 }).closest('div.border-b')).toHaveClass('flex-1')
+    expect(screen.getByText(/2023/)).toHaveClass('mt-auto')
+  })
 })
 
 describe('FeaturedProjectRow', () => {

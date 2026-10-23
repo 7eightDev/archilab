@@ -21,7 +21,8 @@ function placeAndYear(project: Project): string {
 export function ProjectCard({ project, size = 'default' }: { project: Project; size?: 'default' | 'small' }) {
   const small = size === 'small'
   return (
-    <a href={`/progetti/${project.slug}`} className={cardLinkClass}>
+    // Fills its grid row, with the place line at the bottom, so the rules under a row of cards line up.
+    <a href={`/progetti/${project.slug}`} className={`${cardLinkClass} h-full`}>
       <div className={`relative overflow-hidden bg-secondary ${small ? 'aspect-[3/2]' : 'aspect-[4/3]'}`}>
         <Image
           src={project.coverImage.src}
@@ -31,7 +32,7 @@ export function ProjectCard({ project, size = 'default' }: { project: Project; s
           className={zoomClass}
         />
       </div>
-      <div className={`flex flex-col gap-2 pb-4 ${lineClass}`}>
+      <div className={`flex flex-1 flex-col gap-2 pb-4 ${lineClass}`}>
         <span className={microLabelClass}>{categoryLabels[project.category].toUpperCase()}</span>
         <div className="flex items-start justify-between gap-4">
           <h3 className={`font-heading text-[21px] leading-[1.25] tracking-[.02em] text-balance ${titleHoverClass}`}>
@@ -43,7 +44,7 @@ export function ProjectCard({ project, size = 'default' }: { project: Project; s
             className="mt-1 size-5 shrink-0 text-ottone opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 motion-reduce:transition-none"
           />
         </div>
-        <span className="text-[13px] text-muted-foreground">{placeAndYear(project)}</span>
+        <span className="mt-auto text-[13px] text-muted-foreground">{placeAndYear(project)}</span>
       </div>
     </a>
   )
