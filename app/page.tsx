@@ -37,7 +37,7 @@ export default async function Home() {
   const links = [
     { href: '#studio', label: 'Studio' },
     ...(services.length > 0 ? [{ href: '#servizi', label: 'Servizi' }] : []),
-    ...(project ? [{ href: '#progetti', label: 'Il progetto' }] : []),
+    ...(project ? [{ href: '#progetti', label: 'Caso studio' }] : []),
   ]
 
   return (
