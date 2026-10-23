@@ -66,10 +66,15 @@ export function LogoIntro() {
 
       // Completes any stroke still being drawn, so a skipped mark flies whole.
       overlay.dataset.skipped = ''
-      const from = mark.getBoundingClientRect()
+      // Measured on the svg, which sits off the wrapper's centre (see the markup), and scaled around its own centre.
+      const box = mark.getBoundingClientRect()
+      const from = mark.querySelector('svg')!.getBoundingClientRect()
       const to = target.getBoundingClientRect()
-      const dx = to.left + to.width / 2 - (from.left + from.width / 2)
-      const dy = to.top + to.height / 2 - (from.top + from.height / 2)
+      const fromX = from.left + from.width / 2
+      const fromY = from.top + from.height / 2
+      mark.style.transformOrigin = `${fromX - box.left}px ${fromY - box.top}px`
+      const dx = to.left + to.width / 2 - fromX
+      const dy = to.top + to.height / 2 - fromY
       const timing = { duration, easing: FLY_EASING, fill: 'forwards' } as const
       backdropRef.current.animate([{ opacity: 1 }, { opacity: 0 }], timing)
       mark
@@ -94,7 +99,8 @@ export function LogoIntro() {
       <div ref={overlayRef} aria-hidden className="logo-intro fixed inset-0 z-50 items-center justify-center">
         <div ref={backdropRef} className="absolute inset-0 bg-background" />
         <div ref={markRef} className="relative w-[min(84vw,720px)]">
-          <Logo drawing className="block h-auto w-full" />
+          {/* The viewBox leaves empty room right of the lettering: nudged so the drawing itself is centred. */}
+          <Logo drawing className="relative left-[5%] block h-auto w-full" />
         </div>
       </div>
       {/* text/plain on the client: React only runs it from the server HTML, and warns about client-rendered scripts. */}
