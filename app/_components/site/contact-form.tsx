@@ -243,7 +243,7 @@ function Form({ action, onReset }: { action: ContactAction; onReset: () => void 
           size="cta"
           data-crosshair-target
           disabled={pending || !complete}
-          className="focus-visible:ring-0 focus-visible:shadow-[0_0_0_3px_var(--ottone)] max-sm:w-full"
+          className="px-5 sm:px-6 focus-visible:ring-0 focus-visible:shadow-[0_0_0_3px_var(--ottone)] max-sm:w-full"
         >
           {pending ? 'Invio in corso…' : <>Invia il messaggio <ArrowRightIcon aria-hidden /></>}
         </Button>

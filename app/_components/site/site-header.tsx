@@ -12,7 +12,7 @@ export interface NavLink {
 }
 
 const contactButtonClass =
-  'inline-flex min-h-11 items-center bg-primary px-[18px] text-[13px] font-medium tracking-[.08em] text-primary-foreground transition-colors hover:bg-white'
+  'inline-flex min-h-11 items-center bg-primary px-3.5 text-[13px] font-medium tracking-[.08em] text-primary-foreground transition-colors hover:bg-white'
 const navLinkClass = 'py-3 font-heading text-[13px] tracking-[.16em] transition-colors hover:text-ottone'
 
 /**
