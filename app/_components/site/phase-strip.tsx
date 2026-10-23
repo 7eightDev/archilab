@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useRef, useState } from 'react'
+import { type TransitionEvent, useRef, useState } from 'react'
 import type { GalleryImage } from '@/app/_domain/entities/shared'
 import { microLabelClass } from './section-heading'
 
@@ -19,19 +19,23 @@ export function PhaseStrip({ images, height = 'detail' }: { images: GalleryImage
   const [active, setActive] = useState<number | null>(null)
   // Desktop: while a phase is open the strip keeps its resting height. The narrowed neighbours rewrap their captions
   // onto an extra line, which would otherwise push the rest of the page down; those lines spill into the gap below.
+  // The lock outlasts the phase until the columns have settled back, or the closing animation would push it down too.
   const [lockedHeight, setLockedHeight] = useState<number>()
   const stripRef = useRef<HTMLDivElement>(null)
   if (images.length === 0) return null
 
   const open = (index: number) => {
-    if (active === null && stripRef.current && window.matchMedia?.('(min-width: 1024px)').matches) {
-      setLockedHeight(stripRef.current.offsetHeight)
+    if (lockedHeight === undefined && stripRef.current && window.matchMedia?.('(min-width: 1024px)').matches) {
+      setLockedHeight(stripRef.current.getBoundingClientRect().height)
     }
     setActive(index)
   }
   const close = () => {
     setActive(null)
-    setLockedHeight(undefined)
+    if (!window.matchMedia?.('(prefers-reduced-motion: no-preference)').matches) setLockedHeight(undefined)
+  }
+  const release = (event: TransitionEvent) => {
+    if (active === null && event.propertyName === 'flex-grow') setLockedHeight(undefined)
   }
 
   const few = images.length <= 2
@@ -44,6 +48,8 @@ export function PhaseStrip({ images, height = 'detail' }: { images: GalleryImage
       style={lockedHeight ? { height: lockedHeight } : undefined}
       className="grid gap-y-10 sm:grid-cols-2 sm:gap-x-6 lg:flex lg:gap-0 lg:pt-1.5"
       onMouseLeave={close}
+      onTransitionEnd={release}
+      onTransitionCancel={release}
     >
       {images.map((image, index) => (
         <figure
