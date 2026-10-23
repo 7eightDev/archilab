@@ -1,7 +1,7 @@
 import { render, screen, within } from '@testing-library/react'
 import { notFound } from 'next/navigation'
 import ProjectNotFound from './not-found'
-import ProjectPage, { generateMetadata, generateStaticParams } from './page'
+import ProjectPage, { generateMetadata, generateStaticParams, instant } from './page'
 
 jest.mock('@/app/_actions/submit-contact-form', () => ({ submitContactForm: jest.fn() }))
 jest.mock('next/navigation', () => ({
@@ -18,6 +18,13 @@ async function renderProject(slug: string) {
 function section(name: RegExp) {
   return screen.getByRole('heading', { level: 2, name }).closest('section') as HTMLElement
 }
+
+describe('route config', () => {
+  // Everything on the page depends on the slug; a Suspense shell would also turn the 404 into a 200.
+  it('lets the navigation wait for the page', () => {
+    expect(instant).toBe(false)
+  })
+})
 
 describe('generateStaticParams', () => {
   it('generates a page for every project', async () => {

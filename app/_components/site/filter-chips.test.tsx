@@ -46,4 +46,11 @@ describe('FilterChips', () => {
     expect(current).toHaveLength(1)
     expect(current[0]).toHaveTextContent('Tutti')
   })
+
+  // In a centred column the nav would take the chips' width and widen the page on phones.
+  it('keeps the row within the page width, scrolling the chips instead', () => {
+    render(<FilterChips counts={counts} total={8} />)
+
+    expect(screen.getByRole('navigation', { name: 'Filtra per categoria' })).toHaveClass('w-full')
+  })
 })

@@ -33,9 +33,9 @@ export function FilterChips({
     .sort((a, b) => counts[b]! - counts[a]! || categoryLabels[a].localeCompare(categoryLabels[b], 'it'))
 
   return (
-    <nav aria-label="Filtra per categoria">
+    <nav aria-label="Filtra per categoria" className="w-full">
       {/* On phones the chips scroll sideways, edge to edge. */}
-      <ul className="-mx-6 flex gap-3 overflow-x-auto px-6 sm:mx-0 sm:flex-wrap sm:px-0">
+      <ul className="-mx-6 flex gap-3 overflow-x-auto px-6 sm:mx-0 sm:flex-wrap sm:justify-center sm:px-0">
         <Chip href="/progetti" label="Tutti" count={total} active={active === undefined} />
         {categories.map((category) => (
           <Chip
