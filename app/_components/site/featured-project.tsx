@@ -1,10 +1,9 @@
 import { ArrowRightIcon } from 'lucide-react'
 import Link from 'next/link'
-import { buttonVariants } from '@/app/_components/ui/button'
 import type { Project } from '@/app/_domain/entities/project'
 import type { Service } from '@/app/_domain/entities/service'
 import { AreaFigure } from './area-figure'
-import { textLinkClass } from './link-styles'
+import { outlineCtaLinkClass, tintedCtaLinkClass } from './link-styles'
 import { PhaseStrip } from './phase-strip'
 import { SectionHeading, SectionLead, containerClass, screenSectionClass } from './section-heading'
 import { TitleBlock } from './title-block'
@@ -34,14 +33,18 @@ export function FeaturedProject({ project, services, total }: { project: Project
             <TitleBlock project={project} services={services} columns={2} />
           </div>
         </div>
-        <div className="flex flex-col items-start gap-7 lg:col-span-6 lg:col-start-7">
+        <div className="flex flex-col items-start gap-7 lg:col-span-6 lg:col-start-7 lg:self-center">
           <p className="text-[17px] leading-[1.6] text-muted-foreground">{project.summary}</p>
-          <a href={`/progetti/${project.slug}`} className={buttonVariants({ variant: 'outline', size: 'cta' })}>
-            Leggi il caso studio <ArrowRightIcon aria-hidden />
-          </a>
-          <Link href="/progetti" className={`${textLinkClass} text-[15px]`}>
-            Tutti i progetti · {total}
-          </Link>
+          <div className="flex flex-wrap gap-3">
+            <a href={`/progetti/${project.slug}`} className={`${outlineCtaLinkClass} max-sm:w-full`}>
+              Leggi il caso studio <ArrowRightIcon aria-hidden />
+            </a>
+            <Link href="/progetti" className={`${tintedCtaLinkClass} max-sm:w-full`}>
+              <span>
+                Tutti i progetti <span className="text-muted-foreground">· {total}</span>
+              </span>
+            </Link>
+          </div>
         </div>
       </div>
     </section>
