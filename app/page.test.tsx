@@ -106,6 +106,6 @@ describe('Home page details still to be supplied', () => {
     expect(screen.queryByText(/Ritratto/)).not.toBeInTheDocument()
     expect(screen.queryByText(/P\.IVA/)).not.toBeInTheDocument()
     expect(screen.queryByRole('link', { name: /privacy|cookie/i })).not.toBeInTheDocument()
-    expect(screen.getByRole('contentinfo')).toHaveTextContent('Ordine degli Architetti PPC di Latina')
+    expect(screen.getByRole('contentinfo')).toHaveTextContent('Ordine degli Architetti di Latina')
   })
 })
