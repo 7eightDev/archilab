@@ -67,7 +67,12 @@ export function SiteHeader({
   }, [open])
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background">
+    // Frosted while the page scrolls under it, nearly solid where blur is unsupported; solid behind the open menu.
+    <header
+      className={`sticky top-0 z-40 border-b border-border ${
+        open ? 'bg-background' : 'bg-background/95 supports-backdrop-filter:bg-background/75 supports-backdrop-filter:backdrop-blur-md'
+      }`}
+    >
       <div className={`${containerClass} flex min-h-[var(--header-height)] items-center justify-between gap-6`}>
         <a href={homeHref} aria-label="Archilab, torna all'inizio" className="flex items-center py-2">
           <Logo className="h-10 w-auto sm:h-[52px]" />
