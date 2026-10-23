@@ -1,12 +1,13 @@
 import { act, fireEvent, render, screen } from '@testing-library/react'
-import type { HeroSlide } from './content'
 import { Hero } from './hero'
+import type { HeroSlide } from './hero-slides'
 
-const slides = [1, 2, 3].map((n) => ({
+const slides: HeroSlide[] = [1, 2, 3].map((n) => ({
   kicker: `Kicker ${n}`,
   caption: `Didascalia ${n}`,
   image: { src: `/foto-${n}.jpg`, alt: `Foto ${n}` },
-})) as HeroSlide[]
+  project: { href: `/progetti/p-${n}`, title: `Progetto ${n}` },
+}))
 
 function mockReducedMotion(reduce: boolean) {
   window.matchMedia = jest.fn().mockReturnValue({ matches: reduce, addEventListener: jest.fn(), removeEventListener: jest.fn() })
@@ -71,5 +72,35 @@ describe('Hero', () => {
 
     wait(18000)
     expect(counter()).toHaveAccessibleName('Immagine 1 di 3')
+  })
+
+  it('links the current photo to its project', () => {
+    render(<Hero slides={slides} />)
+
+    expect(screen.getByRole('link', { name: 'Guarda il progetto: Progetto 1' })).toHaveAttribute('href', '/progetti/p-1')
+    fireEvent.click(screen.getByRole('button', { name: 'Immagine successiva' }))
+    expect(screen.getByRole('link', { name: 'Guarda il progetto: Progetto 2' })).toHaveAttribute('href', '/progetti/p-2')
+  })
+
+  it('hides the arrows and the counter with a single slide', () => {
+    render(<Hero slides={slides.slice(0, 1)} />)
+
+    expect(screen.queryByRole('button', { name: 'Immagine successiva' })).not.toBeInTheDocument()
+    expect(screen.queryByLabelText('Immagine 1 di 1')).not.toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Guarda il progetto: Progetto 1' })).toBeInTheDocument()
+  })
+
+  it('shows the studio photo without a project link when there are no slides', () => {
+    render(<Hero slides={[]} />)
+
+    expect(screen.getByText('ARCHITETTO A FONDI (LT)')).toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: /Guarda il progetto/ })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Immagine successiva' })).not.toBeInTheDocument()
+  })
+
+  it('leaves out the dash when the caption is empty', () => {
+    render(<Hero slides={[{ ...slides[0], caption: '' }]} />)
+
+    expect(screen.getByRole('link', { name: 'Guarda il progetto: Progetto 1' })).toHaveTextContent(/^Guarda il progetto$/)
   })
 })

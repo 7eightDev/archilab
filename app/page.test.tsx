@@ -30,7 +30,7 @@ describe('Home page', () => {
     const hrefs = within(nav)
       .getAllByRole('link')
       .map((link) => link.getAttribute('href'))
-    expect(new Set(hrefs)).toEqual(new Set(['#studio', '#servizi', '#progetti', '#contatti']))
+    expect(new Set(hrefs)).toEqual(new Set(['#studio', '#servizi', '/progetti', '#contatti']))
   })
 
   it('shows the services and the featured project from the use cases', async () => {
@@ -45,6 +45,21 @@ describe('Home page', () => {
     const sheet = screen.getByLabelText('Scheda tecnica')
     expect(sheet).toHaveTextContent('SUPERFICIE95 m²')
     expect(sheet).toHaveTextContent('SERVIZIArchitettura · Interior · Pratiche urbanistiche')
+    expect(sheet).toHaveTextContent('ANNO2025')
+    expect(sheet).toHaveTextContent('DURATA7 mesi')
+  })
+
+  it('previews the featured project and links to its page and to all projects', async () => {
+    render(await Home())
+
+    const section = screen.getByRole('region', { name: 'Caso Studio' })
+    expect(within(section).getByRole('link', { name: 'Leggi il caso studio' })).toHaveAttribute(
+      'href',
+      '/progetti/appartamento-fondi',
+    )
+    expect(within(section).getByRole('link', { name: 'Tutti i progetti · 10' })).toHaveAttribute('href', '/progetti')
+    expect(within(section).getAllByRole('figure')).toHaveLength(4)
+    expect(within(section).queryByRole('slider', { name: 'Confronta prima e dopo' })).not.toBeInTheDocument()
   })
 
   it('leaves out the project section and its links when no project is featured', async () => {
@@ -54,7 +69,9 @@ describe('Home page', () => {
     render(await Home())
 
     expect(screen.queryByRole('region', { name: 'Caso Studio' })).not.toBeInTheDocument()
-    expect(document.querySelector('a[href="#progetti"], a[href="#servizi"]')).toBeNull()
+    // The header keeps its Progetti entry and the hero its project links; the case study link and services go.
+    expect(screen.queryByRole('link', { name: 'Leggi il caso studio' })).not.toBeInTheDocument()
+    expect(document.querySelector('a[href="#servizi"]')).toBeNull()
   })
 })
 

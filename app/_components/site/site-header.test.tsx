@@ -57,3 +57,65 @@ describe('SiteHeader mobile menu', () => {
     expect(menu()).not.toBeVisible()
   })
 })
+
+describe('SiteHeader across pages', () => {
+  it('marks the current page link', () => {
+    render(<SiteHeader links={[...links.slice(0, 2), { href: '/progetti', label: 'Progetti', current: true }]} />)
+
+    const current = screen.getAllByRole('link', { name: 'PROGETTI', hidden: true })
+    expect(current).toHaveLength(2)
+    for (const link of current) {
+      expect(link).toHaveAttribute('aria-current', 'page')
+      expect(link).toHaveClass('text-ottone')
+    }
+    expect(screen.getByRole('link', { name: 'STUDIO' })).not.toHaveAttribute('aria-current')
+  })
+
+  it('points the logo to the given home', () => {
+    render(<SiteHeader links={links} homeHref="/" />)
+
+    expect(screen.getByRole('link', { name: "Archilab, torna all'inizio" })).toHaveAttribute('href', '/')
+  })
+
+  it('links Contattami to the contact section by default', () => {
+    render(<SiteHeader links={links} />)
+
+    const contacts = screen.getAllByRole('link', { name: 'Contattami', hidden: true })
+    expect(contacts).toHaveLength(2)
+    for (const contact of contacts) expect(contact).toHaveAttribute('href', '#contatti')
+  })
+
+  it('renders a custom contact control', () => {
+    render(
+      <SiteHeader
+        links={links}
+        contact={({ className, onClick, children }) => (
+          <button type="button" className={className} onClick={onClick}>
+            {children}
+          </button>
+        )}
+      />,
+    )
+
+    expect(screen.getAllByRole('button', { name: 'Contattami', hidden: true })).toHaveLength(2)
+    expect(document.querySelector('a[href="#contatti"]')).toBeNull()
+  })
+
+  it('closes the menu when the custom contact control is used', async () => {
+    render(
+      <SiteHeader
+        links={links}
+        contact={({ className, onClick, children }) => (
+          <button type="button" className={className} onClick={onClick}>
+            {children}
+          </button>
+        )}
+      />,
+    )
+    await userEvent.click(screen.getByRole('button', { name: 'Apri il menu' }))
+
+    await userEvent.click(within(menu()).getByRole('button', { name: 'Contattami' }))
+
+    expect(menu()).not.toBeVisible()
+  })
+})

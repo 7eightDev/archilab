@@ -127,7 +127,7 @@ components:
     backgroundColor: "{colors.testo}"
     textColor: "{colors.petrolio-2}"
     rounded: "{rounded.none}"
-    padding: "0 18px"
+    padding: "0 14px"
     height: "44px"
   tag-chip:
     backgroundColor: "{colors.petrolio}"
@@ -240,7 +240,8 @@ Netti e decisi: un blocco pieno color carta su petrolio, che non si può non ved
 - **Primary:** fondo carta, testo petrolio-2, Montserrat 500 15px a +0.04em, altezza 52px, 24px di margine interno su telefono e 32px da 640px; a tutta larghezza su telefono. Freccia a icona a destra quando porta da qualche parte.
 - **Hover / Focus:** il fondo diventa bianco pieno; il focus del pulsante d'invio è un anello di 3px in ottone.
 - **Outline:** quadrato da 44px con bordo linea-forte e icona freccia, per le frecce del carosello; il bordo diventa carta in hover.
-- **Contattami (header):** come il primario ma più compatto, altezza 44px e 18px di margine interno.
+- **Contattami (header):** come il primario ma più compatto, altezza 44px e 14px di margine interno.
+- **Invia il messaggio:** come il primario ma con 20px di margine interno su telefono e 24px da 640px.
 
 ### Inputs / Fields
 - **Style:** fondo petrolio, bordo 1px linea-forte, spigoli vivi, altezza 52px, testo 17px. Etichetta sopra il campo in Montserrat 500 14px.

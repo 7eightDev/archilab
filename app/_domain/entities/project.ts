@@ -36,6 +36,16 @@ export const ProjectSchema = z.object({
   gallery: z.array(GalleryImageSchema).default([]),
   serviceIds: z.array(z.string().min(1)).default([]),
   featured: z.boolean().default(false),
+  /** Position in the home hero, 1 to 5; projects without it stay out of the hero. */
+  heroPosition: z.number().int().min(1).max(5).optional(),
+  /** Kicker shown above the hero title; the component uppercases it. */
+  heroKicker: z.string().min(1).optional(),
+  /** Landscape photo for the hero; the cover is used when it is missing. */
+  heroImage: ImageSchema.optional(),
+  /** Length of the works in months. */
+  durationMonths: z.number().int().positive().optional(),
+  /** Building permits filed for the project, e.g. "CILA". */
+  permits: z.array(z.string().min(1)).default([]),
 })
 
 export type ProjectCategory = z.infer<typeof ProjectCategorySchema>

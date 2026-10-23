@@ -1,112 +1,50 @@
-import Image from 'next/image'
+import { ArrowRightIcon } from 'lucide-react'
+import Link from 'next/link'
 import type { Project } from '@/app/_domain/entities/project'
 import type { Service } from '@/app/_domain/entities/service'
-import { BeforeAfter } from './before-after'
-import { SectionHeading, SectionLead, containerClass, microLabelClass, screenSectionClass } from './section-heading'
+import { AreaFigure } from './area-figure'
+import { outlineCtaLinkClass, tintedCtaLinkClass } from './link-styles'
+import { PhaseStrip } from './phase-strip'
+import { SectionHeading, SectionLead, containerClass, screenSectionClass } from './section-heading'
+import { TitleBlock } from './title-block'
 
 // Wider than the other sections on desktop, so the area figure and the title block fit side by side.
 const wideContainerClass = `${containerClass} lg:max-w-[1440px]`
 
-/** Title block entries ("cartiglio") derived from the project; missing data leaves its cell out. */
-function technicalSheet(project: Project, services: Service[]) {
-  const serviceTitles = project.serviceIds
-    .map((id) => services.find((service) => service.id === id)?.title)
-    .filter((title) => title !== undefined)
+// The home shows the first phases only; the project page tells the rest.
+const PREVIEW_PHASES = 4
 
-  return [
-    { label: 'LUOGO', value: project.location },
-    { label: 'SUPERFICIE', value: project.areaSqm && `${project.areaSqm} m²` },
-    { label: 'INTERVENTO', value: project.scope ?? project.summary },
-    { label: 'SERVIZI', value: serviceTitles.join(' · ') },
-  ].filter((entry): entry is { label: string; value: string } => Boolean(entry.value))
-}
-
-/** 03 Caso studio: photo strip, before/after slider, area figure and title block. */
-export function FeaturedProject({ project, services }: { project: Project; services: Service[] }) {
-  const sheet = technicalSheet(project, services)
-  const { beforeImage, afterImage } = project
-
+/** 03 Caso studio: a preview of the featured project that leads to its page and to all projects. */
+export function FeaturedProject({ project, services, total }: { project: Project; services: Service[]; total: number }) {
   return (
     <section id="progetti" aria-labelledby="progetti-title" className={`${screenSectionClass} pb-16 sm:pb-28`}>
       <SectionHeading id="progetti-title" number="03" title="Caso" accent="Studio" className={`${wideContainerClass} pt-16 sm:mb-12`}>
         <SectionLead display>{project.title}</SectionLead>
       </SectionHeading>
 
-      {project.gallery.length > 0 && (
-        // Phones: stacked 4:3 · tablet: 2×2 grid · desktop: one row whose hovered column widens.
-        <div className="grid sm:grid-cols-2 lg:flex">
-          {project.gallery.map((image) => (
-            <figure
-              key={image.src}
-              // Focusable when it has a phase description, so the keyboard can open the drawer too.
-              tabIndex={image.description ? 0 : undefined}
-              className="group relative aspect-[4/3] overflow-hidden border-background outline-none focus-visible:ring-2 focus-visible:ring-ottone focus-visible:ring-inset sm:aspect-auto sm:min-h-80 lg:min-h-[440px] lg:flex-1 lg:border-r lg:transition-[flex-grow] lg:duration-300 lg:ease-in-out lg:hover:grow-[1.7] lg:focus-visible:grow-[1.7]"
-            >
-              <Image src={image.src} alt={image.alt} fill sizes="(min-width: 1024px) 40vw, (min-width: 640px) 50vw, 100vw" className="object-cover" />
-              <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-3/5 bg-linear-to-b from-[rgba(10,57,71,.85)] to-transparent" />
-              {(image.tag || image.caption) && (
-                <figcaption
-                  // On desktop the caption glides into the opening drawer, in step with it, to head the description.
-                  className={`pointer-events-none absolute z-10 top-6 right-5 left-6 flex flex-col items-start gap-2.5 ${
-                    image.description
-                      ? 'lg:transition-[left] lg:duration-300 lg:ease-out lg:group-hover:left-[calc(100%/3_+_1.5rem)] lg:group-hover:delay-150 lg:group-focus-visible:left-[calc(100%/3_+_1.5rem)] lg:group-focus-visible:delay-150 motion-reduce:transition-none'
-                      : ''
-                  }`}
-                >
-                  {/* Solid chip: the tag stays legible on light photos too. */}
-                  {image.tag && <span className={`${microLabelClass} bg-background px-2 py-1.5`}>{image.tag}</span>}
-                  {image.caption && <span className="font-heading text-[19px] leading-[1.2] tracking-[.02em]">{image.caption}</span>}
-                </figcaption>
-              )}
-              {image.description && (
-                // Phase drawer: a bottom band without hover (touch); on desktop a full-height panel, two thirds wide, that slides in
-                // from the right under the caption. Translucent petrolio plus blur keeps the text legible over any photo.
-                <p className="absolute inset-x-0 bottom-0 border-t border-ottone/50 bg-[rgba(10,57,71,.7)] px-6 py-5 text-[15px] leading-[1.5] text-foreground backdrop-blur-md lg:top-0 lg:left-auto lg:w-2/3 lg:flex lg:flex-col lg:justify-end lg:border-t-0 lg:border-l lg:pb-8 lg:translate-x-full lg:transition-transform lg:duration-300 lg:ease-out lg:group-hover:translate-x-0 lg:group-hover:delay-150 lg:group-focus-visible:translate-x-0 lg:group-focus-visible:delay-150 motion-reduce:transition-none">
-                  {image.description}
-                </p>
-              )}
-            </figure>
-          ))}
-        </div>
-      )}
+      <div className={wideContainerClass}>
+        <PhaseStrip images={project.gallery.slice(0, PREVIEW_PHASES)} height="home" />
+      </div>
 
-      <div className={`${wideContainerClass} grid items-center gap-12 pt-16 sm:pt-24 lg:grid-cols-2`}>
-        {beforeImage && afterImage && (
-          <div className="flex flex-col gap-3">
-            <BeforeAfter before={beforeImage} after={afterImage} />
-            <p className="text-[13px] text-muted-foreground">
-              Trascina il cursore per confrontare prima e dopo · foto provvisorie, da sostituire con quelle del cantiere
-            </p>
+      <div className={`${wideContainerClass} grid gap-12 pt-16 sm:pt-24 lg:grid-cols-12`}>
+        <div className="flex flex-wrap items-start gap-x-8 gap-y-7 lg:col-span-5">
+          <AreaFigure project={project} />
+          <div className="flex-1 basis-64">
+            <TitleBlock project={project} services={services} columns={2} />
           </div>
-        )}
-        <div className="flex flex-col gap-7">
-          {/* Area figure and title block side by side; the block wraps below when the column is too narrow. */}
-          <div className="flex flex-wrap items-start gap-x-8 gap-y-7">
-            {/* The figure is trimmed to its cap height, then lowered to the cap line of the first labels. */}
-            {project.areaSqm && (
-              <p className="mt-2 flex items-end gap-4">
-                <span className="bg-[linear-gradient(135deg,#ECE5DA_10%,var(--ottone)_55%,#D8CDBF_90%)] inline-block bg-clip-text pt-[.06em] [text-box:trim-start_cap_alphabetic] font-heading text-[clamp(96px,12vw,150px)] leading-none font-medium text-transparent">
-                  {project.areaSqm}
-                </span>
-                <span className="pb-1.5 font-heading text-[15px] leading-normal tracking-[.16em]">
-                  <span className="text-ottone">M² RIPENSATI</span>
-                  <br />
-                  DA ZERO
-                </span>
-              </p>
-            )}
-            {sheet.length > 0 && (
-              <dl aria-label="Scheda tecnica" className="grid flex-1 basis-64 grid-cols-2">
-                {sheet.map((entry) => (
-                  <div key={entry.label} className="px-4 py-3.5">
-                    <dt className={`${microLabelClass} mb-2`}>{entry.label}</dt>
-                    <dd className="text-[15px] leading-[1.4]">{entry.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            )}
+        </div>
+        <div className="flex flex-col items-start gap-7 lg:col-span-6 lg:col-start-7 lg:self-center">
+          <p className="text-[17px] leading-[1.6] text-muted-foreground">{project.summary}</p>
+          <div className="flex flex-wrap gap-3">
+            <a href={`/progetti/${project.slug}`} className={`${outlineCtaLinkClass} max-sm:w-full`}>
+              Leggi il caso studio <ArrowRightIcon aria-hidden />
+            </a>
+            <Link href="/progetti" className={`${tintedCtaLinkClass} max-sm:w-full`}>
+              <span>
+                Tutti i progetti <span className="text-muted-foreground">· {total}</span>
+              </span>
+            </Link>
           </div>
-          {project.description && <p className="text-[17px] leading-[1.6] text-muted-foreground">{project.description}</p>}
         </div>
       </div>
     </section>

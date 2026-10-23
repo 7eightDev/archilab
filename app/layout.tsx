@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Montserrat, Oswald } from "next/font/google";
-import { heroSlides } from "@/app/_components/site/content";
+import { defaultHeroSlide } from "@/app/_components/site/hero-slides";
 import "./globals.css";
 
 const oswald = Oswald({
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "it_IT",
     siteName: "Archilab",
-    images: [{ url: heroSlides[0].image.src, alt: heroSlides[0].image.alt }],
+    images: [{ url: defaultHeroSlide.image.src, alt: defaultHeroSlide.image.alt }],
   },
 };
 

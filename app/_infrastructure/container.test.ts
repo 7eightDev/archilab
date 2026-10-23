@@ -1,12 +1,29 @@
 /** @jest-environment node */
 import { ContactDeliveryUnavailableError } from '@/app/_domain/repositories/contact-request-repository'
-import { contactRequestRepositoryFromEnv, getFeaturedProject, listServices, submitContactRequest } from './container'
+import { GetProject } from '@/app/_application/use-cases/get-project'
+import { ListHeroProjects } from '@/app/_application/use-cases/list-hero-projects'
+import { ListProjects } from '@/app/_application/use-cases/list-projects'
+import {
+  contactRequestRepositoryFromEnv,
+  getFeaturedProject,
+  getProject,
+  listHeroProjects,
+  listProjects,
+  listServices,
+  submitContactRequest,
+} from './container'
 import { DisabledContactRequestRepository } from './repositories/disabled-contact-request-repository'
 import { ResendContactRequestRepository } from './repositories/resend-contact-request-repository'
 
 describe('container', () => {
   it('wires GetFeaturedProject to the studio projects', async () => {
     expect((await getFeaturedProject.execute())?.slug).toBe('appartamento-fondi')
+  })
+
+  it('wires the project use cases', () => {
+    expect(listProjects).toBeInstanceOf(ListProjects)
+    expect(getProject).toBeInstanceOf(GetProject)
+    expect(listHeroProjects).toBeInstanceOf(ListHeroProjects)
   })
 
   it('wires ListServices to the studio services', async () => {

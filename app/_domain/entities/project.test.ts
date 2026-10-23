@@ -148,4 +148,37 @@ describe('ProjectSchema', () => {
     const gallery = [{ src: '/images/a.jpg' }]
     expect(ProjectSchema.safeParse({ ...validProject, gallery }).success).toBe(false)
   })
+
+  it('accepts the hero, duration and permit fields', () => {
+    const fields = {
+      heroPosition: 3,
+      heroKicker: 'UNA CASA',
+      heroImage: { src: '/h.jpg', alt: 'Casa' },
+      durationMonths: 7,
+      permits: ['CILA'],
+    }
+
+    expect(ProjectSchema.parse({ ...validProject, ...fields })).toMatchObject(fields)
+  })
+
+  it('defaults permits to an empty list', () => {
+    expect(ProjectSchema.parse(validProject).permits).toEqual([])
+  })
+
+  it.each([0, 6, 2.5])('rejects a hero position outside 1–5 %p', (heroPosition) => {
+    expect(ProjectSchema.safeParse({ ...validProject, heroPosition }).success).toBe(false)
+  })
+
+  it.each([0, -1])('rejects a non-positive duration %p', (durationMonths) => {
+    expect(ProjectSchema.safeParse({ ...validProject, durationMonths }).success).toBe(false)
+  })
+
+  it('rejects empty permits', () => {
+    expect(ProjectSchema.safeParse({ ...validProject, permits: [''] }).success).toBe(false)
+  })
+
+  it('requires alt text on the hero image', () => {
+    const heroImage = { src: '/h.jpg', alt: '' }
+    expect(ProjectSchema.safeParse({ ...validProject, heroImage }).success).toBe(false)
+  })
 })

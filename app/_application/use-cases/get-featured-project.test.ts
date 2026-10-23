@@ -14,6 +14,7 @@ function makeProject(overrides: Partial<Project>): Project {
     gallery: [],
     serviceIds: [],
     featured: true,
+    permits: [],
     ...overrides,
   }
 }
@@ -31,6 +32,10 @@ class InMemoryProjectRepository implements ProjectRepository {
 
   async findFeatured() {
     return this.projects.filter((project) => project.featured)
+  }
+
+  async findInHero() {
+    return []
   }
 }
 

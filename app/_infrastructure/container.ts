@@ -1,4 +1,7 @@
 import { GetFeaturedProject } from '@/app/_application/use-cases/get-featured-project'
+import { GetProject } from '@/app/_application/use-cases/get-project'
+import { ListHeroProjects } from '@/app/_application/use-cases/list-hero-projects'
+import { ListProjects } from '@/app/_application/use-cases/list-projects'
 import { ListServices } from '@/app/_application/use-cases/list-services'
 import { SubmitContactRequest } from '@/app/_application/use-cases/submit-contact-request'
 import type { ContactRequestRepository } from '@/app/_domain/repositories/contact-request-repository'
@@ -29,6 +32,9 @@ const serviceRepository = new InMemoryServiceRepository(services)
 const contactRequestRepository = contactRequestRepositoryFromEnv(process.env)
 
 export const getFeaturedProject = new GetFeaturedProject(projectRepository)
+export const listProjects = new ListProjects(projectRepository)
+export const getProject = new GetProject(projectRepository)
+export const listHeroProjects = new ListHeroProjects(projectRepository)
 export const listServices = new ListServices(serviceRepository)
 export const submitContactRequest = new SubmitContactRequest(contactRequestRepository)
 

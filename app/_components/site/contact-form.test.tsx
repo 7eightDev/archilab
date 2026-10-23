@@ -163,3 +163,15 @@ describe('ContactForm', () => {
     expect(decodeURIComponent(link.getAttribute('href')!)).toContain(filledValues.message)
   })
 })
+
+describe('ContactForm layout', () => {
+  it('puts two fields per row only when its container is wide enough', () => {
+    const { container } = render(<ContactForm action={jest.fn()} />)
+
+    const form = container.querySelector('form')!
+    expect(form.parentElement).toHaveClass('@container')
+    expect(form).toHaveClass('@xl:grid-cols-2')
+    expect(form.className).not.toMatch(/\bsm:grid-cols-2\b/)
+    expect(container.querySelector('.sm\\:col-span-2')).toBeNull()
+  })
+})

@@ -1,11 +1,11 @@
 'use client';
 
-import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react';
+import { ArrowLeftIcon, ArrowRightIcon, ArrowUpRightIcon } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import Crosshair from '@/app/_components/ui/crosshair';
-import type { HeroSlide } from './content';
 import { pad } from './format';
+import { defaultHeroSlide, type HeroSlide } from './hero-slides';
 import { ctaLinkClass } from './link-styles';
 import { containerClass, screenHeightClass } from './section-heading';
 
@@ -18,8 +18,11 @@ const CROSSHAIR_COLOR = '#bc9a62';
 const carouselButtonClass =
   'flex size-11 cursor-pointer items-center justify-center border border-input transition-colors hover:border-foreground';
 
-/** Full-bleed opening: three photos that cross-fade, with the studio's promise over them. */
-export function Hero({ slides }: { slides: HeroSlide[] }) {
+/** Full-bleed opening: the chosen projects' photos cross-fade, with the studio's promise over them. */
+export function Hero({ slides: projectSlides }: { slides: HeroSlide[] }) {
+  // Without chosen projects the studio's own photo stands alone, with no link and no controls.
+  const slides = projectSlides.length > 0 ? projectSlides : [defaultHeroSlide];
+  const carousel = slides.length > 1;
   const [index, setIndex] = useState(0);
   const touchStartX = useRef<number | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
@@ -28,7 +31,7 @@ export function Hero({ slides }: { slides: HeroSlide[] }) {
     setIndex((current) => (current + step + slides.length) % slides.length);
   // Hovering or focusing the hero holds the current photo, so nothing changes under the reader.
   const [held, setHeld] = useState(false);
-  const autoplay = !held && slides.length > 1;
+  const autoplay = !held && carousel;
 
   // Keyed on index: a manual step restarts the countdown instead of cutting the new photo short.
   useEffect(() => {
@@ -99,13 +102,14 @@ export function Hero({ slides }: { slides: HeroSlide[] }) {
       />
 
       <div
-        className={`${containerClass} relative z-10 flex flex-col justify-between gap-10 pt-12 pb-14 lg:gap-12`}
+        className={`${containerClass} relative z-10 flex flex-col justify-between gap-10 pt-12 pb-14 max-sm:pb-28 lg:gap-12`}
       >
         {/* Margin note of the drawing sheet: kept out of the flow so it does not push the content below the fold. */}
         <span className="absolute top-12 right-6 hidden rotate-180 text-[11px] leading-none font-medium tracking-[.24em] text-muted-foreground [writing-mode:vertical-rl] sm:block">
           ARCHITETTO · FONDI (LT)
         </span>
         <div>
+          {carousel && (
           <p
             className="flex items-start gap-2"
             aria-label={`Immagine ${index + 1} di ${slides.length}`}
@@ -123,6 +127,7 @@ export function Hero({ slides }: { slides: HeroSlide[] }) {
               / {pad(slides.length)}
             </span>
           </p>
+          )}
         </div>
 
         <div className="flex max-w-[700px] flex-col gap-[22px]">
@@ -145,30 +150,49 @@ export function Hero({ slides }: { slides: HeroSlide[] }) {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2">
-          <button
-            type="button"
-            onClick={() => go(-1)}
-            aria-label="Immagine precedente"
-            className={carouselButtonClass}
-          >
-            <ArrowLeftIcon aria-hidden className="size-5" />
-          </button>
-          <button
-            type="button"
-            onClick={() => go(1)}
-            aria-label="Immagine successiva"
-            className={carouselButtonClass}
-          >
-            <ArrowRightIcon aria-hidden className="size-5" />
-          </button>
-          {/* Silent while rotating on its own, or screen readers would announce a caption every 3 seconds. */}
-          <span
-            aria-live={autoplay ? 'off' : 'polite'}
-            className="text-[13px] text-muted-foreground max-sm:basis-full sm:ml-3"
-          >
-            {slide.caption}
-          </span>
+        {/* Phones: a solid band pinned to the bottom of the hero, so the controls stay legible over any photo. */}
+        <div className="flex items-center gap-2 max-sm:absolute max-sm:inset-x-0 max-sm:bottom-0 max-sm:min-h-[72px] max-sm:gap-3.5 max-sm:border-t max-sm:border-border max-sm:bg-background max-sm:px-4 max-sm:py-2.5">
+          {carousel && (
+            <div className="flex flex-none gap-2 max-sm:gap-1.5">
+              <button
+                type="button"
+                onClick={() => go(-1)}
+                aria-label="Immagine precedente"
+                className={carouselButtonClass}
+              >
+                <ArrowLeftIcon aria-hidden className="size-5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => go(1)}
+                aria-label="Immagine successiva"
+                className={carouselButtonClass}
+              >
+                <ArrowRightIcon aria-hidden className="size-5" />
+              </button>
+            </div>
+          )}
+          {/* Silent while rotating on its own, or screen readers would announce a caption every 6 seconds. */}
+          <div aria-live={autoplay ? 'off' : 'polite'} className="min-w-0 max-sm:flex-1 sm:ml-1.5">
+            {slide.project && (
+              <a
+                href={slide.project.href}
+                aria-label={`Guarda il progetto: ${slide.project.title}`}
+                className="flex min-h-11 flex-col justify-center gap-1 px-1.5 text-sm text-foreground outline-offset-4 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-foreground sm:flex-row sm:items-center sm:justify-start sm:gap-3.5"
+              >
+                {slide.caption && (
+                  <>
+                    <span className="truncate max-sm:text-xs max-sm:text-muted-foreground">{slide.caption}</span>
+                    <span aria-hidden className="h-px w-7 flex-none bg-current max-sm:hidden" />
+                  </>
+                )}
+                <span className="inline-flex items-center gap-2 font-medium">
+                  <span className="underline decoration-1 underline-offset-[6px]">Guarda il progetto</span>
+                  <ArrowUpRightIcon aria-hidden className="size-4" />
+                </span>
+              </a>
+            )}
+          </div>
         </div>
       </div>
     </section>
