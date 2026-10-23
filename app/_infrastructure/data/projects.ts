@@ -30,11 +30,36 @@ export const projects = [
     coverImage: photos.light,
     beforeImage: photos.before,
     afterImage: photos.living,
+    // [Descrizioni delle fasi da confermare con Maria]
     gallery: [
-      { ...photos.before, tag: 'RILIEVO', caption: 'Prima: l’appartamento anni ’80' },
-      { ...photos.plan, tag: 'ARCHITETTURA', caption: 'La pianta ripensata' },
-      { ...photos.site, tag: 'CANTIERE', caption: 'I lavori, seguiti ogni settimana' },
-      { ...photos.light, tag: 'INTERIOR', caption: 'Dopo: la zona giorno aperta alla luce' },
+      {
+        ...photos.before,
+        tag: 'RILIEVO',
+        caption: 'Prima: l’appartamento anni ’80',
+        description:
+          'Ho misurato ogni stanza e verificato impianti e muri portanti: il punto di partenza per capire cosa si poteva aprire.',
+      },
+      {
+        ...photos.plan,
+        tag: 'ARCHITETTURA',
+        caption: 'La pianta ripensata',
+        description:
+          'Ho eliminato il corridoio e unito cucina e soggiorno in un unico ambiente, poi ho seguito la CILA con il Comune.',
+      },
+      {
+        ...photos.site,
+        tag: 'CANTIERE',
+        caption: 'I lavori, seguiti ogni settimana',
+        description:
+          'Una visita a settimana con l’impresa per controllare tempi, costi e dettagli, senza sorprese a fine lavori.',
+      },
+      {
+        ...photos.light,
+        tag: 'INTERIOR',
+        caption: 'Dopo: la zona giorno aperta alla luce',
+        description:
+          'Arredi su misura, materiali e luci scelti insieme: la casa consegnata finita, pronta da abitare.',
+      },
     ],
     serviceIds: ['s-architettura', 's-interior', 's-pratiche'],
     featured: true,

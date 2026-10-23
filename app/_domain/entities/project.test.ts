@@ -127,6 +127,18 @@ describe('ProjectSchema', () => {
     expect(project.gallery[0]).toMatchObject({ caption: 'I lavori, seguiti ogni settimana', tag: 'CANTIERE' })
   })
 
+  it('keeps the phase description on gallery images', () => {
+    const description = 'Ogni settimana in cantiere, con impresa e fornitori.'
+    const project = ProjectSchema.parse({ ...validProject, gallery: [{ src: '/images/a.jpg', alt: 'Cantiere', description }] })
+
+    expect(project.gallery[0].description).toBe(description)
+  })
+
+  it('rejects an empty gallery description', () => {
+    const gallery = [{ src: '/images/a.jpg', alt: 'Cantiere', description: '' }]
+    expect(ProjectSchema.safeParse({ ...validProject, gallery }).success).toBe(false)
+  })
+
   it('rejects an empty gallery tag', () => {
     const gallery = [{ src: '/images/a.jpg', alt: 'Cantiere', tag: '' }]
     expect(ProjectSchema.safeParse({ ...validProject, gallery }).success).toBe(false)
