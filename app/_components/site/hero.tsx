@@ -173,19 +173,18 @@ export function Hero({ slides: projectSlides }: { slides: HeroSlide[] }) {
             </div>
           )}
           {/* Silent while rotating on its own, or screen readers would announce a caption every 6 seconds. */}
-          <div aria-live={autoplay ? 'off' : 'polite'} className="min-w-0 max-sm:flex-1 sm:ml-1.5">
+          <div aria-live={autoplay ? 'off' : 'polite'} className="min-w-0 max-sm:flex-1">
             {slide.project && (
               <a
                 href={slide.project.href}
                 aria-label={`Guarda il progetto: ${slide.project.title}`}
-                // The text is already near white, so hover is shown by shape: the caption underlines, the rule
-                // lengthens and the arrow steps out, all without giving up contrast over the photo.
-                className="group flex min-h-11 flex-col justify-center gap-1 px-1.5 text-sm text-foreground outline-offset-4 focus-visible:outline-2 focus-visible:outline-foreground sm:flex-row sm:items-center sm:justify-start sm:gap-3.5"
+                // Hover lifts the link off the photo with a lighter, translucent petrolio, while the rule lengthens and
+                // the arrow steps out: the text is already near white, so a colour change alone would not show.
+                className="group flex min-h-11 flex-col justify-center gap-1 px-1.5 text-sm transition-colors hover:bg-[rgba(39,81,93,.7)] hover:backdrop-blur-sm sm:px-3 text-foreground outline-offset-4 focus-visible:outline-2 focus-visible:outline-foreground sm:flex-row sm:items-center sm:justify-start sm:gap-3.5"
               >
                 {slide.caption && (
                   <>
-                    {/* Padding below, offset by the margin, so the truncating box does not clip the underline. */}
-                    <span className="-mb-2 truncate pb-2 decoration-1 underline-offset-[6px] group-hover:underline max-sm:text-xs max-sm:text-muted-foreground">
+                    <span className="truncate max-sm:text-xs max-sm:text-muted-foreground">
                       {slide.caption}
                     </span>
                     <span aria-hidden className="h-px w-7 flex-none bg-current transition-[width] group-hover:w-10 max-sm:hidden" />
